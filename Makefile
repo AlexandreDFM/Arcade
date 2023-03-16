@@ -12,6 +12,7 @@ SRC			=	Main.cpp														\
 				Abstract/AGameModule.cpp										\
 				Games/NibblerGame.cpp											\
 				Games/SnakeGame.cpp												\
+				Usage/Usage.cpp												\
 
 OBJ			=	$(SRC:.cpp=.o)
 

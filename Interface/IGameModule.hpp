@@ -11,7 +11,17 @@ class IGameModule {
 	public:
 		IGameModule();
 		~IGameModule();
-
+		void init();
+		void update();
+		void render();
+		void destroy();
+		void handleEvent();
+		void handleInput();
+		void handleCollision();
+		void handleLogic();
+		void handleSound();
+		void handleAnimation();
+		void handlePhysics();
 	protected:
 	private:
 };
