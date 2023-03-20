@@ -17,9 +17,28 @@ void ncurse::init()
     nodelay(window, TRUE);
 }
 
+int ncurse::getEvent()
+{
+    int ch = getch();
+    if (ch == KEY_UP)
+        return 1;
+    if (ch == KEY_DOWN)
+        return 2;
+    if (ch == KEY_LEFT)
+        return 3;
+    if (ch == KEY_RIGHT)
+        return 4;
+    if (ch == 10)
+        return 5;
+    if (ch == 27)
+        return 6;
+    return 0;
+}
+
 void ncurse::update()
 {
     wrefresh(window);
+    wclear(window);
 }
 
 void ncurse::drawText(std::string text, int x, int y)

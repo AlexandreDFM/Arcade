@@ -7,15 +7,6 @@
 
 #include "Menu.hpp"
 
-Menu::Menu()
-{
-
-}
-
-Menu::~Menu()
-{
-}
-
 void Menu::init()
 {
     std::string path = "./lib";

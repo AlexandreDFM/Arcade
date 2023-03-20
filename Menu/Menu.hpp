@@ -16,8 +16,6 @@
 #include "../Interface/IGame.hpp"
 class Menu : public IGame{
     public:
-        Menu();
-        ~Menu();
         void init();
         int handleEvent(int event);
         void update();

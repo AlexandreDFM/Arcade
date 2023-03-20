@@ -8,8 +8,7 @@
 #ifndef NCURSE_HPP_
 #define NCURSE_HPP_
 #include "../Interface/IGraphic.hpp"
-#include <ncurses.h>
-
+#include <curses.h>
 class ncurse : public IGraphic {
     public:
     void init();

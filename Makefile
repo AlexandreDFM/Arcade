@@ -14,6 +14,7 @@ SRC			=	Main.cpp														\
 				Games/SnakeGame.cpp												\
 				Usage/Usage.cpp												\
 				Menu/Menu.cpp													\
+				ncurse/ncurse.cpp												\
 
 OBJ			=	$(SRC:.cpp=.o)
 
@@ -22,7 +23,7 @@ INCLUDE		=	-I./Interface/													\
 				-I./Core/														\
 				-I./Games/														\
 
-FLAGS		=	-g3 -Wall -Wextra
+FLAGS		=	-g3 -Wall -Wextra -lncurses
 
 all: 		$(NAME)
 

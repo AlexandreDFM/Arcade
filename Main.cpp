@@ -8,8 +8,9 @@
 #include "Core/Core.hpp"
 #include "Menu/Menu.hpp"
 #include "Usage/Usage.hpp"
-
+#include "ncurse/ncurse.hpp"
 #include <iostream>
+
 int main(int argc, char **argv)
 {
     Usage usage;
@@ -19,6 +20,7 @@ int main(int argc, char **argv)
         return 0;
     }
     Menu menu;
+    ncurse ncurse;
     menu.init();
     std::vector <std::string> gamelist = menu.getGame();
     std::vector <std::string> liblist = menu.getLib();
@@ -28,6 +30,12 @@ int main(int argc, char **argv)
     std::cout << std::endl <<"Library List:" << std::endl;
     for (auto &i : liblist)
         std::cout << i << std::endl;
+    ncurse.init();
+    while (1)
+    {
+        ncurse.drawText(liblist[0], 0, 0);
+        ncurse.update();
+    }
     // Menu menu;
     // menu.start();
 
