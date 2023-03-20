@@ -8,7 +8,7 @@
 #include "Core/Core.hpp"
 #include "Menu/Menu.hpp"
 #include "Usage/Usage.hpp"
-#include "ncurse/ncurse.hpp"
+#include "Libraries/NCurses/NCurses.hpp"
 #include <iostream>
 
 int main(int argc, char **argv)
@@ -20,7 +20,7 @@ int main(int argc, char **argv)
         return 0;
     }
     Menu menu;
-    ncurse ncurse;
+    NCurses ncurse;
     menu.init();
     std::vector <std::string> gamelist = menu.getGame();
     std::vector <std::string> liblist = menu.getLib();

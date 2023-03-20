@@ -9,6 +9,7 @@
     #define ARKADE_IGRAPHIC_HPP
 
     #include <ios>
+    #include <iostream>
 
 class IGraphic {
     public:

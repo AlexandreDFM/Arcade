@@ -8,7 +8,7 @@
 #ifndef SNAKEGAME_HPP_
 	#define SNAKEGAME_HPP_
 
-    #include "../Abstract/AGameModule.hpp"
+    #include "../../Abstract/AGameModule.hpp"
 
 class SnakeGame : virtual public AGameModule {
 	public:

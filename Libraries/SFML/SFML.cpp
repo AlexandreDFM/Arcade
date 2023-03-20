@@ -26,7 +26,7 @@ void SFML::init()
 
 int SFML::getEvent()
 {
-
+    return 1;
 }
 
 void SFML::update()
