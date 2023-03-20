@@ -6,14 +6,15 @@
 */
 
 #ifndef MENU_HPP_
-#define MENU_HPP_
+    #define MENU_HPP_
 
-#include <iostream>
-#include <string>
-#include <vector>
-#include <map>
-#include <filesystem>
-#include "../Interface/IGame.hpp"
+    #include <iostream>
+    #include <string>
+    #include <vector>
+    #include <map>
+    #include <filesystem>
+    #include "../Interface/IGame.hpp"
+
 class Menu : public IGame{
     public:
         void init();
@@ -24,7 +25,6 @@ class Menu : public IGame{
         void close();
         std::vector <std::string> getLib();
         std::vector <std::string> getGame();
-    protected:
     private:
         std::vector <std::string> _liblist;
         std::vector <std::string> _gamelist;

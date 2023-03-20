@@ -9,12 +9,12 @@
 #include "IDisplay.hpp"
 
 class DisplayModule : public IDisplayModule {
-public:
-    DisplayModule() { std::cout << "DisplayModuleA created" << std::endl; }
-    ~DisplayModule() { std::cout << "DisplayModuleA destroyed" << std::endl; }
-    void init() override { std::cout << "DisplayModuleA initialized" << std::endl; }
-    void stop() override { std::cout << "DisplayModuleA stopped" << std::endl; }
-    const std::string& getName() const override { static const std::string name = "DisplayModuleA"; return name; }
+    public:
+        DisplayModule() { std::cout << "DisplayModuleA created" << std::endl; }
+        ~DisplayModule() { std::cout << "DisplayModuleA destroyed" << std::endl; }
+        void init() override { std::cout << "DisplayModuleA initialized" << std::endl; }
+        void stop() override { std::cout << "DisplayModuleA stopped" << std::endl; }
+        const std::string& getName() const override { static const std::string name = "DisplayModuleA"; return name; }
 };
 
 extern "C" IDisplayModule* create_display_module() {

@@ -14,9 +14,9 @@ Usage::Usage()
 void Usage::DisplayUsage()
 {
     std::cout << "USAGE" << std::endl;
-    std::cout << "\t./arcade lib" << std::endl;
+    std::cout << "\t./arcade Libraries" << std::endl;
     std::cout << "DESCRIPTION" << std::endl;
-    std::cout << "\tlib\t\tlibrary in which the game will be played" << std::endl;
+    std::cout << "\tLibraries\t\tlibrary in which the game will be played" << std::endl;
 }
 
 void Usage::CheckUsage(int ac, char **av)

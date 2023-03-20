@@ -8,15 +8,12 @@
 #ifndef NIBBLERGAME_HPP_
 	#define NIBBLERGAME_HPP_
 
-#include "../Abstract/AGameModule.hpp"
+    #include "../Abstract/AGameModule.hpp"
 
 class NibblerGame : virtual public AGameModule {
 	public:
 		NibblerGame();
 		~NibblerGame();
-
-	protected:
-	private:
 };
 
 #endif /*NIBBLERGAME_HPP_*/

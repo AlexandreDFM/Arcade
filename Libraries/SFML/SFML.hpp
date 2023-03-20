@@ -2,17 +2,18 @@
 ** EPITECH PROJECT, 2023
 ** B-OOP-400-NCE-4-1-arcade-roman.lopes
 ** File description:
-** Sfml
+** SFML
 */
 
 #ifndef SFML_HPP_
-#define SFML_HPP_
-#include "../Interface/IGraphic.hpp"
-#include <SFML/Graphics.hpp>
+    #define SFML_HPP_
 
-class Sfml {
+    #include "../../Interface/IGraphic.hpp"
+    #include <SFML/Graphics.hpp>
+
+class SFML {
     public:
-        Sfml();
+        SFML();
         void init();
         int getEvent();
         void update();
@@ -20,9 +21,7 @@ class Sfml {
         void drawSprite(void *spt);
         void drawBackground(void *bkg);
         void close();
-        ~Sfml();
-
-    protected:
+        ~SFML();
     private:
         sf::RenderWindow *window;
         sf::Event event;

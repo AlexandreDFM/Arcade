@@ -8,15 +8,12 @@
 #ifndef AGAMEMODULE_HPP_
 	#define AGAMEMODULE_HPP_
 
-#include "../Interface/IGame.hpp"
+    #include "../Interface/IGame.hpp"
 
 class AGameModule : virtual public IGame {
 	public:
 		AGameModule();
 		~AGameModule();
-
-	protected:
-	private:
 };
 
 #endif /*AGAMEMODULE_HPP_*/

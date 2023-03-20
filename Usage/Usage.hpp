@@ -6,10 +6,10 @@
 */
 
 #ifndef USAGE_HPP_
-#define USAGE_HPP_
+    #define USAGE_HPP_
 
-#include <iostream>
-#include <string>
+    #include <iostream>
+    #include <string>
 
 class Usage {
     public:
@@ -19,8 +19,6 @@ class Usage {
         static void DisplayUsage();
         void CheckLib(char **av);
         void CheckGame(char **av);
-    protected:
-    private:
 };
 
 #endif /* !USAGE_HPP_ */

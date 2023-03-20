@@ -8,15 +8,12 @@
 #ifndef ADISPLAYMODULE_HPP_
 	#define ADISPLAYMODULE_HPP_
 
-#include "../Interface/IGraphic.hpp"
+    #include "../Interface/IGraphic.hpp"
 
 class ADisplayModule : virtual public IGraphic {
 	public:
 		ADisplayModule();
 		~ADisplayModule();
-
-	protected:
-	private:
 };
 
 #endif /*ADISPLAYMODULE_HPP_*/

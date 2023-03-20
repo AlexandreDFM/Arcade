@@ -2,12 +2,12 @@
 ** EPITECH PROJECT, 2023
 ** B-OOP-400-NCE-4-1-arcade-roman.lopes
 ** File description:
-** ncurse
+** NCurses
 */
 
-#include "ncurse.hpp"
+#include "NCurses.hpp"
 
-void ncurse::init()
+void NCurses::init()
 {
     window = initscr();
     cbreak();
@@ -17,7 +17,7 @@ void ncurse::init()
     nodelay(window, TRUE);
 }
 
-int ncurse::getEvent()
+int NCurses::getEvent()
 {
     int ch = getch();
     if (ch == KEY_UP)
@@ -35,26 +35,26 @@ int ncurse::getEvent()
     return 0;
 }
 
-void ncurse::update()
+void NCurses::update()
 {
     wrefresh(window);
     wclear(window);
 }
 
-void ncurse::drawText(std::string text, int x, int y)
+void NCurses::drawText(std::string text, int x, int y)
 {
     mvprintw(y, x, text.c_str());
 }
 
-void ncurse::drawSprite(void *spt)
+void NCurses::drawSprite(void *spt)
 {
 }
 
-void ncurse::drawBackground(void *bkg)
+void NCurses::drawBackground(void *bkg)
 {
 }
 
-void ncurse::close()
+void NCurses::close()
 {
     endwin();
 }

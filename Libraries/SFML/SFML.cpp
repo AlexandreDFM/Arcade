@@ -2,20 +2,20 @@
 ** EPITECH PROJECT, 2023
 ** B-OOP-400-NCE-4-1-arcade-roman.lopes
 ** File description:
-** Sfml
+** SFML
 */
 
-#include "Sfml.hpp"
+#include "SFML.hpp"
 
-Sfml::Sfml()
+SFML::SFML()
 {
 }
 
-Sfml::~Sfml()
+SFML::~SFML()
 {
 }
 
-void Sfml::init()
+void SFML::init()
 {
     this->window->create(sf::VideoMode(800, 600), "SFML window");
     this->font.loadFromFile("arial.ttf");
@@ -24,18 +24,18 @@ void Sfml::init()
     this->text.setStyle(sf::Text::Bold);
 }
 
-int Sfml::getEvent()
+int SFML::getEvent()
 {
 
 }
 
-void Sfml::update()
+void SFML::update()
 {
     this->window->clear();
     this->window->display();
 }
 
-void Sfml::drawText(std::string text, int x, int y)
+void SFML::drawText(std::string text, int x, int y)
 {
     this->text.setString(text);
     this->text.setPosition(x, y);
