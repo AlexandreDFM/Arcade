@@ -13,6 +13,7 @@ SRC			=	Main.cpp														\
 				Games/NibblerGame.cpp											\
 				Games/SnakeGame.cpp												\
 				Usage/Usage.cpp												\
+				Menu/Menu.cpp													\
 
 OBJ			=	$(SRC:.cpp=.o)
 

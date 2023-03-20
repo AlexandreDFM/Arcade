@@ -5,8 +5,6 @@
 ** Main.cpp
 */
 
-#include "Interface/IDisplayModule.hpp"
-#include "Interface/IGameModule.hpp"
 #include "Core/Core.hpp"
 #include "Menu/Menu.hpp"
 #include "Usage/Usage.hpp"
@@ -20,7 +18,18 @@ int main(int argc, char **argv)
         usage.DisplayUsage();
         return 0;
     }
+    Menu menu;
+    menu.init();
+    std::vector <std::string> gamelist = menu.getGame();
+    std::vector <std::string> liblist = menu.getLib();
+    std::cout << "Games List:" << std::endl;
+    for (auto &i : gamelist)
+        std::cout << i << std::endl;
+    std::cout << std::endl <<"Library List:" << std::endl;
+    for (auto &i : liblist)
+        std::cout << i << std::endl;
     // Menu menu;
     // menu.start();
+
     return 0;
 }

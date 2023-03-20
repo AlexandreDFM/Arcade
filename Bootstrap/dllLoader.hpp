@@ -27,6 +27,7 @@ public:
             handle = nullptr;
         }
     }
+
     T* getInstance(const std::string& symbol) const {
         void* symbolPtr = dlsym(handle, symbol.c_str());
         if (!symbolPtr) {

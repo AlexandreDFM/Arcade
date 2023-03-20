@@ -8,9 +8,9 @@
 #ifndef AGAMEMODULE_HPP_
 	#define AGAMEMODULE_HPP_
 
-#include "../Interface/IGameModule.hpp"
+#include "../Interface/IGame.hpp"
 
-class AGameModule : virtual public IGameModule {
+class AGameModule : virtual public IGame {
 	public:
 		AGameModule();
 		~AGameModule();

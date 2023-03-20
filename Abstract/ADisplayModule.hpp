@@ -8,9 +8,9 @@
 #ifndef ADISPLAYMODULE_HPP_
 	#define ADISPLAYMODULE_HPP_
 
-#include "../Interface/IDisplayModule.hpp"
+#include "../Interface/IGraphic.hpp"
 
-class ADisplayModule : virtual public IDisplayModule {
+class ADisplayModule : virtual public IGraphic {
 	public:
 		ADisplayModule();
 		~ADisplayModule();
