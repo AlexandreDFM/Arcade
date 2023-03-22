@@ -10,6 +10,7 @@
 
     #include <ios>
     #include <iostream>
+    #include "../struct.hpp"
 
 namespace Arcade {
     class IDisplay {
@@ -29,9 +30,8 @@ namespace Arcade {
             //////////////////////// Setters //////////////////////////
             virtual void setIsRunning(bool isRunning) = 0;
             //////////////////////// Drawers //////////////////////////
-            virtual void drawSprite(void *spt) = 0;
-            virtual void drawBackground(void *bkg) = 0;
-            virtual void drawText(std::string text, int x, int y) = 0;
+            virtual void display(std::vector<drawableText>) = 0;
+            virtual void display(std::vector<drawable>) = 0;
     };
 }
 
