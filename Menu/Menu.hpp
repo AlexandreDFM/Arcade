@@ -19,10 +19,10 @@ namespace Arcade {
             void close() override;
 
             //////////////////////// Getters //////////////////////////
-            bool getIsRunning() override;
+            void setIsRunning() override;
 
             //////////////////////// Setters //////////////////////////
-            bool setIsRunning() override;
+            bool isRunning() override;
 
             //////////////////////// Drawers //////////////////////////
 

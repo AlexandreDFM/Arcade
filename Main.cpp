@@ -27,11 +27,10 @@ int main(int argc, char **argv)
     DLLoader<Arcade::IDisplay> loader("./lib/lib_arcade_ncurses.so");
     auto instance = loader.getInstance("create_display_module");
     instance->init();
-    while(instance->getIsRunning()) {
-        instance->drawText("Hello", 0, 0);
-        instance->update();
-    }
-    instance->stop();
+//    while(instance->isRunning()) {
+//        instance->update();
+//    }
+//    instance->stop();
 //    instance->~IDisplayModule();
 //    return 0;
 

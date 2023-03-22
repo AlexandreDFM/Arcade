@@ -21,19 +21,9 @@ namespace Arcade {
             void init() override;
             void update() override;
             void close() override;
-
             //////////////////////// Getters //////////////////////////
-            int getEvent();
-
+            int getEvent() override;
             //////////////////////// Setters //////////////////////////
-
-            //////////////////////// Drawers //////////////////////////
-            void drawText(std::string text, int x, int y);
-            void drawSprite(void *spt);
-            void drawBackground(void *bkg);
-            //////////////////////// Creators /////////////////////////
-            void createText() override;
-            void createSprite() override;
         private:
             WINDOW *window;
     };

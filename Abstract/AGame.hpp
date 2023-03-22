@@ -13,17 +13,21 @@
 namespace Arcade {
     class AGame : virtual public IGame {
         public:
-            /////////////////////// Constructors //////////////////////
             AGame();
             ~AGame() override = default;
             //////////////////////// Functions ////////////////////////
             void init() override;
             void update() override;
             void close() override;
-            //////////////////////// Getters //////////////////////////
-            //////////////////////// Setters //////////////////////////
             //////////////////////// Handlers /////////////////////////
-            //////////////////////// Creators /////////////////////////
+            int handleEvent(int event) override;
+            //////////////////////// Getters //////////////////////////
+            bool isRunning() override;
+            const std::vector<Drawable> &getDrawable() override;
+            const std::map<char, std::string> &getAssets() override;
+            const std::vector<DrawableText> &getDrawableText() override;
+            //////////////////////// Setters //////////////////////////
+            void setIsRunning() override;
     private:
     };
 }

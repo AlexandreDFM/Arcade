@@ -17,12 +17,7 @@ namespace Arcade {
             SFML();
             void init() override;
             int getEvent() override;
-            void createText() override;
-            void createSprite() override;
             void update() override;
-            void drawText(std::string text, int x, int y) override;
-            void drawSprite(void *spt) override;
-            void drawBackground(void *bkg) override;
             void close() override;
             ~SFML() override;
         private:
