@@ -14,6 +14,7 @@
 #include <map>
 #include <filesystem>
 #include "../Interface/IGame.hpp"
+
 class Menu : public IGame{
     public:
         void init();
@@ -21,6 +22,7 @@ class Menu : public IGame{
         void update();
         bool getIsRunning();
         bool setIsRunning();
+        virtual const std::map<char, std::string> &getassets() = 0;
         void close();
         std::vector <std::string> getLib();
         std::vector <std::string> getGame();

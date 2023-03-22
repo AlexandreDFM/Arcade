@@ -8,12 +8,14 @@
 #define DLL_LOADER_HPP
 
 #include <dlfcn.h>
+#include <string.h>
+#include <iostream>
 #include "IDisplay.hpp"
-typedef IDisplayModule* (*create_instance_t)();
 
-template<typename T>
+
 class DLLoader {
 public:
+    DLLoader() {handle = nullptr;}
     DLLoader(const std::string& path) {
         handle = dlopen(path.c_str(), RTLD_LAZY);
         if (!handle) {
@@ -28,14 +30,15 @@ public:
         }
     }
 
-    T* getInstance(const std::string& symbol) const {
-        void* symbolPtr = dlsym(handle, symbol.c_str());
+template<typename T>
+    T* getFunction(const std::string& symbol) const {
+        T* (*symbolPtr)() = dlsym(handle, symbol.c_str());
         if (!symbolPtr) {
             std::cerr << "Failed to get symbol: " << symbol << '\n';
             return nullptr;
         }
-        create_instance_t createInstance = reinterpret_cast<create_instance_t>(symbolPtr);
-        return createInstance();
+
+        return symbolPtr();
     }
 
 
@@ -44,3 +47,5 @@ private:
 };
 
 #endif // DLL_LOADER_HPP
+
+// IGraphic *g = dll.getInstance<IGraphic*>("create");

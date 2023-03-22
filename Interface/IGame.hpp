@@ -2,17 +2,25 @@
 ** EPITECH PROJECT, 2026
 ** Arkade
 ** File description:
-** Created by victor delamonica,
+** Created by victor delamonica et dieu
 */
 
 #ifndef ARKADE_IGAME_HPP
 #define ARKADE_IGAME_HPP
+
+#include <iostream>
+#include <map>
+#include <vector>
+#include "../struct.hpp"
 
 class IGame {
     public:
     virtual void init() = 0;
     virtual int handleEvent(int event) = 0;
     virtual void update() = 0;
+    virtual const std::map<char, std::string> &getassets() = 0;
+    virtual const std::vector<drawable> &getDrawable() = 0;
+    virtual const std::vector<drawableText> &getDrawableText() = 0;
     virtual bool getIsRunning() = 0;
     virtual bool setIsRunning() = 0;
     virtual void close() = 0;

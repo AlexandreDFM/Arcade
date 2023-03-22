@@ -28,10 +28,6 @@ int ncurse::getEvent()
         return 3;
     if (ch == KEY_RIGHT)
         return 4;
-    if (ch == 10)
-        return 5;
-    if (ch == 27)
-        return 6;
     return 0;
 }
 

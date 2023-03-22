@@ -25,6 +25,10 @@ void Usage::CheckUsage(int ac, char **av)
         DisplayUsage();
         exit(84);
     }
+    if (ac == 2 && std::string(av[1]) == "-h") {
+        DisplayUsage();
+        exit (0);
+    }
 }
 
 void Usage::CheckLib(char **av)

@@ -18,7 +18,6 @@ class Usage {
         void CheckUsage(int ac, char **av);
         static void DisplayUsage();
         void CheckLib(char **av);
-        void CheckGame(char **av);
     protected:
     private:
 };

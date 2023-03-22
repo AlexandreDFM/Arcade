@@ -22,6 +22,8 @@ void Menu::init()
 
 int Menu::handleEvent(int event)
 {
+    if (event == 1)
+
     return 0;
 }
 
