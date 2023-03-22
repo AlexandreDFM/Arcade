@@ -7,10 +7,22 @@
 
 #include "Core.hpp"
 
-Core::Core()
-{
-}
+namespace Arcade {
+    Core::Core()
+    {
+    }
 
-Core::~Core()
-{
+    Core::~Core()
+    {
+    }
+
+    void Core::loop()
+    {
+        while (true) {
+    //        display->clear();
+    //        display->draw(game->getMap());
+    //        display->display();
+    //        game->update(display->getEvent());
+        }
+    }
 }

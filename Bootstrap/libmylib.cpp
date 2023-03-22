@@ -8,7 +8,7 @@
 #include <iostream>
 #include "IDisplay.hpp"
 
-class DisplayModule : public IDisplayModule {
+class DisplayModule : public Arcade::ADisplay {
     public:
         DisplayModule() { std::cout << "DisplayModuleA created" << std::endl; }
         ~DisplayModule() { std::cout << "DisplayModuleA destroyed" << std::endl; }
@@ -17,6 +17,6 @@ class DisplayModule : public IDisplayModule {
         const std::string& getName() const override { static const std::string name = "DisplayModuleA"; return name; }
 };
 
-extern "C" IDisplayModule* create_display_module() {
+extern "C" DisplayModule* create_display_module() {
     return new DisplayModule();
 }

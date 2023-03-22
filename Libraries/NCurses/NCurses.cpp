@@ -7,54 +7,71 @@
 
 #include "NCurses.hpp"
 
-void NCurses::init()
-{
-    window = initscr();
-    cbreak();
-    noecho();
-    keypad(window, TRUE);
-    curs_set(0);
-    nodelay(window, TRUE);
-}
+namespace Arcade {
+    NCurses::NCurses()
+    {
+        this->window = nullptr;
+    }
 
-int NCurses::getEvent()
-{
-    int ch = getch();
-    if (ch == KEY_UP)
-        return 1;
-    if (ch == KEY_DOWN)
-        return 2;
-    if (ch == KEY_LEFT)
-        return 3;
-    if (ch == KEY_RIGHT)
-        return 4;
-    if (ch == 10)
-        return 5;
-    if (ch == 27)
-        return 6;
-    return 0;
-}
+    void NCurses::init()
+    {
+        this->window = initscr();
+        cbreak();
+        noecho();
+        keypad(this->window, TRUE);
+        curs_set(0);
+        nodelay(this->window, TRUE);
+    }
 
-void NCurses::update()
-{
-    wrefresh(window);
-    wclear(window);
-}
+    int NCurses::getEvent()
+    {
+        int ch = getch();
+        if (ch == KEY_UP)
+            return 1;
+        if (ch == KEY_DOWN)
+            return 2;
+        if (ch == KEY_LEFT)
+            return 3;
+        if (ch == KEY_RIGHT)
+            return 4;
+        if (ch == 10)
+            return 5;
+        if (ch == 27)
+            return 6;
+        return 0;
+    }
 
-void NCurses::drawText(std::string text, int x, int y)
-{
-    mvprintw(y, x, text.c_str());
-}
+    void NCurses::update()
+    {
+        wrefresh(this->window);
+        wclear(this->window);
+    }
 
-void NCurses::drawSprite(void *spt)
-{
-}
+    void NCurses::drawText(std::string text, int x, int y)
+    {
+        mvprintw(y, x, text.c_str());
+    }
 
-void NCurses::drawBackground(void *bkg)
-{
-}
+    void NCurses::drawSprite(void *spt)
+    {
+        (void)(spt);
+    }
 
-void NCurses::close()
-{
-    endwin();
+    void NCurses::drawBackground(void *bkg)
+    {
+        (void)(bkg);
+    }
+
+    void NCurses::close()
+    {
+        endwin();
+    }
+
+    void NCurses::createText()
+    {
+    }
+
+    void NCurses::createSprite()
+    {
+    }
 }

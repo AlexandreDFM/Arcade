@@ -8,19 +8,35 @@
 #ifndef NCURSE_HPP_
     #define NCURSE_HPP_
 
-    #include "../../Interface/IGraphic.hpp"
     #include <curses.h>
+    #include "../../Abstract/ADisplay.hpp"
 
-class NCurses : public IGraphic {
-    public:
-        void init();
-        int getEvent();
-        virtual void update();
-        virtual void drawText(std::string text, int x, int y);
-        virtual void drawSprite(void *spt);
-        virtual void drawBackground(void *bkg);
-        virtual void close();
-    private:
-        WINDOW *window;
-};
+namespace Arcade {
+    class NCurses : public ADisplay {
+        public:
+            /////////////////////// Constructors //////////////////////
+            NCurses();
+            ~NCurses() override = default;
+            //////////////////////// Functions ////////////////////////
+            void init() override;
+            void update() override;
+            void close() override;
+
+            //////////////////////// Getters //////////////////////////
+            int getEvent();
+
+            //////////////////////// Setters //////////////////////////
+
+            //////////////////////// Drawers //////////////////////////
+            void drawText(std::string text, int x, int y);
+            void drawSprite(void *spt);
+            void drawBackground(void *bkg);
+            //////////////////////// Creators /////////////////////////
+            void createText() override;
+            void createSprite() override;
+        private:
+            WINDOW *window;
+    };
+}
+
 #endif /* !NCURSE_HPP_ */

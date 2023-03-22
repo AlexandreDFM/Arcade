@@ -9,9 +9,9 @@
     #define DLL_LOADER_HPP
 
     #include <dlfcn.h>
-    #include "IDisplay.hpp"
+    #include "../Interface/IDisplay.hpp"
 
-    typedef IDisplayModule* (*create_instance_t)();
+    typedef Arcade::IDisplay* (*create_instance_t)();
 
     template<typename T>
 
@@ -31,13 +31,13 @@ class DLLoader {
             }
         }
 
-        T* getInstance(const std::string& symbol) const {
+        T* getInstance(const std::string &symbol) const {
             void* symbolPtr = dlsym(handle, symbol.c_str());
             if (!symbolPtr) {
                 std::cerr << "Failed to get symbol: " << symbol << '\n';
                 return nullptr;
             }
-            auto createInstance = reinterpret_cast<create_instance_t>(symbolPtr);
+            create_instance_t createInstance = reinterpret_cast<create_instance_t>(symbolPtr);
             return createInstance();
         }
     private:

@@ -8,26 +8,32 @@
 #ifndef MENU_HPP_
     #define MENU_HPP_
 
-    #include <iostream>
-    #include <string>
-    #include <vector>
-    #include <map>
-    #include <filesystem>
-    #include "../Interface/IGame.hpp"
+    #include "../Abstract/AGame.hpp"
 
-class Menu : public IGame{
-    public:
-        void init();
-        int handleEvent(int event);
-        void update();
-        bool getIsRunning();
-        bool setIsRunning();
-        void close();
-        std::vector <std::string> getLib();
-        std::vector <std::string> getGame();
-    private:
-        std::vector <std::string> _liblist;
-        std::vector <std::string> _gamelist;
-};
+namespace Arcade {
+    class Menu : virtual public AGame {
+        public:
+            //////////////////////// Functions ////////////////////////
+            void init() override;
+            void update() override;
+            void close() override;
+
+            //////////////////////// Getters //////////////////////////
+            bool getIsRunning() override;
+
+            //////////////////////// Setters //////////////////////////
+            bool setIsRunning() override;
+
+            //////////////////////// Drawers //////////////////////////
+
+
+            int handleEvent(int event) override;
+            std::vector <std::string> getLib();
+            std::vector <std::string> getGame();
+        private:
+            std::vector <std::string> _liblist;
+            std::vector <std::string> _gamelist;
+    };
+}
 
 #endif /* !MENU_HPP_ */

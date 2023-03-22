@@ -8,12 +8,14 @@
 #ifndef SNAKEGAME_HPP_
 	#define SNAKEGAME_HPP_
 
-    #include "../../Abstract/AGameModule.hpp"
+    #include "../../Abstract/AGame.hpp"
 
-class SnakeGame : virtual public AGameModule {
-	public:
-		SnakeGame();
-		~SnakeGame();
-};
+namespace Arcade {
+    class SnakeGame : virtual public AGame {
+        public:
+            SnakeGame();
+            ~SnakeGame();
+    };
+}
 
 #endif /*SNAKEGAME_HPP_*/

@@ -8,14 +8,30 @@
 #ifndef ARKADE_IGAME_HPP
     #define ARKADE_IGAME_HPP
 
-class IGame {
-    public:
-        virtual void init() = 0;
-        virtual int handleEvent(int event) = 0;
-        virtual void update() = 0;
-        virtual bool getIsRunning() = 0;
-        virtual bool setIsRunning() = 0;
-        virtual void close() = 0;
-};
+    #include <map>
+    #include <string>
+    #include <vector>
+    #include <fstream>
+    #include <iostream>
+    #include <filesystem>
+
+namespace Arcade {
+    class IGame {
+        public:
+            virtual ~IGame() = default;
+            //////////////////////// Functions ////////////////////////
+            virtual void init() = 0;
+            virtual void update() = 0;
+            virtual void close() = 0;
+            //////////////////////// Creators /////////////////////////
+
+            //////////////////////// Getters //////////////////////////
+            virtual bool getIsRunning() = 0;
+            //////////////////////// Setters //////////////////////////
+            virtual bool setIsRunning() = 0;
+            //////////////////////// Handlers /////////////////////////
+            virtual int handleEvent(int event) = 0;
+    };
+}
 
 #endif //ARKADE_IGAME_HPP

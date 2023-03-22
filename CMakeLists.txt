@@ -16,12 +16,11 @@ include_directories(Menu)
 include_directories(Usage)
 
 add_executable(B_OOP_400_NCE_4_1_arcade_roman_lopes
-        Abstract/ADisplayModule.cpp
-        Abstract/ADisplayModule.hpp
-        Abstract/AGameModule.cpp
-        Abstract/AGameModule.hpp
+        Abstract/ADisplay.cpp
+        Abstract/ADisplay.hpp
+        Abstract/AGame.cpp
+        Abstract/AGame.hpp
         Bootstrap/dllLoader.hpp
-        Bootstrap/IDisplay.hpp
         Bootstrap/libmylib.cpp
         Bootstrap/main.cpp
         Core/Core.cpp
@@ -31,7 +30,7 @@ add_executable(B_OOP_400_NCE_4_1_arcade_roman_lopes
         Games/Snake/Snake.cpp
         Games/Snake/Snake.hpp
         Interface/IGame.hpp
-        Interface/IGraphic.hpp
+        Interface/IDisplay.hpp
         Libraries/NCurses/NCurses.cpp
         Libraries/NCurses/NCurses.hpp
         Libraries/SDL2/SDL2.cpp

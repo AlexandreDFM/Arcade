@@ -8,10 +8,19 @@
 #ifndef CORE_HPP_
     #define CORE_HPP_
 
-class Core {
-    public:
-        Core();
-        ~Core();
-};
+    #include "../Interface/IGame.hpp"
+    #include "../Interface/IDisplay.hpp"
+
+namespace Arcade {
+    class Core {
+        public:
+            Core();
+            ~Core();
+            void loop();
+        private:
+            IDisplay *display;
+            IGame *game;
+    };
+}
 
 #endif /* !CORE_HPP_ */

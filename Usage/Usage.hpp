@@ -13,12 +13,26 @@
 
 class Usage {
     public:
+        class Error {
+            public:
+                //////////////////////// ErrorTypes ////////////////////////
+                enum ErrorType {
+                    LIB,
+                    GAME
+                };
+                Error(ErrorType type);
+                const std::string &what() const;
+            private:
+                std::string _message;
+        };
         Usage();
-        ~Usage() = default;
-        void CheckUsage(int ac, char **av);
+        static void CheckUsage(int ac, char **av);
         static void DisplayUsage();
         void CheckLib(char **av);
         void CheckGame(char **av);
+        private:
+            std::string _lib;
+            std::string _game;
 };
 
 #endif /* !USAGE_HPP_ */

@@ -7,9 +7,19 @@
 
 #include "Usage.hpp"
 
-Usage::Usage()
+Usage::Error::Error(ErrorType type)
 {
+    switch (type) {
+        case LIB:
+            _message = "Error: Library not found";
+            break;
+        case GAME:
+            _message = "Error: Game not found";
+            break;
+    }
 }
+
+const std::string &Usage::Error::what() const { return _message; }
 
 void Usage::DisplayUsage()
 {
@@ -22,8 +32,9 @@ void Usage::DisplayUsage()
 void Usage::CheckUsage(int ac, char **av)
 {
     if (ac != 2) {
-        DisplayUsage();
-        exit(84);
+        Usage::DisplayUsage();
+        exit(0);
+//        throw Usage::Error(Usage::Error::LIB);
     }
 }
 
@@ -31,7 +42,6 @@ void Usage::CheckLib(char **av)
 {
     std::string lib = av[1];
     if (lib.find(".so") == std::string::npos) {
-        DisplayUsage();
-        exit(84);
+        DisplayUsage(); throw Usage::Error(Usage::Error::LIB);
     }
 }
