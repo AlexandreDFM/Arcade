@@ -50,5 +50,23 @@ int main(int argc, char **argv)
 //    }
     // Menu menu;
     // menu.start();
+
+    // Usage usage;
+    // usage.CheckUsage(argc, argv);
+    // Menu menu;
+    // ncurse ncurse;
+    // menu.init();
+    // std::vector <std::string> gamelist = menu.getGame();
+    // std::vector <std::string> liblist = menu.getLib();
+    // ncurse.init();
+    // while (1)
+    // {
+    //     ncurse.drawText(liblist[0], 0, 0);
+    //     ncurse.drawText(liblist[1], 0, 1);
+    //     ncurse.drawText(liblist[2], 0, 2);
+    //     ncurse.drawText(gamelist[0], 0, 5);
+    //     ncurse.update();
+    // }
+
     return 0;
 }

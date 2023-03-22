@@ -30,6 +30,7 @@ namespace Arcade {
             int handleEvent(int event) override;
             std::vector <std::string> getLib();
             std::vector <std::string> getGame();
+            const std::map<char, std::string> &getassets();
         private:
             std::vector <std::string> _liblist;
             std::vector <std::string> _gamelist;
