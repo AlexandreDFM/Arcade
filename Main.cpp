@@ -20,12 +20,8 @@ int main(int argc, char **argv)
     if (argc == 2 && std::string(argv[1]) == "-h") {
         Usage::DisplayUsage(); return 0;
     }
-
-//    std::shared_ptr<Arcade::Menu> menu = std::make_shared<Arcade::Menu>(); // Error on this line because not Arcade::Menu but Arcade::IGame
-//    std::shared_ptr<Arcade::IDisplay> game = std::make_shared<Arcade::SFML>();
-
     DLLoader<Arcade::IDisplay> loader("./lib/lib_arcade_ncurses.so");
-    auto instance = loader.getInstance("create_display_module");
+    auto instance = loader.getInstance("create");
     instance->init();
 //    while(instance->isRunning()) {
 //        instance->update();

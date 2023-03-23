@@ -29,6 +29,10 @@ namespace Arcade {
             //////////////////////// Setters //////////////////////////
             void setIsRunning() override;
     private:
+        bool _isRunning;
+        std::map<char, std::string> _assets;
+        std::vector<Drawable> _drawable;
+        std::vector<DrawableText> _drawableText;
     };
 }
 

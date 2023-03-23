@@ -31,22 +31,22 @@ namespace Arcade {
 
     bool AGame::isRunning()
     {
-        return false;
+        return _isRunning;
     }
 
-    const std::vector<Drawable> &getDrawable()
+    const std::vector<Drawable> &AGame::getDrawable()
     {
-        return std::vector<Drawable>();
+        return _drawable;
     }
 
-    const std::map<char, std::string> &getAssets()
+    const std::map<char, std::string> &AGame::getAssets()
     {
-        return std::map<char, std::string>();
+        return _assets;
     }
 
-    const std::vector<DrawableText> &getDrawableText()
+    const std::vector<DrawableText> &AGame::getDrawableText()
     {
-        return std::vector<DrawableText>();
+        return _drawableText;
     }
 
     void AGame::setIsRunning()
