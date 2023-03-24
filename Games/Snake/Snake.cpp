@@ -36,6 +36,11 @@ namespace Arcade {
         return this->_assets;
     }
 
+    EventType SnakeGame::getDirection()
+    {
+        return this->_direction;
+    }
+
     void SnakeGame::update (EventType key)
     {
         if (key == EventType::LEFT && this->_direction != EventType::RIGHT)

@@ -18,6 +18,7 @@ namespace Arcade {
             const std::vector<Drawable> &getDrawable();
             const std::map<char, std::string> &getAssets();
             void update(EventType key);
+            Arcade::EventType getDirection();
             void close();
 
             ~SnakeGame();
