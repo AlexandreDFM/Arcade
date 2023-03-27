@@ -24,7 +24,7 @@ namespace Arcade {
             //////////////////////// Getters //////////////////////////
             Arcade::EventType getEvent() override;
             //////////////////////// Setters //////////////////////////
-        protected
+        protected:
             bool _isRunning;
             std::map<char, std::string> _assets;
     };

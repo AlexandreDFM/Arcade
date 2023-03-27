@@ -26,9 +26,8 @@ namespace Arcade {
         sf::IntRect rect = sf::IntRect(0, 0, 8, 8);
         for (auto &asset : gameAssets) {
             sf::Texture texture;
-            texture.loadFromFile(sprite.second);
-            sf::Sprite sprite;
-            sprite.setTexture(texture);
+            texture.loadFromFile(asset.begin()->second);
+            this->sprite.setTexture(texture);
             this->_spriteAssets.push_back({{asset.begin()->first, sprite}});
             rect.left += 8;
         }
@@ -65,7 +64,7 @@ namespace Arcade {
                 }
             }
         }
-        return (EventType::NONE);
+        return EventType::NOTHING;
     }
 
     void SFML::display(std::vector<Drawable> drawables)
@@ -73,7 +72,7 @@ namespace Arcade {
         for (auto &drawable : drawables) {
             for (auto &sprite : this->_spriteAssets) {
                 if (sprite.begin()->first == drawable.draw) {
-                    sprite.begin()->second.setPosition({drawabl.x, drawable.y});
+                    sprite.begin()->second.setPosition({(float) drawable.x, (float) drawable.y});
                     this->window->draw(sprite.begin()->second);
                 }
             }
@@ -84,7 +83,7 @@ namespace Arcade {
     {
         for (auto &drawable : drawables) {
             this->text.setString(drawable.text);
-            this->text.setPosition({drawable.x, drawable.y});
+            this->text.setPosition({(float) drawable.x, (float) drawable.y});
             this->window->draw(this->text);
         }
     }

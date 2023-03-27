@@ -20,7 +20,6 @@ namespace Arcade {
             void update(EventType key);
             Arcade::EventType getDirection();
             void close();
-
             ~SnakeGame();
         private:
             std::map<char, std::string> _assets;
