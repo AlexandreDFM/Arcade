@@ -10,6 +10,12 @@
 namespace Arcade {
     SnakeGame::SnakeGame()
     {
+        _apple = {
+                0, 0, 0, 'x'
+        };
+        _score = 0;
+        _direction = EventType::NOTHING;
+        _event = EventType::NOTHING;
     }
 
     void SnakeGame::init()
@@ -18,8 +24,8 @@ namespace Arcade {
         this->_apple.x = rand() % 59 + 1;
         this->_apple.y = rand() % 39 + 1;
         this->_snake.push_back({ 13, 12, 1, 'o'}); // draw value char
-        this->_assets.push_back({{'o', "assets/snake/snake.png"}});
-        this->_assets.push_back({{'x', "assets/snake/apple.png"}});
+        this->_assets.insert({{'o', "assets/snake/snake.png"}});
+        this->_assets.insert({{'x', "assets/snake/apple.png"}});
     }
 
     const std::vector<Drawable> &SnakeGame::getDrawable()
@@ -71,7 +77,7 @@ namespace Arcade {
             if (this->_snake[0].x == i.x && this->_snake[0].y == i.y)
                 this->close();
 
-        if (this._snake[0].x == 0 || this._snake[0].x == 60 || this._snake[0].y == 0 || this._snake[0].y == 40)
+        if (this->_snake[0].x == 0 || this->_snake[0].x == 60 || this->_snake[0].y == 0 || this->_snake[0].y == 40)
             this->close();
     }
 
@@ -81,9 +87,5 @@ namespace Arcade {
         this->_snake.clear();
         this->_all.clear();
         this->_assets.clear();
-    }
-
-    SnakeGame::~SnakeGame()
-    {
     }
 }

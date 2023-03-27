@@ -15,7 +15,7 @@ namespace Arcade {
     class SFML : public ADisplay {
         public:
             SFML();
-            ~SFML() override;
+            ~SFML() override = default;
             void init(const std::vector<std::map<char, std::string>>& gameAssets) override;
             Arcade::EventType getEvent() override;
             void update() override;

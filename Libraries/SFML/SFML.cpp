@@ -10,10 +10,8 @@
 namespace Arcade {
     SFML::SFML()
     {
-    }
-
-    SFML::~SFML()
-    {
+        this->window = nullptr;
+        this->event = sf::Event();
     }
 
     void SFML::init(const std::vector<std::map<char, std::string>>& gameAssets)

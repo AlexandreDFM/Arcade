@@ -8,6 +8,9 @@
 #ifndef ARKADE_IGAME_HPP
     #define ARKADE_IGAME_HPP
 
+    #include <map>
+    #include <vector>
+    #include <iostream>
     #include "Struct.hpp"
 
 namespace Arcade {
