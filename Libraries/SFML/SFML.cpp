@@ -36,32 +36,8 @@ namespace Arcade {
         this->window->display();
     }
 
-    void SFML::drawText(std::string text, int x, int y)
-    {
-        this->text.setString(text);
-        this->text.setPosition(x, y);
-        this->window->draw(this->text);
-    }
-
-    void SFML::drawSprite(void *spt)
-    {
-
-    }
-
-    void SFML::drawBackground(void *bkg)
-    {
-    }
-
     void SFML::close()
     {
         this->window->close();
-    }
-
-    void SFML::createText()
-    {
-    }
-
-    void SFML::createSprite()
-    {
     }
 }

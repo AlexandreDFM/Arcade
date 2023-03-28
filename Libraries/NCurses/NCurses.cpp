@@ -47,31 +47,8 @@ namespace Arcade {
         wclear(this->window);
     }
 
-    void NCurses::drawText(std::string text, int x, int y)
-    {
-        mvprintw(y, x, text.c_str());
-    }
-
-    void NCurses::drawSprite(void *spt)
-    {
-        (void)(spt);
-    }
-
-    void NCurses::drawBackground(void *bkg)
-    {
-        (void)(bkg);
-    }
-
     void NCurses::close()
     {
         endwin();
-    }
-
-    void NCurses::createText()
-    {
-    }
-
-    void NCurses::createSprite()
-    {
     }
 }

@@ -20,18 +20,13 @@ int main(int argc, char **argv)
     if (argc == 2 && std::string(argv[1]) == "-h") {
         Usage::DisplayUsage(); return 0;
     }
-
-//    std::shared_ptr<Arcade::Menu> menu = std::make_shared<Arcade::Menu>(); // Error on this line because not Arcade::Menu but Arcade::IGame
-//    std::shared_ptr<Arcade::IDisplay> game = std::make_shared<Arcade::SFML>();
-
     DLLoader<Arcade::IDisplay> loader("./lib/lib_arcade_ncurses.so");
-    auto instance = loader.getInstance("create_display_module");
+    auto instance = loader.getInstance("create");
     instance->init();
-    while(instance->getIsRunning()) {
-        instance->drawText("Hello", 0, 0);
-        instance->update();
-    }
-    instance->stop();
+//    while(instance->isRunning()) {
+//        instance->update();
+//    }
+//    instance->stop();
 //    instance->~IDisplayModule();
 //    return 0;
 
@@ -50,5 +45,23 @@ int main(int argc, char **argv)
 //    }
     // Menu menu;
     // menu.start();
+
+    // Usage usage;
+    // usage.CheckUsage(argc, argv);
+    // Menu menu;
+    // ncurse ncurse;
+    // menu.init();
+    // std::vector <std::string> gamelist = menu.getGame();
+    // std::vector <std::string> liblist = menu.getLib();
+    // ncurse.init();
+    // while (1)
+    // {
+    //     ncurse.drawText(liblist[0], 0, 0);
+    //     ncurse.drawText(liblist[1], 0, 1);
+    //     ncurse.drawText(liblist[2], 0, 2);
+    //     ncurse.drawText(gamelist[0], 0, 5);
+    //     ncurse.update();
+    // }
+
     return 0;
 }

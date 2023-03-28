@@ -29,12 +29,11 @@ namespace Arcade {
     {
     }
 
-    bool Menu::getIsRunning()
+    void Menu::setIsRunning()
     {
-        return false;
     }
 
-    bool Menu::setIsRunning()
+    bool Menu::isRunning()
     {
         return false;
     }

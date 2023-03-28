@@ -14,7 +14,6 @@ SRC					=	Main.cpp												\
 						Abstract/AGame.cpp										\
 						Usage/Usage.cpp											\
 						Menu/Menu.cpp											\
-#						DLLoader/DLLoader.cpp									\
 
 CORE_SRC			=	Core/Core.cpp											\
 #						Core/Loader.cpp											\

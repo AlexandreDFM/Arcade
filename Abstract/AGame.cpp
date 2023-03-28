@@ -23,4 +23,33 @@ namespace Arcade {
     void AGame::close()
     {
     }
+
+    int AGame::handleEvent(int event)
+    {
+        return 0;
+    }
+
+    bool AGame::isRunning()
+    {
+        return _isRunning;
+    }
+
+    const std::vector<Drawable> &AGame::getDrawable()
+    {
+        return _drawable;
+    }
+
+    const std::map<char, std::string> &AGame::getAssets()
+    {
+        return _assets;
+    }
+
+    const std::vector<DrawableText> &AGame::getDrawableText()
+    {
+        return _drawableText;
+    }
+
+    void AGame::setIsRunning()
+    {
+    }
 }

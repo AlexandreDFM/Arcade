@@ -13,26 +13,17 @@
 namespace Arcade {
     class ADisplay : public IDisplay {
         public:
-            /////////////////////// Constructors //////////////////////
             ADisplay();
             ~ADisplay() override;
             //////////////////////// Functions ////////////////////////
             void init() override;
             void update() override;
             void close() override;
-            void stop() override;
-            //////////////////////// Creators /////////////////////////
-            void createText() override;
-            void createSprite() override;
+            void display(std::vector<Drawable>) override;
+            void display(std::vector<DrawableText>) override;
             //////////////////////// Getters //////////////////////////
             int getEvent() override;
-            bool getIsRunning() const override;
             //////////////////////// Setters //////////////////////////
-            void setIsRunning(bool isRunning) override;
-            //////////////////////// Drawers //////////////////////////
-            void drawSprite(void *spt) override;
-            void drawBackground(void *bkg) override;
-            void drawText(std::string text, int x, int y) override;
         private:
             bool _isRunning;
     };

@@ -30,9 +30,6 @@ class Usage {
         static void DisplayUsage();
         void CheckLib(char **av);
         void CheckGame(char **av);
-        private:
-            std::string _lib;
-            std::string _game;
 };
 
 #endif /* !USAGE_HPP_ */
