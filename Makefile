@@ -28,7 +28,7 @@ GRAPHICALS_SRC		=	Libraries/NCurses/NCurses.cpp							\
 
 GRAPHICALS_NCURSES	=	Libraries/NCurses/NCurses.cpp							\
 
-GRAPHICALS_SDL2		=	Libraries/SDL2/SDL2.cpp									\
+##GRAPHICALS_SDL2		=	Libraries/SDL2/SDL2.cpp									\
 
 GRAPHICALS_SFML		=	Libraries/SFML/SFML.cpp									\
 
@@ -89,10 +89,10 @@ lib_ncurses:
 						$(GRAPHICALS_NCURSES) &&								\
 						g++ -shared -o $(LIB_NAME)ncurses.so ./lib/Ncurses.o	\
 
-lib_sdl2:				$(OBJ)
-						g++ -shared -o $(LIB_NAME)sdl2.so $(OBJ_SDL2)			\
-						$(INCLUDE_SDL2) $(FLAGS)
-
+##lib_sdl2:				$(OBJ)
+##						g++ -shared -o $(LIB_NAME)sdl2.so $(OBJ_SDL2)			\
+##						$(INCLUDE_SDL2) $(FLAGS)
+##
 lib_sfml:				$(OBJ)
 						g++ -shared -o $(LIB_NAME)sfml.so $(OBJ_SFML)			\
 						$(INCLUDE_SFML) $(FLAGS)

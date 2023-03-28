@@ -4,44 +4,50 @@
 ** File description:
 ** dllLoader
 */
-
 #ifndef DLL_LOADER_HPP
-    #define DLL_LOADER_HPP
+#define DLL_LOADER_HPP
 
-    #include <dlfcn.h>
-    #include "../Interface/IDisplay.hpp"
+#include <dlfcn.h>
+#include <string.h>
+#include <iostream>
 
-    typedef Arcade::IDisplay* (*create_instance_t)();
 
-    template<typename T>
 
 class DLLoader {
-    public:
-        DLLoader(const std::string& path) {
-            handle = dlopen(path.c_str(), RTLD_LAZY);
-            if (!handle) {
-                std::cout << dlerror() << std::endl;
-            }
+public:
+    DLLoader() {handle = nullptr;}
+    explicit DLLoader(const std::string& path) {
+        handle = dlopen(path.c_str(), RTLD_LAZY);
+        if (!handle) {
+            std::cout << dlerror() << std::endl;
         }
+    }
 
-        ~DLLoader() {
-            if (handle) {
-                dlclose(handle);
-                handle = nullptr;
-            }
+    ~DLLoader() {
+        if (handle) {
+            dlclose(handle);
+            handle = nullptr;
         }
+    }
 
-        T* getInstance(const std::string &symbol) const {
-            void* symbolPtr = dlsym(handle, symbol.c_str());
-            if (!symbolPtr) {
-                std::cerr << "Failed to get symbol: " << symbol << '\n';
-                return nullptr;
-            }
-            create_instance_t createInstance = reinterpret_cast<create_instance_t>(symbolPtr);
-            return createInstance();
+
+    template<typename T>
+    T* getFunction(const std::string& symbol) const {
+        void *ptr = dlsym(handle, symbol.c_str());
+        if (!ptr) {
+            std::cerr << "Failed to get symbol: " << symbol << '\n';
+            return nullptr;
         }
-    private:
-        void* handle;
+        auto func = reinterpret_cast<T*(*)()>(ptr);
+
+        return func();
+    }
+
+
+private:
+    void* handle;
 };
 
 #endif // DLL_LOADER_HPP
+
+// IGraphic *g = dll.getInstance<IGraphic*>("create");

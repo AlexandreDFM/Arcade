@@ -29,9 +29,5 @@ namespace Arcade {
     };
 }
 
-extern "C" Arcade::ADisplay *create_display_module() {
-    return new Arcade::ADisplay();
-}
-
 
 #endif /*ADISPLAYMODULE_HPP_*/

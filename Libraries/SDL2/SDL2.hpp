@@ -8,8 +8,8 @@
 #ifndef SDL2_HPP_
 	#define SDL2_HPP_
 
-    #include <SDL2/SDL.h>
-    #include <SDL2/SDL_test_images.h>
+//    #include <SDL2/SDL.h>
+//#include <SDL2/SDL_test_images.h>
     #include "../../Abstract/AGame.hpp"
 
 namespace Arcade {
@@ -33,8 +33,8 @@ namespace Arcade {
             void drawSprite(void *spt);
             void drawBackground(void *bkg);
         private:
-            SDL_Window *_window;
-            SDL_Renderer *_renderer;
+//            SDL_Window *_window;
+ //           SDL_Renderer *_renderer;
     //        TTF_Font *_font;
     };
 }
