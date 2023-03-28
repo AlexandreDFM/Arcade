@@ -14,7 +14,21 @@ namespace Arcade {
     class SnakeGame : virtual public AGame {
         public:
             SnakeGame();
-            ~SnakeGame();
+            ~SnakeGame() override = default;
+            void init() override;
+            const std::vector<Drawable> &getDrawable() override;
+            const std::map<char, std::string> &getAssets() override;
+            void update(EventType key);
+            Arcade::EventType getDirection() override;
+            void close() override;
+        private:
+            std::map<char, std::string> _assets;
+            std::vector<Drawable> _snake;
+            std::vector<Drawable> _all;
+            Drawable _apple;
+            EventType _event;
+            EventType _direction;
+            int _score;
     };
 }
 

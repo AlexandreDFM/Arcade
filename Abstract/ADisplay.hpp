@@ -16,16 +16,17 @@ namespace Arcade {
             ADisplay();
             ~ADisplay() override;
             //////////////////////// Functions ////////////////////////
-            void init() override;
+            void init(const std::vector<std::map<char, std::string>>& gameAssets) override;
             void update() override;
             void close() override;
             void display(std::vector<Drawable>) override;
             void display(std::vector<DrawableText>) override;
             //////////////////////// Getters //////////////////////////
-            int getEvent() override;
+            Arcade::EventType getEvent() override;
             //////////////////////// Setters //////////////////////////
-        private:
+        protected:
             bool _isRunning;
+            std::map<char, std::string> _assets;
     };
 }
 

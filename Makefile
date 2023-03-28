@@ -7,7 +7,7 @@
 
 NAME				=	arcade
 
-LIB_NAME			=	lib/lib_arcade_
+LIB_NAME			=	lib/arcade_
 
 SRC					=	Main.cpp												\
 						Abstract/ADisplay.cpp									\
@@ -19,8 +19,9 @@ CORE_SRC			=	Core/Core.cpp											\
 #						Core/Loader.cpp											\
 #						Core/Parser.cpp											\
 
-GAMES_SRC			=	Games/Nibbler/Nibbler.cpp								\
-						Games/Snake/Snake.cpp									\
+GAMES_NIBBLER		=	Games/Nibbler/Nibbler.cpp								\
+
+GAMES_SNAKE			=	Games/Snake/Snake.cpp									\
 
 GRAPHICALS_SRC		=	Libraries/NCurses/NCurses.cpp							\
 						Libraries/SDL2/SDL2.cpp									\
@@ -36,15 +37,15 @@ OBJ_SRC				=	$(SRC:.cpp=.o)
 
 OBJ_CORE			=	$(CORE_SRC:.cpp=.o)
 
-OBJ_GAMES			=	$(GAMES_SRC:.cpp=.o)
-
-OBJ_GRAPHICALS		=	$(GRAPHICALS_SRC:.cpp=.o)
-
 OBJ_NCURSES			=	$(GRAPHICALS_NCURSES:.cpp=.o)
 
 OBJ_SDL2			=	$(GRAPHICALS_SDL2:.cpp=.o)
 
 OBJ_SFML			=	$(GRAPHICALS_SFML:.cpp=.o)
+
+OBJ_NIBBLER			=	$(GAMES_NIBBLER:.cpp=.o)
+
+OBJ_SNAKE			=	$(GAMES_SNAKE:.cpp=.o)
 
 INCLUDE_SRC			=	-I./Interface/											\
 						-I./Abstract/											\
@@ -54,29 +55,30 @@ INCLUDE_SRC			=	-I./Interface/											\
 
 INCLUDE_CORE		=	-I./Core/												\
 
-INCLUDE_GAMES		=	-I./Games/Nibbler										\
-						-I./Games/Snake											\
+INCLUDE_NIBBLER		=	-I./Interface/											\
+						-I./Games/Nibbler/										\
 
-INCLUDE_GRAPHICALS	=	-I./Libraries/NCurses/									\
-						-I./Libraries/SDL2/										\
-						-I./Libraries/SFML/										\
+INCLUDE_SNAKE		=	-I./Interface/											\
+						-I./Games/Snake/										\
 
 INCLUDE_NCURSES		=	-I./Interface/											\
 						-I./Libraries/NCurses/									\
 
-INCLUDE_SDL2		=	-I./Libraries/SDL2/										\
+INCLUDE_SDL2		=	-I./Interface/											\
+						-I./Libraries/SDL2/										\
 
-INCLUDE_SFML		=	-I./Libraries/SFML/										\
+INCLUDE_SFML		=	-I./Interface/											\
+						-I./Libraries/SFML/										\
 
-FLAGS				=	-g3 -Wall -Wextra -lncurses -lSDL2 -lsfml-graphics -lsfml-window -lsfml-system
+FLAGS				=	-g3 -Wall -Wextra -Werror
 
-FLAGS_NCURSES		=	-g3 -Wall -Wextra -lncurses
+FLAGS_NCURSES		=	-Wall -Wextra -lncurses
 
-FLAGS_SDL2			=	-g3 -Wall -Wextra -lSDL2
+FLAGS_SDL2			=	-Wall -Wextra -lSDL2
 
-FLAGS_SFML			=	-g3 -Wall -Wextra -lsfml-graphics -lsfml-window -lsfml-system
+FLAGS_SFML			=	-Wall -Wextra -lsfml-graphics -lsfml-window -lsfml-system
 
-all: 					lib_ncurses $(NAME)
+all: 					core graphicals games
 
 $(NAME):				$(OBJ_SRC) $(OBJ_CORE)
 						g++ -o $(NAME) -L./lib $(OBJ_SRC) $(OBJ_CORE)			\
@@ -89,19 +91,29 @@ lib_ncurses:
 						$(GRAPHICALS_NCURSES) &&								\
 						g++ -shared -o $(LIB_NAME)ncurses.so ./lib/Ncurses.o	\
 
-##lib_sdl2:				$(OBJ)
-##						g++ -shared -o $(LIB_NAME)sdl2.so $(OBJ_SDL2)			\
-##						$(INCLUDE_SDL2) $(FLAGS)
-##
-lib_sfml:				$(OBJ)
-						g++ -shared -o $(LIB_NAME)sfml.so $(OBJ_SFML)			\
-						$(INCLUDE_SFML) $(FLAGS)
+lib_sdl2:
+						g++ -o ./lib/SDL2.o -c -fpic $(FLAGS_SDL2)				\
+						$(GRAPHICALS_SDL2) &&									\
+						g++ -shared -o $(LIB_NAME)sdl2.so ./lib/SDL2.o			\
 
-games: 					lib_ncurses lib_sdl2 lib_sfml
+lib_sfml:
+						g++ -o ./lib/SFML.o -c -fpic ${FLAGS_SFML}				\
+						$(GRAPHICALS_SFML) &&									\
+						g++ -shared -o $(LIB_NAME)sfml.so ./lib/SFML.o			\
 
-graphicals: 			$(OBJ)
-						g++ -o $(NAME) $(OBJ_GRAPHICALS) $(INCLUDE_GRAPHICALS)	\
-						$(FLAGS)
+graphicals: 			lib_ncurses lib_sdl2 lib_sfml
+
+snake:
+						g++ -o ./lib/Snake.o -c -fpic $(FLAGS)					\
+						$(GAMES_SNAKE) &&										\
+						g++ -shared -o $(LIB_NAME)snake.so ./lib/Snake.o		\
+
+nibbler:
+						g++ -o ./lib/Nibbler.o -c -fpic $(FLAGS)				\
+						$(GAMES_NIBBLER) &&										\
+						g++ -shared -o $(LIB_NAME)nibbler.so ./lib/Nibbler.o	\
+
+games: 					snake nibbler
 
 clean:
 						rm -f $(OBJ_SRC)
@@ -114,4 +126,4 @@ fclean: 				clean
 
 re: 					fclean all $(NAME)
 
-.PHONY: 				all clean fclean re
+.PHONY: 				all clean fclean re core graphicals games snake nibbler lib_ncurses lib_sdl2 lib_sfml

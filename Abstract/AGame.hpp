@@ -26,9 +26,10 @@ namespace Arcade {
             const std::vector<Drawable> &getDrawable() override;
             const std::map<char, std::string> &getAssets() override;
             const std::vector<DrawableText> &getDrawableText() override;
+            Arcade::EventType getDirection() override;
             //////////////////////// Setters //////////////////////////
             void setIsRunning() override;
-    private:
+    protected:
         bool _isRunning;
         std::map<char, std::string> _assets;
         std::vector<Drawable> _drawable;

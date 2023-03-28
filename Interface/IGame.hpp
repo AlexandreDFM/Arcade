@@ -8,6 +8,9 @@
 #ifndef ARKADE_IGAME_HPP
     #define ARKADE_IGAME_HPP
 
+    #include <map>
+    #include <vector>
+    #include <iostream>
     #include "Struct.hpp"
 
 namespace Arcade {
@@ -25,6 +28,7 @@ namespace Arcade {
             virtual const std::vector<Drawable> &getDrawable() = 0;
             virtual const std::map<char, std::string> &getAssets() = 0;
             virtual const std::vector<DrawableText> &getDrawableText() = 0;
+            virtual Arcade::EventType getDirection() = 0;
             //////////////////////// Setters //////////////////////////
             virtual void setIsRunning() = 0;
     };
