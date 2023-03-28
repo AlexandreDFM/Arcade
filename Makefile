@@ -29,7 +29,7 @@ GRAPHICALS_SRC		=	Libraries/NCurses/NCurses.cpp							\
 
 GRAPHICALS_NCURSES	=	Libraries/NCurses/NCurses.cpp							\
 
-GRAPHICALS_SDL2		=	Libraries/SDL2/SDL2.cpp									\
+##GRAPHICALS_SDL2		=	Libraries/SDL2/SDL2.cpp									\
 
 GRAPHICALS_SFML		=	Libraries/SFML/SFML.cpp									\
 
@@ -107,7 +107,6 @@ snake:
 						g++ -o ./lib/Snake.o -c -fpic $(FLAGS)					\
 						$(GAMES_SNAKE) &&										\
 						g++ -shared -o $(LIB_NAME)snake.so ./lib/Snake.o		\
-
 
 nibbler:
 						g++ -o ./lib/Nibbler.o -c -fpic $(FLAGS)				\
