@@ -46,15 +46,14 @@ OBJ_NIBBLER			=	$(GAMES_NIBBLER:.cpp=.o)
 
 OBJ_SNAKE			=	$(GAMES_SNAKE:.cpp=.o)
 
-INCLUDE_CORE		=	-I./Interface/											\
-						-I./Abstract/											\
-						-I./Core/												\
+INCLUDE_CORE		=	-I./Core/												\
+						-I./Interface/											\
 						-I./Games/												\
+						-I./Abstract/											\
 						-I./DLLoarder/											\
-						-I./Core/												\
 
-INCLUDE_MENU		=	-I./Interface/											\
-						-I./Menu												\
+INCLUDE_MENU		=	-I./Menu												\
+						-I./Interface/											\
 
 INCLUDE_NIBBLER		=	-I./Interface/											\
 						-I./Games/Nibbler/										\
@@ -119,10 +118,15 @@ nibbler:
 games: 					menu snake nibbler
 
 clean:
-						rm -f $(OBJ_SRC)
 						rm -f $(OBJ_CORE)
-						rm -f $(OBJ_GAMES)
-						rm -f $(OBJ_GRAPHICALS)
+						rm -f $(OBJ_NCURSES)
+						rm -f $(OBJ_SDL2)
+						rm -f $(OBJ_SFML)
+						rm -f $(OBJ_MENU)
+						rm -f $(OBJ_NIBBLER)
+						rm -f $(OBJ_SNAKE)
+						rm -f ./lib/*.o
+						rm -f ./lib/*.so
 
 fclean: 				clean
 						rm -f $(NAME)
