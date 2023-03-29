@@ -17,10 +17,8 @@ namespace Arcade {
             ~AGame() override = default;
             //////////////////////// Functions ////////////////////////
             void init() override;
-            void update() override;
+            void update(Arcade::EventType event) override;
             void close() override;
-            //////////////////////// Handlers /////////////////////////
-            int handleEvent(int event) override;
             //////////////////////// Getters //////////////////////////
             bool isRunning() override;
             const std::vector<Drawable> &getDrawable() override;
@@ -28,11 +26,12 @@ namespace Arcade {
             const std::vector<DrawableText> &getDrawableText() override;
             Arcade::EventType getDirection() override;
             //////////////////////// Setters //////////////////////////
-            void setIsRunning() override;
+            void setIsRunning(bool isRunning) override;
     protected:
         bool _isRunning;
-        std::map<char, std::string> _assets;
+        Arcade::EventType _event;
         std::vector<Drawable> _drawable;
+        std::map<char, std::string> _assets;
         std::vector<DrawableText> _drawableText;
     };
 }

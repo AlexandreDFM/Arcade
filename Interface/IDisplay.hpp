@@ -10,12 +10,18 @@
 
     #include "Struct.hpp"
 
+#include <ios>
+#include <iostream>
+#include <vector>
+#include <map>
+#include "Struct.hpp"
+
 namespace Arcade {
     class IDisplay {
     public:
         virtual ~IDisplay() = default;
         //////////////////////// Functions ////////////////////////
-        virtual void init(const std::vector<std::map<char, std::string>>& gameAssets) = 0;
+        virtual void init(const std::map<char, std::string>& gameAssets) = 0;
         virtual void update() = 0;
         virtual void close() = 0;
         virtual void display(std::vector<Drawable>) = 0;

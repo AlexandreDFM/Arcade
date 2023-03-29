@@ -19,7 +19,7 @@ namespace Arcade {
         std::cout << "DisplayModuleA destroyed" << std::endl;
     }
 
-    void ADisplay::init()
+    void ADisplay::init(const std::map<char, std::string>& gameAssets)
     {
         this->_isRunning = true;
         std::cout << "DisplayModuleA initialized" << std::endl;
@@ -46,9 +46,9 @@ namespace Arcade {
         std::cout << "DisplayModuleA display" << std::endl;
     }
 
-    int ADisplay::getEvent()
+    Arcade::EventType ADisplay::getEvent()
     {
         std::cout << "DisplayModuleA getEvent" << std::endl;
-        return 0;
+        return Arcade::EventType::NOTHING;
     }
 }

@@ -16,7 +16,7 @@ namespace Arcade {
             ADisplay();
             ~ADisplay() override;
             //////////////////////// Functions ////////////////////////
-            void init(const std::vector<std::map<char, std::string>>& gameAssets) override;
+            void init(const std::map<char, std::string>& gameAssets) override;
             void update() override;
             void close() override;
             void display(std::vector<Drawable>) override;

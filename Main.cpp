@@ -20,5 +20,5 @@ int main(int argc, char **argv)
     if (argc == 2 && std::string(argv[1]) == "-h") {
         Usage::DisplayUsage(); return 0;
     }
-    Arcade::Core("./lib/lib_arcade_ncurses.so");
+    Arcade::Core("./lib/arcade_ncurses.so");
 }

@@ -13,8 +13,9 @@ namespace Arcade {
         this->window = nullptr;
     }
 
-    void NCurses::init()
+    void NCurses::init(const std::map<char, std::string>& gameAssets)
     {
+        (void) gameAssets;
         this->window = initscr();
         cbreak();
         noecho();
@@ -23,22 +24,22 @@ namespace Arcade {
         nodelay(this->window, TRUE);
     }
 
-    int NCurses::getEvent()
+    Arcade::EventType NCurses::getEvent()
     {
         int ch = getch();
         if (ch == KEY_UP)
-            return 1;
+            return Arcade::EventType::UP;
         if (ch == KEY_DOWN)
-            return 2;
+            return Arcade::EventType::DOWN;
         if (ch == KEY_LEFT)
-            return 3;
+            return Arcade::EventType::LEFT;
         if (ch == KEY_RIGHT)
-            return 4;
-        if (ch == 10)
-            return 5;
-        if (ch == 27)
-            return 6;
-        return 0;
+            return Arcade::EventType::RIGHT;
+//        if (ch == 10)
+//            return Arcade::EventType::ENTER;
+//        if (ch == 27)
+//            return Arcade::EventType::ESCAPE;
+        return Arcade::EventType::NOTHING;
     }
 
     void NCurses::update()

@@ -14,7 +14,7 @@ namespace Arcade {
     Core::Core(std::string lib) {
         DLLoader Dll(lib);
         this->setGraphic(Dll.getFunction<IDisplay>("create"));
-        DLLoader Game("../lib/menu.so");
+        DLLoader Game("./lib/arcade_menu.so");
         this->setGame(Game.getFunction<IGame>("create"));
     }
 

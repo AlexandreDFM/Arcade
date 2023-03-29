@@ -18,11 +18,11 @@ namespace Arcade {
             NCurses();
             ~NCurses() override = default;
             //////////////////////// Functions ////////////////////////
-            void init() override;
+            void init(const std::map<char, std::string>& gameAssets) override;
             void update() override;
             void close() override;
             //////////////////////// Getters //////////////////////////
-            int getEvent() override;
+            Arcade::EventType getEvent() override;
             //////////////////////// Setters //////////////////////////
         private:
             WINDOW *window;

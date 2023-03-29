@@ -14,7 +14,7 @@ namespace Arcade {
         this->event = sf::Event();
     }
 
-    void SFML::init(const std::vector<std::map<char, std::string>>& gameAssets)
+    void SFML::init(const std::map<char, std::string> &gameAssets)
     {
         this->window = new sf::RenderWindow(sf::VideoMode(1920, 1080), "Arkade");
         this->font.loadFromFile("arial.ttf");
@@ -23,10 +23,11 @@ namespace Arcade {
         this->text.setStyle(sf::Text::Bold);
         sf::IntRect rect = sf::IntRect(0, 0, 8, 8);
         for (auto &asset : gameAssets) {
-            sf::Texture texture;
-            texture.loadFromFile(asset.begin()->second);
-            this->sprite.setTexture(texture);
-            this->_spriteAssets.push_back({{asset.begin()->first, sprite}});
+            (void) asset;
+//            sf::Texture texture;
+//            texture.loadFromFile(asset.begin()->second);
+//            this->sprite.setTexture(texture);
+//            this->_spriteAssets.insert({asset.begin()->first, sprite});
             rect.left += 8;
         }
     }
