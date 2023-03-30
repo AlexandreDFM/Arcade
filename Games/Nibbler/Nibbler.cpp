@@ -7,7 +7,9 @@
 
 #include "Nibbler.hpp"
 
-extern "C" IGame *entryPoint()
-{
-    return new NibblerGame();
+namespace Arcade {
+    extern "C" IGame *entryPoint()
+    {
+        return new NibblerGame();
+    }
 }
