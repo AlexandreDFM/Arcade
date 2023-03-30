@@ -10,10 +10,10 @@
 
 //    #include <SDL2/SDL.h>
 //#include <SDL2/SDL_test_images.h>
-    #include "../../Abstract/AGame.hpp"
+    #include "../../Abstract/ADisplay.hpp"
 
 namespace Arcade {
-    class SDL2 : public AGame {
+    class SDL2 : public ADisplay {
         public:
             /////////////////////// Constructors //////////////////////
             SDL2();

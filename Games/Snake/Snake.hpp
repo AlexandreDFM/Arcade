@@ -31,5 +31,4 @@ namespace Arcade {
             int _score;
     };
 }
-
 #endif /*SNAKEGAME_HPP_*/

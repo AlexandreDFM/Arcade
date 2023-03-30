@@ -52,4 +52,9 @@ namespace Arcade {
     {
         endwin();
     }
+
+    extern "C" IDisplay *entryPoint()
+    {
+        return new NCurses();
+    }
 }

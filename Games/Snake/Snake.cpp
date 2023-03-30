@@ -88,4 +88,11 @@ namespace Arcade {
         this->_all.clear();
         this->_assets.clear();
     }
+
+    extern "C" {
+        IGame *entryPoint()
+        {
+            return new SnakeGame();
+        }
+    }
 }

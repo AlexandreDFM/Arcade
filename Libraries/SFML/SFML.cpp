@@ -99,4 +99,11 @@ namespace Arcade {
         delete this->window;
 
     }
+
+    extern "C" {
+        ADisplay *entryPoint()
+        {
+            return new SFML();
+        }
+    }
 }

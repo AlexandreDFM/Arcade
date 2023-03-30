@@ -100,4 +100,11 @@ namespace Arcade {
         // Quit SDL
         SDL_Quit();
     }
+
+    extern "C" {
+        IDisplay *entryPoint()
+        {
+            return new SDL2();
+        }
+    }
 }
