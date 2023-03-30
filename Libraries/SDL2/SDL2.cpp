@@ -118,5 +118,11 @@ namespace Arcade {
             return Arcade::EventType::CLOSE;
         }
         return Arcade::EventType::NOTHING;
+
+    extern "C" {
+        IDisplay *entryPoint()
+        {
+            return new SDL2();
+        }
     }
 }

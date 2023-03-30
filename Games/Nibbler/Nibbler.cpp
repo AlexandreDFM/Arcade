@@ -6,3 +6,8 @@
 */
 
 #include "Nibbler.hpp"
+
+extern "C" IGame *entryPoint()
+{
+    return new NibblerGame();
+}

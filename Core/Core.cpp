@@ -20,9 +20,9 @@ namespace Arcade {
 
     Core::Core(std::string lib, std::string game) {
         DLLoader dll(lib);
-        this->setGraphic(dll.getFunction<IDisplay>("create"));
+        this->setGraphic(dll.getFunction<IDisplay>("entryPoint"));
         DLLoader dll2(game);
-        this->setGame(dll2.getFunction<IGame>("create"));
+        this->setGame(dll2.getFunction<IGame>("entryPoint"));
     }
 
     Core::~Core() {
