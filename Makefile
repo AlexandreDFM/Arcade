@@ -74,7 +74,7 @@ FLAGS				=	-g3 -Wall -Wextra -Werror
 
 FLAGS_NCURSES		=	-Wall -Wextra -lncurses
 
-FLAGS_SDL2			=	-Wall -Wextra -lSDL2
+FLAGS_SDL2			=	-Wall -Wextra -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer
 
 FLAGS_SFML			=	-Wall -Wextra -lsfml-graphics -lsfml-window -lsfml-system
 
@@ -98,7 +98,7 @@ lib_sfml:
 						$(GRAPHICALS_SFML) &&									\
 						g++ -shared -o $(LIB_NAME)sfml.so ./lib/SFML.o			\
 
-graphicals: 			lib_ncurses lib_sfml
+graphicals: 			lib_ncurses lib_sfml lib_sdl2
 
 menu:
 						g++ -o ./lib/Menu.o -c -fpic $(FLAGS)					\

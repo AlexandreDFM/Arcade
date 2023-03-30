@@ -8,8 +8,10 @@
 #ifndef SDL2_HPP_
 	#define SDL2_HPP_
 
-//    #include <SDL2/SDL.h>
-//#include <SDL2/SDL_test_images.h>
+    #include <SDL2/SDL.h>
+    #include <SDL2/SDL_ttf.h>
+    #include <SDL2/SDL_image.h>
+
     #include "../../Abstract/ADisplay.hpp"
 
 namespace Arcade {
@@ -19,23 +21,19 @@ namespace Arcade {
             SDL2();
             ~SDL2();
             //////////////////////// Functions ////////////////////////
-            void init();
-            void update();
+            void init(const std::map<char, std::string> &gameAssets) override;
+            void update() override;
             void close() override;
-
+            void display(std::vector<Drawable>) override;
+            void display(std::vector<DrawableText>) override;
             //////////////////////// Getters //////////////////////////
-            int getEvent();
-
-            //////////////////////// Setters //////////////////////////
-
-            //////////////////////// Drawers //////////////////////////
-            void drawText(std::string text, int x, int y);
-            void drawSprite(void *spt);
-            void drawBackground(void *bkg);
+            Arcade::EventType getEvent() override;
         private:
-//            SDL_Window *_window;
- //           SDL_Renderer *_renderer;
-    //        TTF_Font *_font;
+            SDL_Window *_window;
+            SDL_Renderer *_renderer;
+            SDL_Event _event;
+            TTF_Font *_font;
+            std::map<char, SDL_Texture *> _spriteAssets;
     };
 }
 
