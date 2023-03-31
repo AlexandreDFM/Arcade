@@ -11,6 +11,9 @@
     #include <SFML/Graphics.hpp>
     #include "../../Abstract/ADisplay.hpp"
 
+#include <iostream>
+#include <SFML/Graphics.hpp>
+
 namespace Arcade {
     class SFML : public ADisplay {
         public:
