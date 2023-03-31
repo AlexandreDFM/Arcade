@@ -20,6 +20,7 @@ namespace Arcade {
 
     void AGame::update(Arcade::EventType event)
     {
+        (void) event;
     }
 
     void AGame::close()

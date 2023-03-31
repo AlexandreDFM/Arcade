@@ -21,6 +21,7 @@ namespace Arcade {
 
     void ADisplay::init(const std::map<char, std::string>& gameAssets)
     {
+        (void) gameAssets;
         this->_isRunning = true;
         std::cout << "DisplayModuleA initialized" << std::endl;
     }
@@ -38,11 +39,13 @@ namespace Arcade {
 
     void ADisplay::display(std::vector<Drawable> drawables)
     {
+        (void) drawables;
         std::cout << "DisplayModuleA display" << std::endl;
     }
 
     void ADisplay::display(std::vector<DrawableText> drawables)
     {
+        (void) drawables;
         std::cout << "DisplayModuleA display" << std::endl;
     }
 

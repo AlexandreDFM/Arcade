@@ -19,8 +19,14 @@ namespace Arcade {
             void close() override;
             //////////////////////// Getters //////////////////////////
             bool isRunning() override;
-            std::vector <std::string> getLib() ;
+            const std::vector<Drawable> &getDrawable() override;
+            const std::map<char, std::string> &getAssets() override;
+            const std::vector<DrawableText> &getDrawableText() override;
+            Arcade::EventType getDirection() override;
+            std::vector <std::string> getLib();
             std::vector <std::string> getGame();
+            //////////////////////// Setters //////////////////////////
+            void setIsRunning(bool isRunning) override;
         private:
             std::vector <std::string> _liblist;
             std::vector <std::string> _gamelist;
