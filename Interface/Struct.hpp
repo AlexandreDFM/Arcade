@@ -17,7 +17,7 @@ namespace Arcade {
     struct Drawable {
         int x;
         int y;
-        int color;
+        Color color;
         char draw;
     };
 
