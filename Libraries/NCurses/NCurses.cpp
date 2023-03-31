@@ -24,6 +24,29 @@ namespace Arcade {
         nodelay(this->window, TRUE);
     }
 
+    void NCurses::update()
+    {
+        wrefresh(this->window);
+        wclear(this->window);
+    }
+
+    void NCurses::close()
+    {
+        endwin();
+    }
+
+    void NCurses::display(std::vector<Drawable> drawables)
+    {
+        (void) drawables;
+        // TODO
+    }
+
+    void NCurses::display(std::vector<DrawableText> drawables)
+    {
+        (void) drawables;
+        // TODO
+    }
+
     Arcade::EventType NCurses::getEvent()
     {
         int ch = getch();
@@ -40,17 +63,6 @@ namespace Arcade {
 //        if (ch == 27)
 //            return Arcade::EventType::ESCAPE;
         return Arcade::EventType::NOTHING;
-    }
-
-    void NCurses::update()
-    {
-        wrefresh(this->window);
-        wclear(this->window);
-    }
-
-    void NCurses::close()
-    {
-        endwin();
     }
 
     extern "C" IDisplay *entryPoint()

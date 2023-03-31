@@ -21,6 +21,8 @@ namespace Arcade {
             void init(const std::map<char, std::string>& gameAssets) override;
             void update() override;
             void close() override;
+            void display(std::vector<Drawable> drawables) override;
+            void display(std::vector<DrawableText> drawables) override;
             //////////////////////// Getters //////////////////////////
             Arcade::EventType getEvent() override;
             //////////////////////// Setters //////////////////////////

@@ -24,8 +24,8 @@ namespace Arcade {
         virtual void init(const std::map<char, std::string>& gameAssets) = 0;
         virtual void update() = 0;
         virtual void close() = 0;
-        virtual void display(std::vector<Drawable>) = 0;
-        virtual void display(std::vector<DrawableText>) = 0;
+        virtual void display(std::vector<Drawable> drawables) = 0;
+        virtual void display(std::vector<DrawableText> drawables) = 0;
         //////////////////////// Getters //////////////////////////
         virtual Arcade::EventType getEvent() = 0;
         //////////////////////// Setters //////////////////////////

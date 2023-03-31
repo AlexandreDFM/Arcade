@@ -17,20 +17,26 @@ CORE_SRC			=	Main.cpp												\
 						Core/Core.cpp											\
 
 GAMES_MENU			=	Menu/Menu.cpp											\
+						Abstract/AGame.cpp										\
 
 GAMES_NIBBLER		=	Games/Nibbler/Nibbler.cpp								\
+						Abstract/AGame.cpp										\
 
 GAMES_SNAKE			=	Games/Snake/Snake.cpp									\
+						Abstract/AGame.cpp										\
 
 GRAPHICALS_SRC		=	Libraries/NCurses/NCurses.cpp							\
 						Libraries/SDL2/SDL2.cpp									\
 						Libraries/SFML/SFML.cpp									\
 
-GRAPHICALS_NCURSES	=	Libraries/NCurses/NCurses.cpp							\
+GRAPHICALS_NCURSES	=	Abstract/ADisplay.cpp									\
+						Libraries/NCurses/NCurses.cpp							\
 
 GRAPHICALS_SDL2		=	Libraries/SDL2/SDL2.cpp									\
+						Abstract/ADisplay.cpp									\
 
 GRAPHICALS_SFML		=	Libraries/SFML/SFML.cpp									\
+						Abstract/ADisplay.cpp									\
 
 OBJ_CORE			=	$(CORE_SRC:.cpp=.o)
 
@@ -53,28 +59,34 @@ INCLUDE_CORE		=	-I./Core/												\
 						-I./DLLoarder/											\
 
 INCLUDE_MENU		=	-I./Menu												\
+						-I./Abstract/											\
 						-I./Interface/											\
 
 INCLUDE_NIBBLER		=	-I./Interface/											\
+						-I./Abstract/											\
 						-I./Games/Nibbler/										\
 
 INCLUDE_SNAKE		=	-I./Interface/											\
+						-I./Abstract/											\
 						-I./Games/Snake/										\
 
 INCLUDE_NCURSES		=	-I./Interface/											\
+						-I./Abstract/											\
 						-I./Libraries/NCurses/									\
 
 INCLUDE_SDL2		=	-I./Interface/											\
+						-I./Abstract/											\
 						-I./Libraries/SDL2/										\
 
 INCLUDE_SFML		=	-I./Interface/											\
+						-I./Abstract/											\
 						-I./Libraries/SFML/										\
 
 FLAGS				=	-g3 -Wall -Wextra -Werror
 
 FLAGS_NCURSES		=	-Wall -Wextra -lncurses
 
-FLAGS_SDL2			=	-Wall -Wextra -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer
+FLAGS_SDL2			=	-Wall -Wextra -lSDL2 -lSDL2_image -lSDL2_ttf
 
 FLAGS_SFML			=	-Wall -Wextra -lsfml-graphics -lsfml-window -lsfml-system
 
@@ -84,36 +96,30 @@ core: 					$(OBJ_CORE)
 						g++ -o $(NAME) $(OBJ_CORE) $(INCLUDE_CORE) $(FLAGS)
 
 lib_ncurses:
-						g++ -o ./lib/Ncurses.o -c -fpic $(FLAGS_NCURSES)		\
-						$(GRAPHICALS_NCURSES) &&								\
-						g++ -shared -o $(LIB_NAME)ncurses.so ./lib/Ncurses.o	\
+						g++ -shared -o $(LIB_NAME)ncurses.so -fpic				\
+						$(FLAGS_NCURSES) $(GRAPHICALS_NCURSES)
 
 lib_sdl2:
-						g++ -o ./lib/SDL2.o -c -fpic $(FLAGS_SDL2)				\
-						$(GRAPHICALS_SDL2) &&									\
-						g++ -shared -o $(LIB_NAME)sdl2.so ./lib/SDL2.o			\
+						g++ -shared -o $(LIB_NAME)sdl2.so -fpic					\
+						$(FLAGS_SDL2) $(GRAPHICALS_SDL2)
 
 lib_sfml:
-						g++ -o ./lib/SFML.o -c -fpic ${FLAGS_SFML}				\
-						$(GRAPHICALS_SFML) &&									\
-						g++ -shared -o $(LIB_NAME)sfml.so ./lib/SFML.o			\
+						g++ -shared -o $(LIB_NAME)sfml.so -fpic					\
+						${FLAGS_SFML} $(GRAPHICALS_SFML)
 
 graphicals: 			lib_ncurses lib_sfml lib_sdl2
 
 menu:
-						g++ -o ./lib/Menu.o -c -fpic $(FLAGS)					\
-						$(GAMES_MENU) &&										\
-						g++ -shared -o $(LIB_NAME)menu.so ./lib/Menu.o			\
+						g++ -shared -o $(LIB_NAME)menu.so -fpic					\
+						$(FLAGS) $(GAMES_MENU)
 
 snake:
-						g++ -o ./lib/Snake.o -c -fpic $(FLAGS)					\
-						$(GAMES_SNAKE) &&										\
-						g++ -shared -o $(LIB_NAME)snake.so ./lib/Snake.o		\
+						g++ -shared -o $(LIB_NAME)snake.so -fpic				\
+						$(FLAGS) $(GAMES_SNAKE)
 
 nibbler:
-						g++ -o ./lib/Nibbler.o -c -fpic $(FLAGS)				\
-						$(GAMES_NIBBLER) &&										\
-						g++ -shared -o $(LIB_NAME)nibbler.so ./lib/Nibbler.o	\
+						g++ -shared -o $(LIB_NAME)nibbler.so -fpic				\
+						$(FLAGS) $(GAMES_NIBBLER)
 
 games: 					menu snake nibbler
 
@@ -126,10 +132,10 @@ clean:
 						rm -f $(OBJ_NIBBLER)
 						rm -f $(OBJ_SNAKE)
 						rm -f ./lib/*.o
-						rm -f ./lib/*.so
 
 fclean: 				clean
 						rm -f $(NAME)
+						rm -f ./lib/*.so
 
 re: 					fclean all $(NAME)
 

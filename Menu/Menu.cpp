@@ -12,7 +12,7 @@ namespace Arcade {
     {
         std::string path = "./lib";
         for (const auto & entry : std::filesystem::directory_iterator(path)) {
-            if (entry.path() == "./lib/lib_arcade_sfmlo.so" || entry.path() == "./lib/lib_arcade_ncurse.so" || entry.path() == "./lib/lib_arcade_opengl.so") {
+            if (entry.path() == "./lib/arcade_sfml.so" || entry.path() == "./lib/arcade_ncurses.so" || entry.path() == "./lib/arcade_opengl.so") {
                  _liblist.push_back(entry.path());
             } else {
                 _gamelist.push_back(entry.path());
@@ -34,6 +34,31 @@ namespace Arcade {
         return false;
     }
 
+    const std::vector<Drawable> &Menu::getDrawable()
+    {
+        return _drawable;
+    }
+
+    const std::map<char, std::string> &Menu::getAssets()
+    {
+        return _assets;
+    }
+
+    const std::vector<DrawableText> &Menu::getDrawableText()
+    {
+        return _drawableText;
+    }
+
+    Arcade::EventType Menu::getDirection()
+    {
+        return _event;
+    }
+
+    void Menu::setIsRunning(bool isRunning)
+    {
+        _isRunning = isRunning;
+    }
+
     std::vector <std::string> Menu::getLib()
     {
         return _liblist;
@@ -42,5 +67,10 @@ namespace Arcade {
     std::vector <std::string> Menu::getGame()
     {
         return _gamelist;
+    }
+
+    extern "C" IGame *entryPoint()
+    {
+        return new Menu();
     }
 }
