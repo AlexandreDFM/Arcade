@@ -8,21 +8,31 @@
 #include "Core.hpp"
 
 namespace Arcade {
-    Core::Core()
-    {
+    Core::Core() {
     }
 
-    Core::~Core()
-    {
+    Core::Core(std::string lib) {
+        DLLoader Dll(lib);
+        this->setGraphic(Dll.getFunction<IDisplay>("create"));
+        DLLoader Game("./lib/arcade_menu.so");
+        this->setGame(Game.getFunction<IGame>("create"));
     }
 
-    void Core::loop()
-    {
-        while (true) {
-    //        display->clear();
-    //        display->draw(game->getMap());
-    //        display->display();
-    //        game->update(display->getEvent());
-        }
+    Core::Core(std::string lib, std::string game) {
+        DLLoader dll(lib);
+        this->setGraphic(dll.getFunction<IDisplay>("entryPoint"));
+        DLLoader dll2(game);
+        this->setGame(dll2.getFunction<IGame>("entryPoint"));
+    }
+
+    Core::~Core() {
+    }
+
+    void Core::setGraphic(IDisplay *graphic) {
+        this->graphic = graphic;
+    }
+
+    void Core::setGame(IGame *game) {
+        this->game = game;
     }
 }

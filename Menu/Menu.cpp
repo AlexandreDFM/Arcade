@@ -20,26 +20,18 @@ namespace Arcade {
         }
     }
 
-    int Menu::handleEvent(int event)
+    void Menu::update(Arcade::EventType event)
     {
-        return 0;
+        (void) event;
     }
 
-    void Menu::update()
-    {
-    }
-
-    void Menu::setIsRunning()
+    void Menu::close()
     {
     }
 
     bool Menu::isRunning()
     {
         return false;
-    }
-
-    void Menu::close()
-    {
     }
 
     std::vector <std::string> Menu::getLib()

@@ -10,23 +10,20 @@
 namespace Arcade {
     AGame::AGame()
     {
+        _isRunning = true;
+        _event = Arcade::EventType::NOTHING;
     }
 
     void AGame::init()
     {
     }
 
-    void AGame::update()
+    void AGame::update(Arcade::EventType event)
     {
     }
 
     void AGame::close()
     {
-    }
-
-    int AGame::handleEvent(int event)
-    {
-        return 0;
     }
 
     bool AGame::isRunning()
@@ -49,7 +46,13 @@ namespace Arcade {
         return _drawableText;
     }
 
-    void AGame::setIsRunning()
+    Arcade::EventType AGame::getDirection()
     {
+        return _event;
+    }
+
+    void AGame::setIsRunning(bool isRunning)
+    {
+        _isRunning = isRunning;
     }
 }

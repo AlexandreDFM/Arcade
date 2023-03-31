@@ -15,17 +15,12 @@ namespace Arcade {
         public:
             //////////////////////// Functions ////////////////////////
             void init() override;
-            void update() override;
+            void update(Arcade::EventType event) override;
             void close() override;
             //////////////////////// Getters //////////////////////////
-            void setIsRunning() override;
+            bool isRunning() override;
             std::vector <std::string> getLib() ;
             std::vector <std::string> getGame();
-            const std::map<char, std::string> &getassets();
-            //////////////////////// Setters //////////////////////////
-            bool isRunning() override;
-            //////////////////////// Drawers //////////////////////////
-            int handleEvent(int event) override;
         private:
             std::vector <std::string> _liblist;
             std::vector <std::string> _gamelist;

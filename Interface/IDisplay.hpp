@@ -10,19 +10,25 @@
 
     #include "Struct.hpp"
 
+#include <ios>
+#include <iostream>
+#include <vector>
+#include <map>
+#include "Struct.hpp"
+
 namespace Arcade {
     class IDisplay {
-        public:
-            virtual ~IDisplay() = default;
-            //////////////////////// Functions ////////////////////////
-            virtual void init() = 0;
-            virtual void update() = 0;
-            virtual void close() = 0;
-            virtual void display(std::vector<Drawable>) = 0;
-            virtual void display(std::vector<DrawableText>) = 0;
-            //////////////////////// Getters //////////////////////////
-            virtual int getEvent() = 0;
-            //////////////////////// Setters //////////////////////////
+    public:
+        virtual ~IDisplay() = default;
+        //////////////////////// Functions ////////////////////////
+        virtual void init(const std::map<char, std::string>& gameAssets) = 0;
+        virtual void update() = 0;
+        virtual void close() = 0;
+        virtual void display(std::vector<Drawable>) = 0;
+        virtual void display(std::vector<DrawableText>) = 0;
+        //////////////////////// Getters //////////////////////////
+        virtual Arcade::EventType getEvent() = 0;
+        //////////////////////// Setters //////////////////////////
     };
 }
 

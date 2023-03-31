@@ -6,3 +6,10 @@
 */
 
 #include "Nibbler.hpp"
+
+namespace Arcade {
+    extern "C" IGame *entryPoint()
+    {
+        return new NibblerGame();
+    }
+}

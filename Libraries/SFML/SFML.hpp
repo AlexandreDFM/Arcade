@@ -15,16 +15,20 @@ namespace Arcade {
     class SFML : public ADisplay {
         public:
             SFML();
-            void init() override;
-            int getEvent() override;
+            ~SFML() override = default;
+            void init(const std::map<char, std::string> &gameAssets) override;
+            Arcade::EventType getEvent() override;
             void update() override;
             void close() override;
-            ~SFML() override;
+            void display(std::vector<Drawable>) override;
+            void display(std::vector<DrawableText>) override;
         private:
             sf::RenderWindow *window;
+            sf::Sprite sprite;
             sf::Event event;
             sf::Text text;
             sf::Font font;
+            std::vector<std::map<char, sf::Sprite>> _spriteAssets;
     };
 }
 

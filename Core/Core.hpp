@@ -10,15 +10,23 @@
 
     #include "../Interface/IGame.hpp"
     #include "../Interface/IDisplay.hpp"
+    #include "../DLLoader/DLLoader.hpp"
 
 namespace Arcade {
     class Core {
         public:
+            //////////////////////// Constructor ////////////////////////
             Core();
+            Core(std::string lib);
+            Core(std::string lib, std::string game);
             ~Core();
+            //////////////////////// Setter ////////////////////////
+            void setGraphic(IDisplay *graphic);
+            void setGame(IGame *game);
+            //////////////////////// Functions ////////////////////////
             void loop();
         private:
-            IDisplay *display;
+            IDisplay *graphic;
             IGame *game;
     };
 }
