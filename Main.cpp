@@ -14,6 +14,6 @@ int main(int argc, char **argv)
     if (argc == 2 && std::string(argv[1]) == "-h") {
         Usage::DisplayUsage(); return 0;
     }
-    Arcade::Core core = Arcade::Core("./lib/arcade_sfml.so");
+    Arcade::Core core = Arcade::Core(argv[1]);
     core.loop();
 }

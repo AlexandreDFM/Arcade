@@ -44,12 +44,12 @@ namespace Arcade {
 
     void Core::loop()
     {
-//        this->init();
+        this->graphic->init(this->game->getAssets());
         while (this->game->isRunning()) {
-//            this->graphic->clear();
-//            this->graphic->draw(this->game->getMap());
-//            this->graphic->display();
-//            this->game->update(this->graphic->getEvent());
+           this->graphic->clear();
+           this->game->update(this->graphic->getEvent());
+           this->graphic->update();
+           this->graphic->display(this->game->getDrawable());
         }
     }
 }
