@@ -17,6 +17,7 @@ namespace Arcade {
             ~SnakeGame() override = default;
             void init() override;
             void update(EventType key) override;
+            void placeApple();
             const std::vector<Drawable> &getDrawable() override;
             const std::vector<DrawableText> &getDrawableText() override;
             const std::map<char, std::string> &getAssets() override;
@@ -24,6 +25,7 @@ namespace Arcade {
             void close() override;
         private:
             int _score;
+            int _highScore;
             Drawable _apple;
             EventType _event;
             EventType _direction;

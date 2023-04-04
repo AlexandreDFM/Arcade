@@ -33,7 +33,7 @@ namespace Arcade {
 
     EventType SFML::getEvent() {
         while (this->window->pollEvent(this->event)) {
-            if (this->event.type == sf::Event::Closed) this->window->close();
+            if (this->event.type == sf::Event::Closed) return EventType::CLOSE;
             if (this->event.type == sf::Event::KeyPressed) {
                 switch (this->event.key.code) {
                     case sf::Keyboard::Escape: return EventType::CLOSE;
@@ -71,7 +71,7 @@ namespace Arcade {
         if (drawables.empty()) return;
         for (auto &drawable : drawables) {
             this->text.setString(drawable.text);
-            this->text.setPosition({(float) drawable.x, (float) drawable.y});
+            this->text.setPosition({(float) drawable.x * 40, (float) drawable.y * 40});
             this->window->draw(this->text);
         }
     }

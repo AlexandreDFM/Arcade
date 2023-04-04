@@ -53,11 +53,11 @@ namespace Arcade {
            this->graphic->display(this->game->getDrawable());
            this->graphic->display(this->game->getDrawableText());
            this->game->update(this->graphic->getEvent());
+           if (!this->game->isRunning()) break;
            this->graphic->update();
            this->graphic->clear();
         }
         std::cout << "Game closed" << std::endl;
         this->graphic->close();
-//        this->game->close();
     }
 }
