@@ -16,20 +16,22 @@ namespace Arcade {
             SnakeGame();
             ~SnakeGame() override = default;
             void init() override;
+            void update(EventType key) override;
             const std::vector<Drawable> &getDrawable() override;
+            const std::vector<DrawableText> &getDrawableText() override;
             const std::map<char, std::string> &getAssets() override;
-            void update(EventType key);
             Arcade::EventType getDirection() override;
             void close() override;
         private:
-            std::map<char, std::string> _assets;
-            std::vector<Drawable> _snake;
-            std::vector<Drawable> _all;
-            std::vector<Drawable> _wall;
+            int _score;
             Drawable _apple;
             EventType _event;
             EventType _direction;
-            int _score;
+            std::vector<Drawable> _all;
+            std::vector<Drawable> _wall;
+            std::vector<Drawable> _snake;
+            std::vector<DrawableText> _text;
+            std::map<char, std::string> _assets;
     };
 }
 #endif /*SNAKEGAME_HPP_*/
