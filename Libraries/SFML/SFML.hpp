@@ -15,6 +15,12 @@
 #include <SFML/Graphics.hpp>
 
 namespace Arcade {
+
+    struct SFMLSprite {
+        sf::Texture texture;
+        sf::Sprite sprite;
+    };
+
     class SFML : public ADisplay {
         public:
             SFML();
@@ -22,6 +28,7 @@ namespace Arcade {
             void init(const std::map<char, std::string> &gameAssets) override;
             Arcade::EventType getEvent() override;
             void update() override;
+            void clear() override;
             void close() override;
             void display(std::vector<Drawable>) override;
             void display(std::vector<DrawableText>) override;
@@ -31,7 +38,7 @@ namespace Arcade {
             sf::Event event;
             sf::Text text;
             sf::Font font;
-            std::vector<std::map<char, sf::Sprite>> _spriteAssets;
+            std::map<char, SFMLSprite> _spriteAssets;
     };
 }
 
