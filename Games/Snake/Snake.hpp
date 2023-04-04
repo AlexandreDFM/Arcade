@@ -16,7 +16,7 @@ namespace Arcade {
             SnakeGame();
             ~SnakeGame() override = default;
             void init() override;
-            void update(EventType key) override;
+            void update(EventType event) override;
             void placeApple();
             const std::vector<Drawable> &getDrawable() override;
             const std::vector<DrawableText> &getDrawableText() override;

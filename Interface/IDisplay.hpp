@@ -8,13 +8,11 @@
 #ifndef ARKADE_IGRAPHIC_HPP
     #define ARKADE_IGRAPHIC_HPP
 
+    #include <ios>
+    #include <map>
+    #include <vector>
+    #include <iostream>
     #include "Struct.hpp"
-
-#include <ios>
-#include <iostream>
-#include <vector>
-#include <map>
-#include "Struct.hpp"
 
 namespace Arcade {
     class IDisplay {

@@ -44,7 +44,7 @@ namespace Arcade {
             exit(84);
         }
         // Create font
-        _font = TTF_OpenFont("Assets/Fonts/arial.ttf", 24);
+        _font = TTF_OpenFont("./Assets/Police/Poppins-Black.ttf", 24);
         if (_font == nullptr) {
             std::cerr << "Font could not be created! SDL_ttf Error: " << TTF_GetError() << std::endl;
             exit(84);

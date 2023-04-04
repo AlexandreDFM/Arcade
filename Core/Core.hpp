@@ -9,8 +9,8 @@
     #define CORE_HPP_
 
     #include "../Interface/IGame.hpp"
-    #include "../Interface/IDisplay.hpp"
     #include "../DLLoader/DLLoader.hpp"
+    #include "../Interface/IDisplay.hpp"
 
 namespace Arcade {
     class Core {

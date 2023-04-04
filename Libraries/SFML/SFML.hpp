@@ -8,11 +8,10 @@
 #ifndef SFML_HPP_
     #define SFML_HPP_
 
+    #include <SFML/System.hpp>
+    #include <SFML/Window.hpp>
     #include <SFML/Graphics.hpp>
     #include "../../Abstract/ADisplay.hpp"
-
-#include <iostream>
-#include <SFML/Graphics.hpp>
 
 namespace Arcade {
 

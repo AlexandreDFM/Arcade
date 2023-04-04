@@ -142,9 +142,9 @@ namespace Arcade {
         }
     }
 
-    void SnakeGame::update(EventType key)
+    void SnakeGame::update(EventType event)
     {
-        switch (key) {
+        switch (event) {
             case EventType::LEFT:
                 if (this->_direction != EventType::RIGHT)   this->_direction = EventType::LEFT;
                 break;

@@ -8,7 +8,9 @@
 #ifndef MENU_HPP_
     #define MENU_HPP_
 
-    #include "../Abstract/AGame.hpp"
+    #include "../../Abstract/AGame.hpp"
+    #include "../../DLLoader/DLLoader.hpp"
+    #include "../../Interface/IDisplay.hpp"
 
 namespace Arcade {
     class Menu : virtual public AGame {
@@ -23,13 +25,10 @@ namespace Arcade {
             const std::map<char, std::string> &getAssets() override;
             const std::vector<DrawableText> &getDrawableText() override;
             Arcade::EventType getDirection() override;
-            std::vector <std::string> getLib();
-            std::vector <std::string> getGame();
+//            std::vector <std::string> getLib();
+//            std::vector <std::string> getGame();
             //////////////////////// Setters //////////////////////////
             void setIsRunning(bool isRunning) override;
-        private:
-            std::vector <std::string> _liblist;
-            std::vector <std::string> _gamelist;
     };
 }
 
