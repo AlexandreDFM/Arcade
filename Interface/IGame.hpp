@@ -8,9 +8,10 @@
 #ifndef ARKADE_IGAME_HPP
     #define ARKADE_IGAME_HPP
 
-#include <map>
-#include <vector>
-#include "Struct.hpp"
+    #include <map>
+    #include <vector>
+    #include <chrono>
+    #include "Struct.hpp"
 
 namespace Arcade {
     class IGame {

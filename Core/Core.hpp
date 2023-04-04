@@ -28,6 +28,8 @@ namespace Arcade {
         private:
             IDisplay *graphic;
             IGame *game;
+            DLLoader *gameDll;
+            DLLoader *graphicDll;
     };
 }
 

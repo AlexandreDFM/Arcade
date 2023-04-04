@@ -14,10 +14,10 @@ namespace Arcade {
 
     Core::Core(std::string lib)
     {
-        DLLoader Dll(lib);
-        this->setGraphic(Dll.getFunction<IDisplay>("entryPoint"));
-        DLLoader Game("./lib/arcade_menu.so");
-        this->setGame(Game.getFunction<IGame>("entryPoint"));
+        this->graphicDll = new DLLoader(lib);
+        this->setGraphic(this->graphicDll->getFunction<IDisplay>("entryPoint"));
+        this->gameDll = new DLLoader("./lib/arcade_snake.so");
+        this->setGame(this->gameDll->getFunction<IGame>("entryPoint"));
     }
 
     Core::Core(std::string lib, std::string game)
@@ -44,12 +44,20 @@ namespace Arcade {
 
     void Core::loop()
     {
+        std::cout << "Loop" << std::endl;
+        this->game->init();
+        std::cout << "Game loaded" << std::endl;
         this->graphic->init(this->game->getAssets());
+        std::cout << "Assets loaded" << std::endl;
         while (this->game->isRunning()) {
-           this->graphic->clear();
+           this->graphic->display(this->game->getDrawable());
+           this->graphic->display(this->game->getDrawableText());
            this->game->update(this->graphic->getEvent());
            this->graphic->update();
-           this->graphic->display(this->game->getDrawable());
+           this->graphic->clear();
         }
+        std::cout << "Game closed" << std::endl;
+        this->graphic->close();
+//        this->game->close();
     }
 }

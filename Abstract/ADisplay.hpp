@@ -18,15 +18,13 @@ namespace Arcade {
             //////////////////////// Functions ////////////////////////
             void init(const std::map<char, std::string>& gameAssets) override;
             void update() override;
+            void clear() override;
             void close() override;
             void display(std::vector<Drawable> drawables) override;
             void display(std::vector<DrawableText> drawables) override;
             //////////////////////// Getters //////////////////////////
             Arcade::EventType getEvent() override;
             //////////////////////// Setters //////////////////////////
-        protected:
-            bool _isRunning;
-            std::map<char, std::string> _assets;
     };
 }
 

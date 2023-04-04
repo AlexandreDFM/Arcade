@@ -10,7 +10,6 @@
 namespace Arcade {
     ADisplay::ADisplay()
     {
-        this->_isRunning = true;
         std::cout << "DisplayModuleA created" << std::endl;
     }
 
@@ -22,7 +21,6 @@ namespace Arcade {
     void ADisplay::init(const std::map<char, std::string>& gameAssets)
     {
         (void) gameAssets;
-        this->_isRunning = true;
         std::cout << "DisplayModuleA initialized" << std::endl;
     }
 
@@ -31,9 +29,13 @@ namespace Arcade {
         std::cout << "DisplayModuleA updated" << std::endl;
     }
 
+    void ADisplay::clear()
+    {
+        std::cout << "DisplayModuleA cleared" << std::endl;
+    }
+
     void ADisplay::close()
     {
-        this->_isRunning = false;
         std::cout << "DisplayModuleA initialized" << std::endl;
     }
 
