@@ -14,21 +14,26 @@ namespace Arcade {
     class NibblerGame : virtual public AGame {
         public:
             NibblerGame();
-            void init();
-            const std::vector<Drawable> &getDrawable();
-            const std::map<char, std::string> &getAssets();
-            void update(EventType key);
-            void close();
-            ~NibblerGame();
+            ~NibblerGame() override = default;
+            void init() override;
+            void update(EventType key) override;
+            void placeApple();
+            const std::vector<Drawable> &getDrawable() override;
+            const std::vector<DrawableText> &getDrawableText() override;
+            const std::map<char, std::string> &getAssets() override;
+            Arcade::EventType getDirection() override;
+            void close() override;
         private:
-            std::map<char, std::string> _assets;
-            std::vector<Drawable> _snake;
-            std::vector<Drawable> _all;
-            std::vector<Drawable> _wall;
+            int _score;
+            int _highScore;
             Drawable _apple;
             EventType _event;
             EventType _direction;
-            int _score;
+            std::vector<Drawable> _all;
+            std::vector<Drawable> _wall;
+            std::vector<Drawable> _snake;
+            std::vector<DrawableText> _text;
+            std::map<char, std::string> _assets;
     };
 }
 
