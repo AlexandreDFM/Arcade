@@ -16,7 +16,7 @@ namespace Arcade {
     {
         this->graphicDll = new DLLoader(lib);
         this->setGraphic(this->graphicDll->getFunction<IDisplay>("entryPoint"));
-        this->gameDll = new DLLoader("./lib/arcade_snake.so");
+        this->gameDll = new DLLoader("./lib/arcade_nibbler.so");
         this->setGame(this->gameDll->getFunction<IGame>("entryPoint"));
     }
 
@@ -51,7 +51,7 @@ namespace Arcade {
            this->graphic->display(this->game->getDrawableText());
            Arcade::EventType eventkey = this->graphic->getEvent();
            this->game->update(eventkey);
-           this->changeLib(eventkey);
+           this->setChangeLib(eventkey);
            if (!this->game->isRunning()) break;
            this->graphic->update();
            this->graphic->clear();
@@ -59,17 +59,21 @@ namespace Arcade {
         this->graphic->close();
     }
 
-    
-    void Core::changeLib(EventType event)
+    void Core::setChangeLib(EventType event)
     {
         if (event == EventType::LIBNEXT)
-        {
-            std::cout << "NEXT" << std::endl;
-            this->graphic->close();
-            this->graphicDll->~DLLoader();
-            this->graphicDll = new DLLoader("./lib/arcade_sdl2.so");
-            this->setGraphic(this->graphicDll->getFunction<IDisplay>("entryPoint"));
-            this->graphic->init(this->game->getAssets());
-        }
+            this->changeLib("./lib/arcade_sfml.so");
+        else if (event == EventType::LIBPREV)
+            this->changeLib("./lib/arcade_ncurses.so");
+    }
+
+    void Core::changeLib(std::string lib)
+    {
+        std::cout << "NEXT" << std::endl;
+        this->graphic->close();
+        this->graphicDll->~DLLoader();
+        this->graphicDll = new DLLoader(lib);
+        this->setGraphic(this->graphicDll->getFunction<IDisplay>("entryPoint"));
+        this->graphic->init(this->game->getAssets());
     }
 }

@@ -23,9 +23,10 @@ namespace Arcade {
             //////////////////////// Setter ////////////////////////
             void setGraphic(IDisplay *graphic);
             void setGame(IGame *game);
+            void setChangeLib(EventType event);
             //////////////////////// Functions ////////////////////////
             void loop();
-            void changeLib(EventType event);
+            void changeLib(std::string lib);
         private:
             IDisplay *graphic;
             IGame *game;

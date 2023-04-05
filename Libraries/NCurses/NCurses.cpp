@@ -13,19 +13,25 @@ namespace Arcade {
         this->window = nullptr;
     }
 
-    void NCurses::init(const std::map<char, std::string>& gameAssets)
+    void NCurses::init(const std::map<char, std::string> &gameAssets)
     {
         (void) gameAssets;
         this->window = initscr();
-        cbreak();
-        noecho();
-        keypad(this->window, TRUE);
-        curs_set(0);
         nodelay(this->window, TRUE);
+    // if (!newterm(NULL, stderr, stdin)) {
+    //     printw("Error opening new terminal.");
+    //     refresh();
+    //     endwin();
+    // }
     }
 
     void NCurses::update()
     {
+        static auto start = std::chrono::steady_clock::now();
+        auto end = std::chrono::steady_clock::now();
+        std::chrono::duration<double> elapsed_seconds = end - start;
+        if (elapsed_seconds.count() > 0.1) start = std::chrono::steady_clock::now();
+        else return;
         wrefresh(this->window);
         wclear(this->window);
     }
@@ -38,9 +44,10 @@ namespace Arcade {
     void NCurses::display(std::vector<Drawable> drawables)
     {
         (void) drawables;
-        // TODO
+        for (auto &drawable : drawables) {
+                mvwprintw(this->window, drawable.y, drawable.x, "%c", drawable.draw);
+            }
     }
-
     void NCurses::display(std::vector<DrawableText> drawables)
     {
         (void) drawables;
@@ -49,15 +56,20 @@ namespace Arcade {
 
     Arcade::EventType NCurses::getEvent()
     {
-        int ch = getch();
-        if (ch == KEY_UP)
+
+        int ch = wgetch(this->window);
+        if (ch == 'z')
             return Arcade::EventType::UP;
-        if (ch == KEY_DOWN)
+        if (ch == 's')
             return Arcade::EventType::DOWN;
-        if (ch == KEY_LEFT)
+        if (ch == 'q')
             return Arcade::EventType::LEFT;
-        if (ch == KEY_RIGHT)
+        if (ch == 'd')
             return Arcade::EventType::RIGHT;
+        if (ch == 'm')
+            return Arcade::EventType::LIBNEXT;
+        if (ch == 'o')
+            return Arcade::EventType::LIBPREV;
 //        if (ch == 10)
 //            return Arcade::EventType::ENTER;
 //        if (ch == 27)

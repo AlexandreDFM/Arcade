@@ -10,28 +10,28 @@
 namespace Arcade {
     ADisplay::ADisplay()
     {
-        std::cout << "DisplayModuleA created" << std::endl;
+        // std::cout << "DisplayModuleA created" << std::endl;
     }
 
     ADisplay::~ADisplay()
     {
-        std::cout << "DisplayModuleA destroyed" << std::endl;
+        // std::cout << "DisplayModuleA destroyed" << std::endl;
     }
 
     void ADisplay::init(const std::map<char, std::string>& gameAssets)
     {
         (void) gameAssets;
-        std::cout << "DisplayModuleA initialized" << std::endl;
+        // std::cout << "DisplayModuleA initialized" << std::endl;
     }
 
     void ADisplay::update()
     {
-        std::cout << "DisplayModuleA updated" << std::endl;
+        // std::cout << "DisplayModuleA updated" << std::endl;
     }
 
     void ADisplay::clear()
     {
-        std::cout << "DisplayModuleA cleared" << std::endl;
+        //std::cout << "DisplayModuleA cleared" << std::endl;
     }
 
     void ADisplay::close()
