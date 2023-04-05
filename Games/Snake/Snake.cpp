@@ -24,6 +24,7 @@ namespace Arcade {
         // Set Variables
         this->_score = 0;
         this->_highScore = 0;
+        this->_isRunning = true;
         this->_event = EventType::NOTHING;
         this->_direction = EventType::NOTHING;
 
@@ -58,10 +59,7 @@ namespace Arcade {
         this->_snake.push_back({ 10, 12, BLACK, 'b'});
         this->_snake.push_back({ 9, 12, BLACK, 't'});
 
-        std::cout << "Snake Init Enter" << std::endl;
         this->placeApple();
-
-        std::cout << "Snake Init Leave" << std::endl;
     }
 
     const std::vector<Drawable> &SnakeGame::getDrawable()
@@ -99,10 +97,6 @@ namespace Arcade {
                 appleCoord.insert({y, x});
             }
         }
-        std::cout << "First Coords Prints" << std::endl;
-        for (auto &i : appleCoord) {
-            std::cout << i.second << " " << i.first << std::endl;
-        }
         for (auto &i : this->_snake) {
             for (auto &j : appleCoord) {
                 if (i.x == j.first && i.y == j.second) {
@@ -119,17 +113,12 @@ namespace Arcade {
                 }
             }
         }
-        std::cout << "Second Coords Prints" << std::endl;
-        for (auto &i : appleCoord) {
-            std::cout << i.second << " " << i.first << std::endl;
-        }
 
         if (appleCoord.empty()) {
             _apple = { 1, 1, RED, 'a' };
             this->_apple.x = 1; this->_apple.y = 1; this->_apple.draw = 'a';
         } else {
             int appleCoordIndex = (rand() % appleCoord.size());
-            std::cout << appleCoordIndex << std::endl;
             for (auto &i : appleCoord) {
                 if (appleCoordIndex == 0) {
                     this->_apple.x = i.second;
@@ -145,6 +134,13 @@ namespace Arcade {
     void SnakeGame::update(EventType event)
     {
         switch (event) {
+            case EventType::CLOSE:
+                this->close();
+                return;
+            case EventType::RESTART:
+                this->close();
+                this->init();
+                return;
             case EventType::LEFT:
                 if (this->_direction != EventType::RIGHT)   this->_direction = EventType::LEFT;
                 break;
@@ -211,7 +207,6 @@ namespace Arcade {
                     break;
                 default: break;
             }
-            std::cout << "Snake Resized" << std::endl;
             this->placeApple();
             this->_score += 1;
         }
@@ -240,8 +235,11 @@ namespace Arcade {
     extern "C" {
         IGame *entryPoint()
         {
-            std::cout << "Snake entryPoint" << std::endl;
             return new SnakeGame();
+        }
+        char *getType()
+        {
+            return (char *) "Game";
         }
     }
 }

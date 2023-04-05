@@ -16,8 +16,7 @@
 namespace Arcade {
 
     enum Color {
-        EMPTY,
-        BLACK,
+        BLACK = 1,
         RED,
         GREEN,
         BLUE,

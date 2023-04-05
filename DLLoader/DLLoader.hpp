@@ -53,5 +53,3 @@ class DLLoader {
 };
 
 #endif // DLL_LOADER_HPP
-
-// IGraphic *g = dll.getInstance<IGraphic*>("create");

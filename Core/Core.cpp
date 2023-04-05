@@ -44,11 +44,8 @@ namespace Arcade {
 
     void Core::loop()
     {
-        std::cout << "Loop" << std::endl;
         this->game->init();
-        std::cout << "Game loaded" << std::endl;
         this->graphic->init(this->game->getAssets());
-        std::cout << "Assets loaded" << std::endl;
         while (this->game->isRunning()) {
            this->graphic->display(this->game->getDrawable());
            this->graphic->display(this->game->getDrawableText());
@@ -57,7 +54,6 @@ namespace Arcade {
            this->graphic->update();
            this->graphic->clear();
         }
-        std::cout << "Game closed" << std::endl;
         this->graphic->close();
     }
 }

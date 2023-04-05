@@ -33,7 +33,9 @@ namespace Arcade {
 
     EventType SFML::getEvent() {
         while (this->window->pollEvent(this->event)) {
-            if (this->event.type == sf::Event::Closed) return EventType::CLOSE;
+            if (this->event.type == sf::Event::Closed) {
+                return EventType::CLOSE;
+            }
             if (this->event.type == sf::Event::KeyPressed) {
                 switch (this->event.key.code) {
                     case sf::Keyboard::Escape: return EventType::CLOSE;
@@ -71,6 +73,15 @@ namespace Arcade {
         if (drawables.empty()) return;
         for (auto &drawable : drawables) {
             this->text.setString(drawable.text);
+            switch (drawable.color) {
+                case Color::RED:    this->text.setFillColor(sf::Color::Red);    break;
+                case Color::BLUE:   this->text.setFillColor(sf::Color::Blue);   break;
+                case Color::BLACK:  this->text.setFillColor(sf::Color::Black);  break;
+                case Color::WHITE:  this->text.setFillColor(sf::Color::White);  break;
+                case Color::GREEN:  this->text.setFillColor(sf::Color::Green);  break;
+//                case Color::YELLOW: this->text.setFillColor(sf::Color::Yellow); break;
+                default:            this->text.setFillColor(sf::Color::White);  break;
+            }
             this->text.setPosition({(float) drawable.x * 40, (float) drawable.y * 40});
             this->window->draw(this->text);
         }
@@ -97,6 +108,10 @@ namespace Arcade {
         ADisplay *entryPoint()
         {
             return new SFML();
+        }
+        char *getType()
+        {
+            return (char *) "Lib";
         }
     }
 }
