@@ -13,7 +13,7 @@
 namespace Arcade {
     NibblerGame::NibblerGame() : AGame()
     {
-        _apple = {0, 0, RED, 'a'};
+        _apple = {};
         _score = 0;
         _highScore = 0;
         _direction = EventType::NOTHING;
@@ -65,14 +65,14 @@ namespace Arcade {
 
         this->setMap(1);
 
-        this->_text.push_back({ 38, 7, 12, BLACK, "Score: " + std::to_string(this->_score), std::string("Poppins-Black")});
-        this->_text.push_back({ 38, 10, 12, BLACK, "HighScore: " + std::to_string(this->_highScore), std::string("Poppins-Black")});
+        this->_text.push_back({ 38, 7, 12, WHITE, "Score: " + std::to_string(this->_score), std::string("Poppins-Black")});
+        this->_text.push_back({ 38, 10, 12, WHITE, "HighScore: " + std::to_string(this->_highScore), std::string("Poppins-Black")});
 
-        this->_snake.push_back({ 25, 12, BLACK, 'h'});
-        this->_snake.push_back({ 24, 12, BLACK, 'b'});
-        this->_snake.push_back({ 23, 12, BLACK, 'b'});
-        this->_snake.push_back({ 22, 12, BLACK, 'b'});
-        this->_snake.push_back({ 21, 12, BLACK, 't'});
+        this->_snake.push_back({ 25, 12, WHITE, 'h'});
+        this->_snake.push_back({ 24, 12, WHITE, 'b'});
+        this->_snake.push_back({ 23, 12, WHITE, 'b'});
+        this->_snake.push_back({ 22, 12, WHITE, 'b'});
+        this->_snake.push_back({ 21, 12, WHITE, 't'});
     }
 
     const std::vector<Drawable> &NibblerGame::getDrawable()
@@ -106,59 +106,15 @@ namespace Arcade {
 
     void NibblerGame::placeApple()
     {
-//        for (auto &i : this->_snake) {
-//        std::map<int, int> appleCoord;
-//        for (int x = 6; x < 30; x++) {
-//            for (int y = 7; y < 20; y++) {
-//                appleCoord.insert({y, x});
-//            }
-//        }
-//        std::cout << "First Coords Prints" << std::endl;
-//        for (auto &i : appleCoord) {
-//            std::cout << i.second << " " << i.first << std::endl;
-//        }
-//        for (auto &i : this->_snake) {
-//            for (auto &j : appleCoord) {
-//                if (i.x == j.first && i.y == j.second) {
-//                    appleCoord.erase(j.first);
-//                    appleCoord.erase(j.second);
-//                }
-//            }
-//        }
-//        for (auto &i : this->_wall) {
-//            for (auto &j : appleCoord) {
-//                if (i.x == j.second && i.y == j.first) {
-//                    appleCoord.erase(j.first);
-//                    appleCoord.erase(j.second);
-//                }
-//            }
-//        }
-//        std::cout << "Second Coords Prints" << std::endl;
-//        for (auto &i : appleCoord) {
-//            std::cout << i.second << " " << i.first << std::endl;
-//        }
-//
-//        if (appleCoord.empty()) {
-//            _apple = { 1, 1, RED, 'a' };
-//            this->_apple.x = 1; this->_apple.y = 1; this->_apple.draw = 'a';
-//        } else {
-//            int appleCoordIndex = (rand() % appleCoord.size());
-//            std::cout << appleCoordIndex << std::endl;
-//            for (auto &i : appleCoord) {
-//                if (appleCoordIndex == 0) {
-//                    this->_apple.x = i.second;
-//                    this->_apple.y = i.first;
-//                    this->_apple.draw = 'a';
-//                    break;
-//                }
-//                appleCoordIndex--;
-//            }
-//        }
+
     }
 
     void NibblerGame::update(EventType event)
     {
         switch (event) {
+            case EventType::CLOSE:
+                this->_isRunning = false;
+                break;
             case EventType::LEFT:
                 if (this->_direction != EventType::RIGHT)   this->_direction = EventType::LEFT;
                 break;
@@ -229,9 +185,12 @@ namespace Arcade {
                 break;
             default: break;
         }
+        int index = 0;
         for (auto &i : this->_apples) {
             if (this->_snake[0].x == i.x && this->_snake[0].y == i.y) {
-                i = {0, 0, RED, 'a'};
+                // Remove i from _apples
+                this->_apples.erase(this->_apples.begin() + index);
+//                i = {0, 0, RED, 'a'};
                 switch (this->_direction) {
                     case EventType::UP:
                         this->_snake.push_back(
@@ -256,7 +215,6 @@ namespace Arcade {
                                 {this->_snake[this->_snake.size() - 1].x - 1,
                                  this->_snake[this->_snake.size() - 1].y, BLACK,
                                  'b'});
-                        break;
                     default:
                         break;
                 }
@@ -264,6 +222,7 @@ namespace Arcade {
                 this->placeApple();
                 this->_score += 1;
             }
+            index++;
         }
         for (auto it = this->_snake.begin() + 1; it != this->_snake.end(); it++) {
             if (this->_snake[0].x == it->x && this->_snake[0].y == it->y) {

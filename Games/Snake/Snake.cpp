@@ -37,27 +37,27 @@ namespace Arcade {
 
         // Place Background
         for (int x = 5; x < 31; x++) {
-            this->_wall.push_back({x, 5, BLACK, 'w'});
-            this->_wall.push_back({x, 20, BLACK, 'w'});
+            this->_wall.push_back({x, 5, WHITE, 'w'});
+            this->_wall.push_back({x, 20, WHITE, 'w'});
         }
 
         for (int y = 6; y < 20; y++) {
-            this->_wall.push_back({5, y, BLACK, 'w'});
-            this->_wall.push_back({30, y, BLACK, 'w'});
+            this->_wall.push_back({5, y, WHITE, 'w'});
+            this->_wall.push_back({30, y, WHITE, 'w'});
         }
 
-        this->_text.push_back({ 33, 7, 12, BLACK, "Score: " + std::to_string(this->_score), std::string("Poppins-Black")});
+        this->_text.push_back({ 33, 7, 12, WHITE, "Score: " + std::to_string(this->_score), std::string("Poppins-Black")});
 
-        this->_text.push_back({ 33, 10, 12, BLACK, "HighScore: " + std::to_string(this->_highScore), std::string("Poppins-Black")});
+        this->_text.push_back({ 33, 10, 12, WHITE, "HighScore: " + std::to_string(this->_highScore), std::string("Poppins-WHITE")});
 
 //        int snakeX = 5 + (rand() % 28 + 1);
 //        int snakeY = 6 + (rand() % 18 + 1);
 
-        this->_snake.push_back({ 13, 12, BLACK, 'h'});
-        this->_snake.push_back({ 12, 12, BLACK, 'b'});
-        this->_snake.push_back({ 11, 12, BLACK, 'b'});
-        this->_snake.push_back({ 10, 12, BLACK, 'b'});
-        this->_snake.push_back({ 9, 12, BLACK, 't'});
+        this->_snake.push_back({ 13, 12, WHITE, 'h'});
+        this->_snake.push_back({ 12, 12, WHITE, 'b'});
+        this->_snake.push_back({ 11, 12, WHITE, 'b'});
+        this->_snake.push_back({ 10, 12, WHITE, 'b'});
+        this->_snake.push_back({ 9, 12, WHITE, 't'});
 
         this->placeApple();
     }
@@ -194,16 +194,16 @@ namespace Arcade {
         if (this->_snake[0].x == this->_apple.x && this->_snake[0].y == this->_apple.y) {
             switch (this->_direction) {
                 case EventType::UP:
-                    this->_snake.push_back({this->_snake[this->_snake.size() - 1].x, this->_snake[this->_snake.size() - 1].y + 1, BLACK, 'b'});
+                    this->_snake.push_back({this->_snake[this->_snake.size() - 1].x, this->_snake[this->_snake.size() - 1].y + 1, WHITE, 'b'});
                     break;
                 case EventType::DOWN:
-                    this->_snake.push_back({this->_snake[this->_snake.size() - 1].x, this->_snake[this->_snake.size() - 1].y - 1, BLACK, 'b'});
+                    this->_snake.push_back({this->_snake[this->_snake.size() - 1].x, this->_snake[this->_snake.size() - 1].y - 1, WHITE, 'b'});
                     break;
                 case EventType::LEFT:
-                    this->_snake.push_back({this->_snake[this->_snake.size() - 1].x + 1, this->_snake[this->_snake.size() - 1].y, BLACK, 'b'});
+                    this->_snake.push_back({this->_snake[this->_snake.size() - 1].x + 1, this->_snake[this->_snake.size() - 1].y, WHITE, 'b'});
                     break;
                 case EventType::RIGHT:
-                    this->_snake.push_back({this->_snake[this->_snake.size() - 1].x - 1, this->_snake[this->_snake.size() - 1].y, BLACK, 'b'});
+                    this->_snake.push_back({this->_snake[this->_snake.size() - 1].x - 1, this->_snake[this->_snake.size() - 1].y, WHITE, 'b'});
                     break;
                 default: break;
             }
