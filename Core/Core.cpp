@@ -49,11 +49,27 @@ namespace Arcade {
         while (this->game->isRunning()) {
            this->graphic->display(this->game->getDrawable());
            this->graphic->display(this->game->getDrawableText());
-           this->game->update(this->graphic->getEvent());
+           Arcade::EventType eventkey = this->graphic->getEvent();
+           this->game->update(eventkey);
+           this->changeLib(eventkey);
            if (!this->game->isRunning()) break;
            this->graphic->update();
            this->graphic->clear();
         }
         this->graphic->close();
+    }
+
+    
+    void Core::changeLib(EventType event)
+    {
+        if (event == EventType::LIBNEXT)
+        {
+            std::cout << "NEXT" << std::endl;
+            this->graphic->close();
+            this->graphicDll->~DLLoader();
+            this->graphicDll = new DLLoader("./lib/arcade_sdl2.so");
+            this->setGraphic(this->graphicDll->getFunction<IDisplay>("entryPoint"));
+            this->graphic->init(this->game->getAssets());
+        }
     }
 }

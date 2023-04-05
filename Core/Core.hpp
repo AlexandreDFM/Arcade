@@ -25,6 +25,7 @@ namespace Arcade {
             void setGame(IGame *game);
             //////////////////////// Functions ////////////////////////
             void loop();
+            void changeLib(EventType event);
         private:
             IDisplay *graphic;
             IGame *game;
