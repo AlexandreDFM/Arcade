@@ -29,9 +29,9 @@ namespace Arcade {
             void close() override;
         private:
             int _score;
+            float _speed;
             int _highScore;
             Drawable _apple;
-            EventType _event;
             EventType _direction;
             std::vector<Drawable> _all;
             std::vector<Drawable> _wall;

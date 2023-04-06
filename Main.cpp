@@ -14,6 +14,10 @@ int main(int argc, char **argv)
     if (argc == 2 && std::string(argv[1]) == "-h") {
         Usage::DisplayUsage(); return 0;
     }
+    if (!std::filesystem::exists(argv[1])) {
+        std::cout << "Error: " << argv[1] << " is not a valid path" << std::endl;
+        exit(84);
+    }
     Arcade::Core core = Arcade::Core(argv[1]);
     core.loop();
 }

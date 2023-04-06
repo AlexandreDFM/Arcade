@@ -14,7 +14,6 @@ namespace Arcade {
         _score = 0;
         _highScore = 0;
         _direction = EventType::NOTHING;
-        _event = EventType::NOTHING;
         _isRunning = true;
     }
 
@@ -22,14 +21,14 @@ namespace Arcade {
     {
         srand(time(nullptr));
         this->_score = 0;
+        this->_speed = 1;
         std::ifstream file("./Assets/Games/Snake/HighScore.txt");
-        std::string highscore = "";
+        std::string highScore = "";
         for (int i = 0; i < 1; i++)
-            getline(file, highscore);
+            getline(file, highScore);
         file.close();
-        this->_highScore = std::stoi(highscore);
+        this->_highScore = std::stoi(highScore);
         this->_isRunning = true;
-        this->_event = EventType::NOTHING;
         this->_direction = EventType::NOTHING;
         this->_assets.insert({{'w', "./Assets/Games/Snake/Wall.png"}});
         this->_assets.insert({{'h', "./Assets/Games/Snake/Head.png"}});
@@ -117,6 +116,7 @@ namespace Arcade {
                 }
                 appleCoordIndex--;
             }
+            if (this->_score != 0 && this->_score % 5 == 0) this->_speed += 0.1;
             this->_text[0].text = "Score: " + std::to_string(this->_score);
         }
     }
@@ -140,7 +140,7 @@ namespace Arcade {
         static auto start = std::chrono::steady_clock::now();
         auto end = std::chrono::steady_clock::now();
         std::chrono::duration<double> elapsed_seconds = end - start;
-        if (elapsed_seconds.count() > 0.1) start = std::chrono::steady_clock::now();
+        if (elapsed_seconds.count() * this->_speed > 0.1) start = std::chrono::steady_clock::now();
         else return;
         switch (this->_direction) {
             case EventType::UP:

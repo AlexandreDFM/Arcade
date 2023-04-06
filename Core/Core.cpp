@@ -16,6 +16,14 @@ namespace Arcade {
     {
         this->_index = 1;
         this->graphicDll = new DLLoader(lib);
+        char *str = this->graphicDll->getFunction<char>("getType");
+        if (str == nullptr) {
+            std::cout << "Error: " << lib << " is not a valid library" << std::endl;
+            exit(84);
+        } else if (strncmp(str, "lib", 3) != 0) {
+            std::cout << "Error: " << lib << " is not a valid library" << std::endl;
+            exit(84);
+        }
         this->setGraphic(this->graphicDll->getFunction<IDisplay>("entryPoint"));
         this->gameDll = new DLLoader("./lib/arcade_snake.so");
         this->setGame(this->gameDll->getFunction<IGame>("entryPoint"));

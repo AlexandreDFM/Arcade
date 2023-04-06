@@ -21,7 +21,7 @@ INCLUDE_CORE		=	-I./Core/												\
 						-I./Abstract/											\
 						-I./DLLoarder/											\
 
-CXXFLAGS			=	-g3 -Wall -Wextra -Werror
+CXXFLAGS			=	-g3 -Wall -Wextra -Werror -fno-gnu-unique
 
 all: 					core graphicals games
 

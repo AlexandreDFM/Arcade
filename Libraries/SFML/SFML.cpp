@@ -48,6 +48,10 @@ namespace Arcade {
                     case sf::Keyboard::M:      return EventType::LIBNEXT;
                     case sf::Keyboard::O:      return EventType::GAMEPREV;
                     case sf::Keyboard::P:      return EventType::GAMENEXT;
+                    case sf::Keyboard::E:      return EventType::ACTION1;
+                    case sf::Keyboard::R:      return EventType::ACTION2;
+                    case sf::Keyboard::T:      return EventType::SAVE;
+                    case sf::Keyboard::Y:      return EventType::MENU;
                     default:                   return EventType::NOTHING;
                 }
             }

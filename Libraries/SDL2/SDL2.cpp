@@ -122,6 +122,10 @@ namespace Arcade {
                         case SDLK_m:      return Arcade::EventType::LIBNEXT;
                         case SDLK_o:      return Arcade::EventType::GAMEPREV;
                         case SDLK_p:      return Arcade::EventType::GAMENEXT;
+                        case SDLK_e:      return Arcade::EventType::ACTION1;
+                        case SDLK_r:      return Arcade::EventType::ACTION2;
+                        case SDLK_t:      return Arcade::EventType::MENU;
+                        case SDLK_y:      return Arcade::EventType::SAVE;
                         default:          return Arcade::EventType::NOTHING;
                     }
                 default: return Arcade::EventType::NOTHING;

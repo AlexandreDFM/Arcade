@@ -33,10 +33,10 @@ void Usage::CheckUsage(int ac, char **av)
 {
     if (ac != 2) {
         Usage::DisplayUsage();
-        exit(0);
+        exit(84);
 //        throw Usage::Error(Usage::Error::LIB);
     }
-    if (ac == 2 && std::string(av[1]) == "-h") {
+    if (std::string(av[1]) == "-h") {
         DisplayUsage();
         exit (0);
     }

@@ -133,6 +133,10 @@ namespace Arcade {
             case 'm':       return Arcade::EventType::LIBNEXT;
             case 'o':       return Arcade::EventType::GAMEPREV;
             case 'p':       return Arcade::EventType::GAMENEXT;
+            case 'e':       return Arcade::EventType::ACTION1;
+            case 'r':       return Arcade::EventType::ACTION2;
+            case 't':       return Arcade::EventType::MENU;
+            case 'y':       return Arcade::EventType::SAVE;
             default:        return Arcade::EventType::NOTHING;
         }
     }
