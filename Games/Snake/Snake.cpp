@@ -220,7 +220,7 @@ namespace Arcade {
         }
         char *getType()
         {
-            return (char *) "Game";
+            return (char *) "gameSnake";
         }
     }
 }

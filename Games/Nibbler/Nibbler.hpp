@@ -17,14 +17,17 @@ namespace Arcade {
             ~NibblerGame() override = default;
             void init() override;
             void update(EventType key) override;
-            void placeApple();
+            void checkWall(EventType key);
             void setHighScore();
             const std::vector<Drawable> &getDrawable() override;
             const std::vector<DrawableText> &getDrawableText() override;
             const std::map<char, std::string> &getAssets() override;
             Arcade::EventType getDirection() override;
             void setMap(int i);
+            void checkApple();
+            void bodyMove();
             void close() override;
+            void reset();
         private:
             int _score;
             int _highScore;
