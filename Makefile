@@ -21,12 +21,12 @@ INCLUDE_CORE		=	-I./Core/												\
 						-I./Abstract/											\
 						-I./DLLoarder/											\
 
-FLAGS				=	-g3 -Wall -Wextra -Werror
+CXXFLAGS			=	-g3 -Wall -Wextra -Werror
 
 all: 					core graphicals games
 
 core: 					$(OBJ_CORE)
-						g++ -o $(NAME) $(OBJ_CORE) $(INCLUDE_CORE) $(FLAGS)
+						g++ -o $(NAME) $(OBJ_CORE) $(INCLUDE_CORE)
 
 lib_ncurses:
 						make -C Libraries/NCurses/

@@ -11,8 +11,8 @@
     #include <ios>
     #include <map>
     #include <vector>
-    #include <iostream>
     #include <chrono>
+    #include <iostream>
     #include "Struct.hpp"
 
 namespace Arcade {

@@ -18,6 +18,7 @@ namespace Arcade {
             void init() override;
             void update(EventType key) override;
             void placeApple();
+            void setHighScore();
             const std::vector<Drawable> &getDrawable() override;
             const std::vector<DrawableText> &getDrawableText() override;
             const std::map<char, std::string> &getAssets() override;

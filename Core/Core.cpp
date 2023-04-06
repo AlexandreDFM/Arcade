@@ -22,7 +22,7 @@ namespace Arcade {
 
     Core::Core(std::string lib, std::string game)
     {
-        DLLoader dll("./lib/arcade_ncurses.so");
+        DLLoader dll(lib);
         this->setGraphic(dll.getFunction<IDisplay>("entryPoint"));
         DLLoader dll2(game);
         this->setGame(dll2.getFunction<IGame>("entryPoint"));

@@ -23,9 +23,18 @@ namespace Arcade {
         WHITE
     };
 
+    enum SpriteDirection {
+        NO_DIRECTION,
+        NORTH,
+        SOUTH,
+        EAST,
+        WEST
+    };
+
     struct Drawable {
         int x;
         int y;
+        enum SpriteDirection rotation;
         Color color;
         char draw;
     };

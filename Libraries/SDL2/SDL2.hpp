@@ -26,6 +26,7 @@ namespace Arcade {
             void close() override;
             void display(std::vector<Drawable>) override;
             void display(std::vector<DrawableText>) override;
+            void clear() override;
             //////////////////////// Getters //////////////////////////
             Arcade::EventType getEvent() override;
         private:

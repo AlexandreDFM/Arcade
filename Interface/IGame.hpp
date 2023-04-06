@@ -11,6 +11,7 @@
     #include <map>
     #include <vector>
     #include <chrono>
+    #include <fstream>
     #include "Struct.hpp"
 
 namespace Arcade {
