@@ -117,5 +117,9 @@ namespace Arcade {
         IDisplay *entryPoint() {
             return new SDL2();
         }
+        char *getType()
+        {
+            return (char *) "Lib";
+        }
     }
 }

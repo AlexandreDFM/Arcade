@@ -14,10 +14,25 @@ namespace Arcade {
 
     Core::Core(std::string lib)
     {
+        this->_index = 1;
         this->graphicDll = new DLLoader(lib);
         this->setGraphic(this->graphicDll->getFunction<IDisplay>("entryPoint"));
-        this->gameDll = new DLLoader("./lib/arcade_nibbler.so");
+        this->gameDll = new DLLoader("./lib/arcade_menu.so");
         this->setGame(this->gameDll->getFunction<IGame>("entryPoint"));
+        std::string path = "./lib";
+        for (const auto & entry : std::filesystem::directory_iterator(path)) {
+            if (entry.path().extension() != ".so") {
+                std::cout << "Error: " << entry.path() << " is not a library" << std::endl;
+                continue;
+            }
+            DLLoader *loader = new DLLoader(entry.path());
+            char *string = loader->getFunction<char>("getType");
+            if (string == nullptr) {
+                std::cout << "Error: " << entry.path() << " is not a valid library" << std::endl;
+                delete loader; continue;
+            }
+            if (strcmp(string, "Lib") == 0) _libs.push_back(entry.path());
+        }
     }
 
     Core::Core(std::string lib, std::string game)
@@ -61,10 +76,17 @@ namespace Arcade {
 
     void Core::setChangeLib(EventType event)
     {
-        if (event == EventType::LIBNEXT)
-            this->changeLib("./lib/arcade_sfml.so");
+        if (event == EventType::LIBNEXT) {
+            this->changeLib(this->_libs[this->_index]);
+            if (this->_index == this->_libs.size() - 1) this->_index = 0;
+            else this->_index++;
+        }
         else if (event == EventType::LIBPREV)
-            this->changeLib("./lib/arcade_ncurses.so");
+        {
+            this->_index--;
+            if (this->_index == 0) this->_index = this->_libs.size() - 1;
+            this->changeLib(this->_libs[this->_index]);
+        }
     }
 
     void Core::changeLib(std::string lib)
