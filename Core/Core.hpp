@@ -32,6 +32,8 @@ namespace Arcade {
             IGame *game;
             DLLoader *gameDll;
             DLLoader *graphicDll;
+            std::vector<std::string> _libs;
+            size_t _index;
     };
 }
 

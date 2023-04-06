@@ -77,8 +77,14 @@ namespace Arcade {
         return Arcade::EventType::NOTHING;
     }
 
-    extern "C" IDisplay *entryPoint()
-    {
-        return new NCurses();
+    extern "C" {
+    IDisplay *entryPoint()
+        {
+            return new NCurses();
+        }
+    char *getType()
+        {
+            return (char *) "Lib";
+        }
     }
 }

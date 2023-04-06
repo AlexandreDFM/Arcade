@@ -214,8 +214,14 @@ namespace Arcade {
         this->_wall.clear();
     }
 
-    extern "C" IGame *entryPoint()
-    {
-        return new NibblerGame();
+    extern "C" {
+    IGame *entryPoint()
+        {
+            return new NibblerGame();
+        }
+    char *getType()
+        {
+            return (char *) "Game";
+        }
     }
 }
