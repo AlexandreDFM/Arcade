@@ -27,29 +27,24 @@ namespace Arcade {
     {
     }
 
-    bool AGame::isRunning()
+    bool AGame::isRunning() const
     {
         return _isRunning;
     }
 
-    const std::vector<Drawable> &AGame::getDrawable()
+    const std::vector<Drawable> &AGame::getDrawable() const
     {
         return _drawable;
     }
 
-    const std::map<char, std::string> &AGame::getAssets()
+    const std::map<char, std::string> &AGame::getAssets() const
     {
         return _assets;
     }
 
-    const std::vector<DrawableText> &AGame::getDrawableText()
+    const std::vector<DrawableText> &AGame::getDrawableText() const
     {
         return _drawableText;
-    }
-
-    Arcade::EventType AGame::getDirection()
-    {
-        return _event;
     }
 
     void AGame::setIsRunning(bool isRunning)

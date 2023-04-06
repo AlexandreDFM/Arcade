@@ -24,8 +24,8 @@ namespace Arcade {
                 std::cout << "Error: " << entry.path() << " is not a valid library" << std::endl;
                 delete loader; continue;
             }
-            if (strcmp(string, "Lib") == 0) _libs.push_back(entry.path());
-            else if (strcmp(string, "Game") == 0) _games.push_back(entry.path());
+            if (strncmp(string, "lib", 3) == 0) _libs.push_back(string += 3);
+            else if (strncmp(string, "game", 4) == 0) _games.push_back(string += 4);
             else std::cout << "Error: " << entry.path() << " is not a valid library" << std::endl;
             delete loader;
         }
@@ -33,6 +33,21 @@ namespace Arcade {
 
     void Menu::update(Arcade::EventType event)
     {
+        int index = 2;
+        size_t indexSelector = 0;
+        this->_drawableText.push_back({ 10, 1, 12, WHITE, std::string("Libs :"), std::string("Poppins-Black")});
+        for (auto &lib : _libs) {
+            Color color = indexSelector == this->_index ? RED : this->_selectedLib == lib.data() ? GREEN : WHITE;
+            this->_drawableText.push_back({ 10, index, 12, color, lib.data(), std::string("Poppins-Black")});
+            indexSelector += 1; index += 1;
+        }
+        this->_drawableText.push_back({ 10, index, 12, WHITE, std::string("Games :"), std::string("Poppins-Black")});
+        index += 1;
+        for (auto &game : _games) {
+            Color color = indexSelector == this->_index ? RED : this->_selectedGame == game.data() ? GREEN : WHITE;
+            this->_drawableText.push_back({ 10, index, 12, color, game.data(), std::string("Poppins-Black")});
+            indexSelector += 1; index += 1;
+        }
         switch (event) {
             case EventType::CLOSE:
                 this->close();
@@ -64,48 +79,30 @@ namespace Arcade {
     void Menu::close()
     {
         this->_isRunning = false;
+        this->_libs.clear();
+        this->_games.clear();
+        this->_selectedGame.clear();
+        this->_selectedLib.clear();
     }
 
-    bool Menu::isRunning()
+    bool Menu::isRunning() const
     {
         return this->_isRunning;
     }
 
-    const std::vector<Drawable> &Menu::getDrawable()
+    const std::vector<Drawable> &Menu::getDrawable() const
     {
-        _drawable.clear();
         return _drawable;
     }
 
-    const std::map<char, std::string> &Menu::getAssets()
+    const std::map<char, std::string> &Menu::getAssets() const
     {
         return _assets;
     }
 
-    const std::vector<DrawableText> &Menu::getDrawableText()
+    const std::vector<DrawableText> &Menu::getDrawableText() const
     {
-        _drawableText.clear();
-        int index = 2;
-        size_t indexSelector = 0;
-        this->_drawableText.push_back({ 10, 1, 12, WHITE, std::string("Libs :"), std::string("Poppins-Black")});
-        for (auto &lib : _libs) {
-            int color = indexSelector == this->_index ? RED : this->_selectedLib == lib.data() ? GREEN : WHITE;
-            this->_drawableText.push_back({ 10, index, 12, color, lib.data(), std::string("Poppins-Black")});
-            indexSelector += 1; index += 1;
-        }
-        this->_drawableText.push_back({ 10, index, 12, WHITE, std::string("Games :"), std::string("Poppins-Black")});
-        index += 1;
-        for (auto &game : _games) {
-            int color = indexSelector == this->_index ? RED : this->_selectedGame == game.data() ? GREEN : WHITE;
-            this->_drawableText.push_back({ 10, index, 12, color, game.data(), std::string("Poppins-Black")});
-            indexSelector += 1; index += 1;
-        }
         return _drawableText;
-    }
-
-    Arcade::EventType Menu::getDirection()
-    {
-        return _event;
     }
 
     void Menu::setIsRunning(bool isRunning)
@@ -120,7 +117,7 @@ namespace Arcade {
         }
         char *getType()
         {
-            return (char *) "Game";
+            return (char *) "gameMenu";
         }
     }
 }

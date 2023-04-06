@@ -20,11 +20,10 @@ namespace Arcade {
             void update(Arcade::EventType event) override;
             void close() override;
             //////////////////////// Getters //////////////////////////
-            bool isRunning() override;
-            const std::vector<Drawable> &getDrawable() override;
-            const std::map<char, std::string> &getAssets() override;
-            const std::vector<DrawableText> &getDrawableText() override;
-            Arcade::EventType getDirection() override;
+            bool isRunning() const override;
+            const std::vector<Drawable> &getDrawable() const override;
+            const std::map<char, std::string> &getAssets() const override;
+            const std::vector<DrawableText> &getDrawableText() const override;
             //////////////////////// Setters //////////////////////////
             void setIsRunning(bool isRunning) override;
         private:

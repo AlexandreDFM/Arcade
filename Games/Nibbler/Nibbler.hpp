@@ -19,10 +19,9 @@ namespace Arcade {
             void update(EventType key) override;
             void checkWall(EventType key);
             void setHighScore();
-            const std::vector<Drawable> &getDrawable() override;
-            const std::vector<DrawableText> &getDrawableText() override;
-            const std::map<char, std::string> &getAssets() override;
-            Arcade::EventType getDirection() override;
+            const std::vector<Drawable> &getDrawable() const override;
+            const std::vector<DrawableText> &getDrawableText() const override;
+            const std::map<char, std::string> &getAssets() const override;
             void setMap(int i);
             void checkApple();
             void bodyMove();

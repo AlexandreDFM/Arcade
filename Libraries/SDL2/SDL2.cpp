@@ -15,31 +15,25 @@ namespace Arcade {
     }
 
     void SDL2::init(const std::map<char, std::string> &gameAssets) {
-        // Init SDL
         if (SDL_Init(SDL_INIT_VIDEO) < 0) {
             std::cerr << "SDL could not initialize! SDL_Error: " << SDL_GetError() << std::endl; exit(84);
         }
-        // Init SDL_image
         if (!(IMG_Init(IMG_INIT_PNG) & IMG_INIT_PNG)) {
             std::cerr << "SDL_image could not initialize! SDL_image Error: " << IMG_GetError() << std::endl; exit(84);
         }
-        // Init SDL_ttf
         if (TTF_Init() == -1) {
             std::cerr << "SDL_ttf could not initialize! SDL_ttf Error: " << TTF_GetError() << std::endl; exit(84);
         }
-        // Create window
         this->_window = SDL_CreateWindow("Arcade", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 1920, 1080,
         SDL_WINDOW_SHOWN);
         if (_window == nullptr) {
             std::cerr << "Window could not be created! SDL_Error: " << SDL_GetError() << std::endl; exit(84);
         }
-        // Create renderer
         this->_renderer = SDL_CreateRenderer(_window, -1, SDL_RENDERER_ACCELERATED);
         if (_renderer == nullptr) {
             std::cerr << "Renderer could not be created! SDL_Error: " << SDL_GetError() << std::endl;
             exit(84);
         }
-        // Create font
         this->_font = TTF_OpenFont("./Assets/Police/Poppins-Black.ttf", 12);
         if (_font == nullptr) {
             std::cerr << "Font could not be created! SDL_ttf Error: " << TTF_GetError() << std::endl; exit(84);
@@ -89,13 +83,15 @@ namespace Arcade {
             SDL_Rect size = {0, 0, (int) drawable.text.length() * drawable.size * 3, drawable.size * 3};
             SDL_Rect pos = {drawable.x * 40, drawable.y * 40, (int) drawable.text.length() * drawable.size * 3, drawable.size * 3};
             switch (drawable.color) {
-                case Color::RED:    color = {255, 0, 0, 255}; break;
-                case Color::GREEN:  color = {0, 255, 0, 255}; break;
-                case Color::BLUE:   color = {0, 0, 255, 255}; break;
-//                case Color::YELLOW: color = {255, 255, 0, 255}; break;
-                case Color::WHITE:  color = {255, 255, 255, 255}; break;
-                case Color::BLACK:  color = {0, 0, 0, 255}; break;
-                default: break;
+                case Color::RED:     color = {255, 0, 0, 255};       break;
+                case Color::BLUE:    color = {0, 0, 255, 255};       break;
+                case Color::CYAN:    color = {0, 255, 255, 255};     break;
+                case Color::GREEN:   color = {0, 255, 0, 255};       break;
+                case Color::WHITE:   color = {255, 255, 255, 255};   break;
+                case Color::BLACK:   color = {0, 0, 0, 255};         break;
+                case Color::YELLOW:  color = {255, 255, 0, 255};     break;
+                case Color::MAGENTA: color = {255, 0, 255, 255};     break;
+                default:                                             break;
             }
             SDL_Surface *surface = TTF_RenderText_Solid(_font, drawable.text.c_str(), color);
             SDL_Texture *texture = SDL_CreateTextureFromSurface(_renderer, surface);
@@ -116,13 +112,16 @@ namespace Arcade {
                     return Arcade::EventType::CLOSE;
                 case SDL_KEYDOWN:
                     switch (_event.key.keysym.sym) {
-                        case SDLK_UP:     return Arcade::EventType::UP;
-                        case SDLK_DOWN:   return Arcade::EventType::DOWN;
-                        case SDLK_LEFT:   return Arcade::EventType::LEFT;
-                        case SDLK_RIGHT:  return Arcade::EventType::RIGHT;
                         case SDLK_ESCAPE: return Arcade::EventType::CLOSE;
-                        case SDLK_l:      return Arcade::EventType::RESTART;
+                        case SDLK_SPACE:  return Arcade::EventType::RESTART;
+                        case SDLK_RIGHT:  return Arcade::EventType::RIGHT;
+                        case SDLK_LEFT:   return Arcade::EventType::LEFT;
+                        case SDLK_DOWN:   return Arcade::EventType::DOWN;
+                        case SDLK_UP:     return Arcade::EventType::UP;
+                        case SDLK_l:      return Arcade::EventType::LIBPREV;
                         case SDLK_m:      return Arcade::EventType::LIBNEXT;
+                        case SDLK_o:      return Arcade::EventType::GAMEPREV;
+                        case SDLK_p:      return Arcade::EventType::GAMENEXT;
                         default:          return Arcade::EventType::NOTHING;
                     }
                 default: return Arcade::EventType::NOTHING;
@@ -137,7 +136,7 @@ namespace Arcade {
         }
         char *getType()
         {
-            return (char *) "Lib";
+            return (char *) "libSDL2";
         }
     }
 }

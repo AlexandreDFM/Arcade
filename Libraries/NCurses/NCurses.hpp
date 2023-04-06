@@ -20,6 +20,7 @@ namespace Arcade {
             //////////////////////// Functions ////////////////////////
             void init(const std::map<char, std::string>& gameAssets) override;
             void update() override;
+            void clear() override;
             void close() override;
             void display(std::vector<Drawable> drawables) override;
             void display(std::vector<DrawableText> drawables) override;

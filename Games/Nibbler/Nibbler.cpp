@@ -33,7 +33,7 @@ namespace Arcade {
         else if (this->_score == 40)
             this->setMap(3);
         else
-            //
+            std::cout << "You Win" << std::endl;
 
         this->_assets.insert({{'w', "./Assets/Games/Nibbler/Wall.png"}});
         this->_assets.insert({{'h', "./Assets/Games/Snake/Head.png"}});
@@ -44,11 +44,11 @@ namespace Arcade {
         this->_text.push_back({ 38, 7, 12, WHITE, "Score: " + std::to_string(this->_score), std::string("Poppins-Black")});
         this->_text.push_back({ 38, 10, 12, WHITE, "HighScore: " + std::to_string(this->_highScore), std::string("Poppins-Black")});
 
-        this->_snake.push_back({ 25, 12, EAST, WHITE, 'h'});
-        this->_snake.push_back({ 24, 12, NO_DIRECTION, WHITE, 'b'});
-        this->_snake.push_back({ 23, 12, NO_DIRECTION, WHITE, 'b'});
-        this->_snake.push_back({ 22, 12, NO_DIRECTION, WHITE, 'b'});
-        this->_snake.push_back({ 21, 12, NO_DIRECTION, WHITE, 't'});
+        this->_snake.push_back({ 25, 12, WHITE, 'h'});
+        this->_snake.push_back({ 24, 12, WHITE, 'b'});
+        this->_snake.push_back({ 23, 12, WHITE, 'b'});
+        this->_snake.push_back({ 22, 12, WHITE, 'b'});
+        this->_snake.push_back({ 21, 12, WHITE, 't'});
     }
 
     void NibblerGame::setMap(int i)
@@ -67,8 +67,8 @@ namespace Arcade {
 
         for (int y = 5 ;std::getline(inputFile, line); y++) {
             for (int i = 0; line[i]; i++) {
-                if (line[i] == '#') this->_wall.push_back({i + 15, y, NORTH, BLACK, 'w'});
-                else if (line[i] == 'P') this->_apples.push_back({i + 15, y, NORTH, BLACK, 'a'});
+                if (line[i] == '#') this->_wall.push_back({i + 15, y, BLACK, 'w'});
+                else if (line[i] == 'P') this->_apples.push_back({i + 15, y, BLACK, 'a'});
             }
         }
     }
@@ -97,11 +97,11 @@ namespace Arcade {
         this->_text.push_back({ 38, 7, 12, WHITE, "Score: " + std::to_string(this->_score), std::string("Poppins-Black")});
         this->_text.push_back({ 38, 10, 12, WHITE, "HighScore: " + std::to_string(this->_highScore), std::string("Poppins-Black")});
 
-        this->_snake.push_back({ 25, 12, EAST, WHITE, 'h'});
-        this->_snake.push_back({ 24, 12, NO_DIRECTION, WHITE, 'b'});
-        this->_snake.push_back({ 23, 12, NO_DIRECTION, WHITE, 'b'});
-        this->_snake.push_back({ 22, 12, NO_DIRECTION, WHITE, 'b'});
-        this->_snake.push_back({ 21, 12, NO_DIRECTION, WHITE, 't'});
+        this->_snake.push_back({ 25, 12, WHITE, 'h'});
+        this->_snake.push_back({ 24, 12, WHITE, 'b'});
+        this->_snake.push_back({ 23, 12, WHITE, 'b'});
+        this->_snake.push_back({ 22, 12, WHITE, 'b'});
+        this->_snake.push_back({ 21, 12, WHITE, 't'});
     }
 
     void NibblerGame::setHighScore()
@@ -112,30 +112,19 @@ namespace Arcade {
         file.close();
     }
 
-    const std::vector<Drawable> &NibblerGame::getDrawable()
+    const std::vector<Drawable> &NibblerGame::getDrawable() const
     {
-        this->_all.clear();
-        this->_all.push_back(this->_apple);
-        for (auto &i : this->_wall)     this->_all.push_back(i);
-        for (auto &i : this->_snake)    this->_all.push_back(i);
-        for (auto &i : this->_apples)   this->_all.push_back(i);
         return this->_all;
     }
 
-    const std::vector<DrawableText> &NibblerGame::getDrawableText()
+    const std::vector<DrawableText> &NibblerGame::getDrawableText() const
     {
-        this->_text[0].text = "Score: " + std::to_string(this->_score);
         return this->_text;
     }
 
-    const std::map<char, std::string> &NibblerGame::getAssets()
+    const std::map<char, std::string> &NibblerGame::getAssets() const
     {
         return this->_assets;
-    }
-
-    EventType NibblerGame::getDirection()
-    {
-        return this->_direction;
     }
 
     void NibblerGame::checkWall(EventType event)
@@ -155,19 +144,19 @@ namespace Arcade {
     void NibblerGame::checkApple()
     {
         int index = 0;
-
         for (auto &i : this->_apples) {
             if (this->_snake[0].x == i.x && this->_snake[0].y == i.y) {
                 this->_apples.erase(this->_apples.begin() + index);
                 this->_snake[this->_snake.size() - 1].draw = 'b';
                 switch (this->_direction) {
-                    case EventType::UP:     this->_snake.push_back({this->_snake[this->_snake.size() - 1].x,this->_snake[this->_snake.size() - 1].y + 1,NORTH, WHITE, 't'});    break;
-                    case EventType::DOWN:   this->_snake.push_back({this->_snake[this->_snake.size() - 1].x,this->_snake[this->_snake.size() - 1].y - 1,SOUTH, WHITE, 't'});    break;
-                    case EventType::LEFT:   this->_snake.push_back({this->_snake[this->_snake.size() - 1].x + 1,this->_snake[this->_snake.size() - 1].y,WEST, WHITE, 't'});     break;
-                    case EventType::RIGHT:  this->_snake.push_back({this->_snake[this->_snake.size() - 1].x - 1,this->_snake[this->_snake.size() - 1].y,EAST, WHITE, 't'});     break;
+                    case EventType::UP:     this->_snake.push_back({this->_snake[this->_snake.size() - 1].x,this->_snake[this->_snake.size() - 1].y + 1, WHITE, 't'});    break;
+                    case EventType::DOWN:   this->_snake.push_back({this->_snake[this->_snake.size() - 1].x,this->_snake[this->_snake.size() - 1].y - 1, WHITE, 't'});    break;
+                    case EventType::LEFT:   this->_snake.push_back({this->_snake[this->_snake.size() - 1].x + 1,this->_snake[this->_snake.size() - 1].y, WHITE, 't'});     break;
+                    case EventType::RIGHT:  this->_snake.push_back({this->_snake[this->_snake.size() - 1].x - 1,this->_snake[this->_snake.size() - 1].y, WHITE, 't'});     break;
                     default:                break;
                 }
                 this->_score += 1;
+                this->_text[0].text = "Score: " + std::to_string(this->_score);
             }
             index++;
         }
@@ -227,9 +216,14 @@ namespace Arcade {
 
     void NibblerGame::update(EventType event)
     {
+        this->_all.clear();
+        this->_all.push_back(this->_apple);
+        for (auto &i : this->_wall)     this->_all.push_back(i);
+        for (auto &i : this->_snake)    this->_all.push_back(i);
+        for (auto &i : this->_apples)   this->_all.push_back(i);
+
         EventType tmp = this->_direction;
-        if (this->_apples.size() == 0)
-            this->reset();
+        if (this->_apples.size() == 0) this->reset();
 
         switch (event) {
             case EventType::CLOSE:  this->_isRunning = false; break;

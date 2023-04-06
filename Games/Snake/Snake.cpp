@@ -10,7 +10,7 @@
 namespace Arcade {
     SnakeGame::SnakeGame() : AGame()
     {
-        _apple = { 0, 0, NORTH, RED, 'a' };
+        _apple = { 0, 0, RED, 'a'};
         _score = 0;
         _highScore = 0;
         _direction = EventType::NOTHING;
@@ -37,20 +37,20 @@ namespace Arcade {
         this->_assets.insert({{'t', "./Assets/Games/Snake/Tail.png"}});
         this->_assets.insert({{'a', "./Assets/Games/Snake/Apple.png"}});
         for (int x = 5; x < 31; x++) {
-            this->_wall.push_back({x, 5, NO_DIRECTION, WHITE, 'w'});
-            this->_wall.push_back({x, 20, NO_DIRECTION,  WHITE, 'w'});
+            this->_wall.push_back({x, 5, WHITE, 'w'});
+            this->_wall.push_back({x, 20,  WHITE, 'w'});
         }
         for (int y = 6; y < 20; y++) {
-            this->_wall.push_back({5, y,  NO_DIRECTION, WHITE, 'w'});
-            this->_wall.push_back({30, y, NO_DIRECTION,  WHITE, 'w'});
+            this->_wall.push_back({5, y,  WHITE, 'w'});
+            this->_wall.push_back({30, y,  WHITE, 'w'});
         }
         this->_text.push_back({ 33, 7, 12, WHITE, "Score: " + std::to_string(this->_score), std::string("Poppins-Black")});
         this->_text.push_back({ 33, 10, 12, WHITE, "HighScore: " + std::to_string(this->_highScore), std::string("Poppins-WHITE")});
-        this->_snake.push_back({ 13, 12, EAST, BLUE, 'h'});
-        this->_snake.push_back({ 12, 12, NO_DIRECTION, BLUE, 'b'});
-        this->_snake.push_back({ 11, 12, NO_DIRECTION, BLUE, 'b'});
-        this->_snake.push_back({ 10, 12, NO_DIRECTION, BLUE, 'b'});
-        this->_snake.push_back({ 9, 12, NO_DIRECTION, BLUE, 't'});
+        this->_snake.push_back({ 13, 12, BLUE, 'h'});
+        this->_snake.push_back({ 12, 12, BLUE, 'b'});
+        this->_snake.push_back({ 11, 12, BLUE, 'b'});
+        this->_snake.push_back({ 10, 12, BLUE, 'b'});
+        this->_snake.push_back({ 9, 12, BLUE, 't'});
         this->placeApple();
     }
 
@@ -62,29 +62,19 @@ namespace Arcade {
         file.close();
     }
 
-    const std::vector<Drawable> &SnakeGame::getDrawable()
+    const std::vector<Drawable> &SnakeGame::getDrawable() const
     {
-        this->_all.clear();
-        this->_all.push_back(this->_apple);
-        for (auto &i : this->_snake) this->_all.push_back(i);
-        for (auto &i : this->_wall) this->_all.push_back(i);
         return this->_all;
     }
 
-    const std::vector<DrawableText> &SnakeGame::getDrawableText()
+    const std::vector<DrawableText> &SnakeGame::getDrawableText() const
     {
-        this->_text[0].text = "Score: " + std::to_string(this->_score);
         return this->_text;
     }
 
-    const std::map<char, std::string> &SnakeGame::getAssets()
+    const std::map<char, std::string> &SnakeGame::getAssets() const
     {
         return this->_assets;
-    }
-
-    EventType SnakeGame::getDirection()
-    {
-        return this->_direction;
     }
 
     void SnakeGame::placeApple()
@@ -114,7 +104,7 @@ namespace Arcade {
         }
 
         if (appleCoord.empty()) {
-            _apple = { 1, 1, NORTH, RED, 'a' };
+            _apple = { 1, 1, RED, 'a'};
             this->_apple.x = 1; this->_apple.y = 1; this->_apple.draw = 'a';
         } else {
             int appleCoordIndex = (rand() % appleCoord.size());
@@ -127,11 +117,17 @@ namespace Arcade {
                 }
                 appleCoordIndex--;
             }
+            this->_text[0].text = "Score: " + std::to_string(this->_score);
         }
     }
 
     void SnakeGame::update(EventType event)
     {
+        this->_all.clear();
+        this->_all.push_back(this->_apple);
+        for (auto &i : this->_wall) this->_all.push_back(i);
+        for (auto &i : this->_snake) this->_all.push_back(i);
+
         switch (event) {
             case EventType::CLOSE:   this->setHighScore(); this->close(); return;
             case EventType::RESTART: this->setHighScore(); this->close(); this->init(); return;
@@ -184,10 +180,10 @@ namespace Arcade {
         if (this->_snake[0].x == this->_apple.x && this->_snake[0].y == this->_apple.y) {
             this->_snake[this->_snake.size() - 1].draw = 'b';
             switch (this->_direction) {
-                case EventType::UP:     this->_snake.push_back({this->_snake[this->_snake.size() - 1].x, this->_snake[this->_snake.size() - 1].y + 1, NORTH, WHITE, 't'}); break;
-                case EventType::DOWN:   this->_snake.push_back({this->_snake[this->_snake.size() - 1].x, this->_snake[this->_snake.size() - 1].y - 1, SOUTH, WHITE, 't'}); break;
-                case EventType::LEFT:   this->_snake.push_back({this->_snake[this->_snake.size() - 1].x + 1, this->_snake[this->_snake.size() - 1].y, WEST, WHITE, 't'}); break;
-                case EventType::RIGHT:  this->_snake.push_back({this->_snake[this->_snake.size() - 1].x - 1, this->_snake[this->_snake.size() - 1].y, EAST, WHITE, 't'}); break;
+                case EventType::UP:     this->_snake.push_back({this->_snake[this->_snake.size() - 1].x, this->_snake[this->_snake.size() - 1].y + 1, BLUE, 't'}); break;
+                case EventType::DOWN:   this->_snake.push_back({this->_snake[this->_snake.size() - 1].x, this->_snake[this->_snake.size() - 1].y - 1, BLUE, 't'}); break;
+                case EventType::LEFT:   this->_snake.push_back({this->_snake[this->_snake.size() - 1].x + 1, this->_snake[this->_snake.size() - 1].y, BLUE, 't'}); break;
+                case EventType::RIGHT:  this->_snake.push_back({this->_snake[this->_snake.size() - 1].x - 1, this->_snake[this->_snake.size() - 1].y, BLUE, 't'}); break;
                 default:                break;
             }
             this->placeApple();

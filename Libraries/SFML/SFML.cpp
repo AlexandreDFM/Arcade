@@ -83,13 +83,15 @@ namespace Arcade {
         for (auto &drawable : drawables) {
             this->text.setString(drawable.text);
             switch (drawable.color) {
-                case Color::RED:    this->text.setFillColor(sf::Color::Red);    break;
-                case Color::BLUE:   this->text.setFillColor(sf::Color::Blue);   break;
-                case Color::BLACK:  this->text.setFillColor(sf::Color::Black);  break;
-                case Color::WHITE:  this->text.setFillColor(sf::Color::White);  break;
-                case Color::GREEN:  this->text.setFillColor(sf::Color::Green);  break;
-//                case Color::YELLOW: this->text.setFillColor(sf::Color::Yellow); break;
-                default:            this->text.setFillColor(sf::Color::White);  break;
+                case Color::RED:     this->text.setFillColor(sf::Color::Red);     break;
+                case Color::BLUE:    this->text.setFillColor(sf::Color::Blue);    break;
+                case Color::BLACK:   this->text.setFillColor(sf::Color::Black);   break;
+                case Color::WHITE:   this->text.setFillColor(sf::Color::White);   break;
+                case Color::GREEN:   this->text.setFillColor(sf::Color::Green);   break;
+                case Color::YELLOW:  this->text.setFillColor(sf::Color::Yellow);  break;
+                case Color::CYAN:    this->text.setFillColor(sf::Color::Cyan);    break;
+                case Color::MAGENTA: this->text.setFillColor(sf::Color::Magenta); break;
+                default:             this->text.setFillColor(sf::Color::White);   break;
             }
             this->text.setPosition({(float) drawable.x * 40, (float) drawable.y * 40});
             this->window->draw(this->text);
@@ -120,7 +122,7 @@ namespace Arcade {
         }
         char *getType()
         {
-            return (char *) "Lib";
+            return (char *) "libSFML";
         }
     }
 }

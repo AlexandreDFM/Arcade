@@ -17,7 +17,7 @@ namespace Arcade {
         this->_index = 1;
         this->graphicDll = new DLLoader(lib);
         this->setGraphic(this->graphicDll->getFunction<IDisplay>("entryPoint"));
-        this->gameDll = new DLLoader("./lib/arcade_menu.so");
+        this->gameDll = new DLLoader("./lib/arcade_snake.so");
         this->setGame(this->gameDll->getFunction<IGame>("entryPoint"));
         std::string path = "./lib";
         for (const auto & entry : std::filesystem::directory_iterator(path)) {
@@ -31,7 +31,7 @@ namespace Arcade {
                 std::cout << "Error: " << entry.path() << " is not a valid library" << std::endl;
                 delete loader; continue;
             }
-            if (strcmp(string, "Lib") == 0) _libs.push_back(entry.path());
+            if (strncmp(string, "lib", 3) == 0) _libs.push_back(entry.path());
         }
     }
 
@@ -64,9 +64,9 @@ namespace Arcade {
         while (this->game->isRunning()) {
            this->graphic->display(this->game->getDrawable());
            this->graphic->display(this->game->getDrawableText());
-           Arcade::EventType eventkey = this->graphic->getEvent();
-           this->game->update(eventkey);
-           this->setChangeLib(eventkey);
+           Arcade::EventType eventKey = this->graphic->getEvent();
+           this->game->update(eventKey);
+           this->setChangeLib(eventKey);
            if (!this->game->isRunning()) break;
            this->graphic->update();
            this->graphic->clear();
@@ -77,21 +77,20 @@ namespace Arcade {
     void Core::setChangeLib(EventType event)
     {
         if (event == EventType::LIBNEXT) {
-            this->changeLib(this->_libs[this->_index]);
             if (this->_index == this->_libs.size() - 1) this->_index = 0;
             else this->_index++;
-        }
-        else if (event == EventType::LIBPREV)
-        {
-            this->_index--;
+            this->changeLib(this->_libs[this->_index]);
+        } else if (event == EventType::LIBPREV) {
             if (this->_index == 0) this->_index = this->_libs.size() - 1;
+            else this->_index--;
             this->changeLib(this->_libs[this->_index]);
         }
     }
 
     void Core::changeLib(std::string lib)
     {
-        std::cout << "NEXT" << std::endl;
+        std::cout << "Change lib: " << lib << std::endl;
+        std::cout << "Index: " << this->_index << std::endl;
         this->graphic->close();
         this->graphicDll->~DLLoader();
         this->graphicDll = new DLLoader(lib);
