@@ -35,22 +35,32 @@ namespace Arcade {
         this->_assets.insert({{'b', "./Assets/Games/Snake/Body.png"}});
         this->_assets.insert({{'t', "./Assets/Games/Snake/Tail.png"}});
         this->_assets.insert({{'a', "./Assets/Games/Snake/Apple.png"}});
-        for (int x = 5; x < 31; x++) {
-            this->_wall.push_back({x, 5, WHITE, 'w'});
-            this->_wall.push_back({x, 20,  WHITE, 'w'});
-        }
-        for (int y = 6; y < 20; y++) {
-            this->_wall.push_back({5, y,  WHITE, 'w'});
-            this->_wall.push_back({30, y,  WHITE, 'w'});
-        }
+
+        this->setMap();
+
         this->_text.push_back({ 33, 7, 12, WHITE, "Score: " + std::to_string(this->_score), std::string("Poppins-Black")});
         this->_text.push_back({ 33, 10, 12, WHITE, "HighScore: " + std::to_string(this->_highScore), std::string("Poppins-WHITE")});
-        this->_snake.push_back({ 13, 12, BLUE, 'h'});
-        this->_snake.push_back({ 12, 12, BLUE, 'b'});
-        this->_snake.push_back({ 11, 12, BLUE, 'b'});
-        this->_snake.push_back({ 10, 12, BLUE, 'b'});
-        this->_snake.push_back({ 9, 12, BLUE, 't'});
+
         this->placeApple();
+    }
+
+    void SnakeGame::setMap()
+    {
+        std::string line;
+        std::string path = "./Assets/Games/Snake/Snake.txt";
+        std::ifstream inputFile(path);
+
+        for (int y = 3 ;std::getline(inputFile, line); y++) {
+            for (int i = 0; line[i]; i++) {
+                switch (line[i]) {
+                    case '#':   this->_wall.push_back({i + 2, y, WHITE, 'w'});     break;
+                    case 'h':   this->_snake.push_back({i + 2, y, BLUE, 'h'});    break;
+                    case 'b':   this->_snake.push_back({i + 2, y, BLUE, 'b'});    break;
+                    case 't':   this->_snake.push_back({i + 2, y, BLUE, 't'});    break;
+                    default:    break;
+                }
+            }
+        }
     }
 
     void SnakeGame::setHighScore()
@@ -106,7 +116,7 @@ namespace Arcade {
             _apple = { 1, 1, RED, 'a'};
             this->_apple.x = 1; this->_apple.y = 1; this->_apple.draw = 'a';
         } else {
-            int appleCoordIndex = (rand() % appleCoord.size());
+            size_t appleCoordIndex = (rand() % appleCoord.size());
             for (auto &i : appleCoord) {
                 if (appleCoordIndex == 0) {
                     this->_apple.x = i.x;
@@ -144,7 +154,7 @@ namespace Arcade {
         else return;
         switch (this->_direction) {
             case EventType::UP:
-                for (int i = this->_snake.size() - 1; i > 0; i--) {
+                for (size_t i = this->_snake.size() - 1; i > 0; i--) {
                     if (this->_snake[i].draw == 'h') this->_snake[i].rotation = NORTH;
                     this->_snake[i].x = this->_snake[i - 1].x;
                     this->_snake[i].y = this->_snake[i - 1].y;
@@ -152,7 +162,7 @@ namespace Arcade {
                 this->_snake[0].y -= 1;
                 break;
             case EventType::DOWN:
-                for (int i = this->_snake.size() - 1; i > 0; i--) {
+                for (size_t i = this->_snake.size() - 1; i > 0; i--) {
                     if (this->_snake[i].draw == 'h') this->_snake[i].rotation = SOUTH;
                     this->_snake[i].x = this->_snake[i - 1].x;
                     this->_snake[i].y = this->_snake[i - 1].y;
@@ -160,7 +170,7 @@ namespace Arcade {
                 this->_snake[0].y += 1;
                 break;
             case EventType::LEFT:
-                for (int i = this->_snake.size() - 1; i > 0; i--) {
+                for (size_t i = this->_snake.size() - 1; i > 0; i--) {
                     if (this->_snake[i].draw == 'h') this->_snake[i].rotation = WEST;
                     this->_snake[i].x = this->_snake[i - 1].x;
                     this->_snake[i].y = this->_snake[i - 1].y;
@@ -168,7 +178,7 @@ namespace Arcade {
                 this->_snake[0].x -= 1;
                 break;
             case EventType::RIGHT:
-                for (int i = this->_snake.size() - 1; i > 0; i--) {
+                for (size_t i = this->_snake.size() - 1; i > 0; i--) {
                     if (this->_snake[i].draw == 'h') this->_snake[i].rotation = EAST;
                     this->_snake[i].x = this->_snake[i - 1].x;
                     this->_snake[i].y = this->_snake[i - 1].y;
