@@ -110,6 +110,15 @@ namespace Arcade {
         _isRunning = isRunning;
     }
 
+    MenuInfo Menu::getMenuInfo(Arcade::EventType event)
+    {
+        if (event == EventType::ACTION1) {
+        MenuInfo menu{_selectedLib, _selectedGame};
+        return menu;
+        }
+        return MenuInfo{"", ""};
+    }
+
     extern "C" {
         IGame *entryPoint()
         {

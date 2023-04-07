@@ -26,6 +26,7 @@ namespace Arcade {
             const std::vector<DrawableText> &getDrawableText() const override;
             //////////////////////// Setters //////////////////////////
             void setIsRunning(bool isRunning) override;
+            MenuInfo getMenuInfo(Arcade::EventType event);
         private:
             size_t _index;
             std::string _selectedLib;

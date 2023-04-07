@@ -51,4 +51,10 @@ namespace Arcade {
     {
         _isRunning = isRunning;
     }
+
+    const MenuInfo AGame::getMenuInfo(Arcade::EventType event)
+    {
+        (void) event;
+        return MenuInfo {0, 0};
+    }
 }

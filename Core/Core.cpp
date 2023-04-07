@@ -25,7 +25,7 @@ namespace Arcade {
             exit(84);
         }
         this->setGraphic(this->graphicDll->getFunction<IDisplay>("entryPoint"));
-        this->gameDll = new DLLoader("./lib/arcade_snake.so");
+        this->gameDll = new DLLoader("./lib/arcade_menu.so");
         this->setGame(this->gameDll->getFunction<IGame>("entryPoint"));
         std::string path = "./lib";
         for (const auto & entry : std::filesystem::directory_iterator(path)) {
@@ -45,10 +45,10 @@ namespace Arcade {
 
     Core::Core(std::string lib, std::string game)
     {
-        DLLoader dll(lib);
-        this->setGraphic(dll.getFunction<IDisplay>("entryPoint"));
-        DLLoader dll2(game);
-        this->setGame(dll2.getFunction<IGame>("entryPoint"));
+        this->graphicDll = new DLLoader(lib);
+        this->setGraphic(this->graphicDll->getFunction<IDisplay>("entryPoint"));
+        this->gameDll = new DLLoader(game);
+        this->setGame(this->gameDll->getFunction<IGame>("entryPoint"));
     }
 
     Core::~Core()
@@ -75,6 +75,7 @@ namespace Arcade {
            Arcade::EventType eventKey = this->graphic->getEvent();
            this->game->update(eventKey);
            this->setChangeLib(eventKey);
+           this->MenuGetChange();
            if (!this->game->isRunning()) break;
            this->graphic->update();
            this->graphic->clear();
@@ -95,6 +96,23 @@ namespace Arcade {
         }
     }
 
+    void Core::MenuGetChange()
+    {
+        MenuInfo tmp = this->game->getMenuInfo(this->graphic->getEvent());
+        if (tmp.game_path == "" || tmp.lib_path == "") return;
+        else {
+            this->graphic->close();
+            this->graphicDll->~DLLoader();
+            this->graphicDll = new DLLoader(tmp.lib_path);
+            this->setGraphic(this->graphicDll->getFunction<IDisplay>("entryPoint"));
+            this->graphic->init(this->game->getAssets());
+            this->gameDll->~DLLoader();
+            this->gameDll = new DLLoader(tmp.game_path);
+            this->setGame(this->gameDll->getFunction<IGame>("entryPoint"));
+            this->game->init();
+        }
+
+    }
     void Core::changeLib(std::string lib)
     {
         std::cout << "Change lib: " << lib << std::endl;

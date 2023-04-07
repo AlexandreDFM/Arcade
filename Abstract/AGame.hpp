@@ -24,6 +24,7 @@ namespace Arcade {
             const std::vector<Drawable> &getDrawable() const override;
             const std::map<char, std::string> &getAssets() const override;
             const std::vector<DrawableText> &getDrawableText() const override;
+            const MenuInfo getMenuInfo(Arcade::EventType event);
             //////////////////////// Setters //////////////////////////
             void setIsRunning(bool isRunning) override;
     protected:

@@ -27,6 +27,8 @@ namespace Arcade {
             //////////////////////// Functions ////////////////////////
             void loop();
             void changeLib(std::string lib);
+
+            void MenuGetChange();
         private:
             IDisplay *graphic;
             IGame *game;
