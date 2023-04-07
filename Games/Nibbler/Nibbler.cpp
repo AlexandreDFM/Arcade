@@ -44,11 +44,11 @@ namespace Arcade {
         this->_text.push_back({ 38, 7, 12, WHITE, "Score: " + std::to_string(this->_score), std::string("Poppins-Black")});
         this->_text.push_back({ 38, 10, 12, WHITE, "HighScore: " + std::to_string(this->_highScore), std::string("Poppins-Black")});
 
-        this->_snake.push_back({ 25, 12, WHITE, 'h'});
-        this->_snake.push_back({ 24, 12, WHITE, 'b'});
-        this->_snake.push_back({ 23, 12, WHITE, 'b'});
-        this->_snake.push_back({ 22, 12, WHITE, 'b'});
-        this->_snake.push_back({ 21, 12, WHITE, 't'});
+//        this->_snake.push_back({ 25, 12, WHITE, 'h'});
+//        this->_snake.push_back({ 24, 12, WHITE, 'b'});
+//        this->_snake.push_back({ 23, 12, WHITE, 'b'});
+//        this->_snake.push_back({ 22, 12, WHITE, 'b'});
+//        this->_snake.push_back({ 21, 12, WHITE, 't'});
     }
 
     void NibblerGame::setMap(int i)
@@ -67,8 +67,29 @@ namespace Arcade {
 
         for (int y = 5 ;std::getline(inputFile, line); y++) {
             for (int i = 0; line[i]; i++) {
-                if (line[i] == '#') this->_wall.push_back({i + 15, y, BLACK, 'w'});
-                else if (line[i] == 'P') this->_apples.push_back({i + 15, y, BLACK, 'a'});
+                switch (line[i]) {
+                    case '#':
+                        this->_wall.push_back({i + 15, y, BLACK, 'w'});
+                        break;
+                    case 'P':
+                        this->_apples.push_back({i + 15, y, BLACK, 'a'});
+                        break;
+                    case 'h':
+                        this->_snake.push_back({i + 15, y, WHITE, 'h'});
+                        break;
+                    case 'b':
+                        this->_snake.push_back({i + 15, y, WHITE, 'b'});
+                        break;
+                    case 't':
+                        this->_snake.push_back({i + 15, y, WHITE, 't'});
+                        break;
+                    default:
+                        break;
+
+
+                }
+//                if (line[i] == '#') this->_wall.push_back({i + 15, y, BLACK, 'w'});
+//                else if (line[i] == 'P') this->_apples.push_back({i + 15, y, BLACK, 'a'});
             }
         }
     }
@@ -97,11 +118,11 @@ namespace Arcade {
         this->_text.push_back({ 38, 7, 12, WHITE, "Score: " + std::to_string(this->_score), std::string("Poppins-Black")});
         this->_text.push_back({ 38, 10, 12, WHITE, "HighScore: " + std::to_string(this->_highScore), std::string("Poppins-Black")});
 
-        this->_snake.push_back({ 25, 12, WHITE, 'h'});
-        this->_snake.push_back({ 24, 12, WHITE, 'b'});
-        this->_snake.push_back({ 23, 12, WHITE, 'b'});
-        this->_snake.push_back({ 22, 12, WHITE, 'b'});
-        this->_snake.push_back({ 21, 12, WHITE, 't'});
+//        this->_snake.push_back({ 25, 12, WHITE, 'h'});
+//        this->_snake.push_back({ 24, 12, WHITE, 'b'});
+//        this->_snake.push_back({ 23, 12, WHITE, 'b'});
+//        this->_snake.push_back({ 22, 12, WHITE, 'b'});
+//        this->_snake.push_back({ 21, 12, WHITE, 't'});
     }
 
     void NibblerGame::setHighScore()
