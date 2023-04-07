@@ -43,7 +43,6 @@ namespace Arcade {
 
         this->_text.push_back({ 38, 7, 12, WHITE, "Score: " + std::to_string(this->_score), std::string("Poppins-Black")});
         this->_text.push_back({ 38, 10, 12, WHITE, "HighScore: " + std::to_string(this->_highScore), std::string("Poppins-Black")});
-
     }
 
     void NibblerGame::setMap(int i)
@@ -63,11 +62,11 @@ namespace Arcade {
         for (int y = 5 ;std::getline(inputFile, line); y++) {
             for (int i = 0; line[i]; i++) {
                 switch (line[i]) {
-                    case '#':   this->_wall.push_back({i + 15, y, BLACK, 'w'});     break;
-                    case 'P':   this->_apples.push_back({i + 15, y, BLACK, 'a'});   break;
-                    case 'h':   this->_snake.push_back({i + 15, y, WHITE, 'h'});    break;
-                    case 'b':   this->_snake.push_back({i + 15, y, WHITE, 'b'});    break;
-                    case 't':   this->_snake.push_back({i + 15, y, WHITE, 't'});    break;
+                    case '#':   this->_wall.push_back({i + 15, y, WHITE, 'w'}); break;
+                    case 'P':   this->_apples.push_back({i + 15, y, RED, 'a'}); break;
+                    case 'h':   this->_snake.push_back({i + 15, y, BLUE, 'h'}); break;
+                    case 'b':   this->_snake.push_back({i + 15, y, BLUE, 'b'}); break;
+                    case 't':   this->_snake.push_back({i + 15, y, BLUE, 't'}); break;
                     default:    break;
                 }
             }
@@ -144,10 +143,10 @@ namespace Arcade {
                 this->_apples.erase(this->_apples.begin() + index);
                 this->_snake[this->_snake.size() - 1].draw = 'b';
                 switch (this->_direction) {
-                    case EventType::UP:     this->_snake.push_back({this->_snake[this->_snake.size() - 1].x,this->_snake[this->_snake.size() - 1].y + 1, WHITE, 't'});    break;
-                    case EventType::DOWN:   this->_snake.push_back({this->_snake[this->_snake.size() - 1].x,this->_snake[this->_snake.size() - 1].y - 1, WHITE, 't'});    break;
-                    case EventType::LEFT:   this->_snake.push_back({this->_snake[this->_snake.size() - 1].x + 1,this->_snake[this->_snake.size() - 1].y, WHITE, 't'});     break;
-                    case EventType::RIGHT:  this->_snake.push_back({this->_snake[this->_snake.size() - 1].x - 1,this->_snake[this->_snake.size() - 1].y, WHITE, 't'});     break;
+                    case EventType::UP:     this->_snake.push_back({this->_snake[this->_snake.size() - 1].x,this->_snake[this->_snake.size() - 1].y + 1, BLUE, 't'});    break;
+                    case EventType::DOWN:   this->_snake.push_back({this->_snake[this->_snake.size() - 1].x,this->_snake[this->_snake.size() - 1].y - 1, BLUE, 't'});    break;
+                    case EventType::LEFT:   this->_snake.push_back({this->_snake[this->_snake.size() - 1].x + 1,this->_snake[this->_snake.size() - 1].y, BLUE, 't'});     break;
+                    case EventType::RIGHT:  this->_snake.push_back({this->_snake[this->_snake.size() - 1].x - 1,this->_snake[this->_snake.size() - 1].y, BLUE, 't'});     break;
                     default:                break;
                 }
                 this->_score += 1;
@@ -163,10 +162,20 @@ namespace Arcade {
             case EventType::UP:
                 for (auto i : this->_wall) {
                     if (this->_snake[0].x == i.x && this->_snake[0].y - 1 == i.y) {
+                        for (auto j : this->_wall) {
+                            if (this->_snake[0].x + 1 == j.x && this->_snake[0].y == j.y) {
+                                this->_direction = EventType::LEFT;
+                                return;
+                            }
+                            if (this->_snake[0].x - 1 == j.x && this->_snake[0].y == j.y) {
+                                this->_direction = EventType::RIGHT;
+                                return;
+                            }
+                        }
                         return;
                     }
                 }
-                for (int i = this->_snake.size() - 1; i > 0; i--) {
+                for (size_t i = this->_snake.size() - 1; i > 0; i--) {
                     this->_snake[i].x = this->_snake[i - 1].x;
                     this->_snake[i].y = this->_snake[i - 1].y;
                 }
@@ -174,10 +183,20 @@ namespace Arcade {
             case EventType::DOWN:
                 for (auto i : this->_wall) {
                     if (this->_snake[0].x == i.x && this->_snake[0].y + 1 == i.y) {
+                        for (auto j : this->_wall) {
+                            if (this->_snake[0].x + 1 == j.x && this->_snake[0].y == j.y) {
+                                this->_direction = EventType::LEFT;
+                                return;
+                            }
+                            if (this->_snake[0].x - 1 == j.x && this->_snake[0].y == j.y) {
+                                this->_direction = EventType::RIGHT;
+                                return;
+                            }
+                        }
                         return;
                     }
                 }
-                for (int i = this->_snake.size() - 1; i > 0; i--) {
+                for (size_t i = this->_snake.size() - 1; i > 0; i--) {
                     this->_snake[i].x = this->_snake[i - 1].x;
                     this->_snake[i].y = this->_snake[i - 1].y;
                 }
@@ -186,10 +205,20 @@ namespace Arcade {
             case EventType::LEFT:
                 for (auto &i : this->_wall) {
                     if (this->_snake[0].x - 1 == i.x && this->_snake[0].y == i.y) {
+                        for (auto j : this->_wall) {
+                            if (this->_snake[0].x == j.x && this->_snake[0].y + 1 == j.y) {
+                                this->_direction = EventType::UP;
+                                return;
+                            }
+                            if (this->_snake[0].x == j.x && this->_snake[0].y - 1 == j.y) {
+                                this->_direction = EventType::DOWN;
+                                return;
+                            }
+                        }
                         return;
                     }
                 }
-                for (int i = this->_snake.size() - 1; i > 0; i--) {
+                for (size_t i = this->_snake.size() - 1; i > 0; i--) {
                     this->_snake[i].x = this->_snake[i - 1].x;
                     this->_snake[i].y = this->_snake[i - 1].y;
                 }
@@ -197,10 +226,20 @@ namespace Arcade {
             case EventType::RIGHT:
                 for (auto &i : this->_wall) {
                     if (this->_snake[0].x + 1 == i.x && this->_snake[0].y == i.y) {
+                        for (auto j : this->_wall) {
+                            if (this->_snake[0].x == j.x && this->_snake[0].y + 1 == j.y) {
+                                this->_direction = EventType::UP;
+                                return;
+                            }
+                            if (this->_snake[0].x == j.x && this->_snake[0].y - 1 == j.y) {
+                                this->_direction = EventType::DOWN;
+                                return;
+                            }
+                        }
                         return;
                     }
                 }
-                for (int i = this->_snake.size() - 1; i > 0; i--) {
+                for (size_t i = this->_snake.size() - 1; i > 0; i--) {
                     this->_snake[i].x = this->_snake[i - 1].x;
                     this->_snake[i].y = this->_snake[i - 1].y;
                 }
