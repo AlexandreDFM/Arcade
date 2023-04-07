@@ -26,6 +26,7 @@ namespace Arcade {
             const std::vector<Drawable> &getDrawable() const override;
             const std::map<char, std::string> &getAssets() const override;
             const std::vector<DrawableText> &getDrawableText() const override;
+            void setMap();
             void close() override;
         private:
             int _score;

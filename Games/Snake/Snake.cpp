@@ -35,22 +35,32 @@ namespace Arcade {
         this->_assets.insert({{'b', "./Assets/Games/Snake/Body.png"}});
         this->_assets.insert({{'t', "./Assets/Games/Snake/Tail.png"}});
         this->_assets.insert({{'a', "./Assets/Games/Snake/Apple.png"}});
-        for (int x = 5; x < 31; x++) {
-            this->_wall.push_back({x, 5, WHITE, 'w'});
-            this->_wall.push_back({x, 20,  WHITE, 'w'});
-        }
-        for (int y = 6; y < 20; y++) {
-            this->_wall.push_back({5, y,  WHITE, 'w'});
-            this->_wall.push_back({30, y,  WHITE, 'w'});
-        }
+
+        this->setMap();
+
         this->_text.push_back({ 33, 7, 12, WHITE, "Score: " + std::to_string(this->_score), std::string("Poppins-Black")});
         this->_text.push_back({ 33, 10, 12, WHITE, "HighScore: " + std::to_string(this->_highScore), std::string("Poppins-WHITE")});
-        this->_snake.push_back({ 13, 12, BLUE, 'h'});
-        this->_snake.push_back({ 12, 12, BLUE, 'b'});
-        this->_snake.push_back({ 11, 12, BLUE, 'b'});
-        this->_snake.push_back({ 10, 12, BLUE, 'b'});
-        this->_snake.push_back({ 9, 12, BLUE, 't'});
+
         this->placeApple();
+    }
+
+    void SnakeGame::setMap()
+    {
+        std::string line;
+        std::string path = "./Assets/Games/Snake/Snake.txt";
+        std::ifstream inputFile(path);
+
+        for (int y = 3 ;std::getline(inputFile, line); y++) {
+            for (int i = 0; line[i]; i++) {
+                switch (line[i]) {
+                    case '#':   this->_wall.push_back({i + 2, y, BLACK, 'w'});     break;
+                    case 'h':   this->_snake.push_back({i + 2, y, WHITE, 'h'});    break;
+                    case 'b':   this->_snake.push_back({i + 2, y, WHITE, 'b'});    break;
+                    case 't':   this->_snake.push_back({i + 2, y, WHITE, 't'});    break;
+                    default:    break;
+                }
+            }
+        }
     }
 
     void SnakeGame::setHighScore()
