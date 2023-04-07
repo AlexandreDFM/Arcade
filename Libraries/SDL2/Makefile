@@ -15,7 +15,7 @@ OBJ				=    $(SRC:.cpp=.o)
 CXXFLAGS		=    -Wall -Wextra -Werror -fPIC
 
 all:    			$(OBJ)
-					g++ -shared -o ${NAME} $(OBJ) -lSDL2 -lSDL2_image -lSDL2_ttf
+					g++ -shared -o $(NAME) $(OBJ) -lSDL2 -lSDL2_image -lSDL2_ttf
 
 clean:
 					rm -f $(OBJ)

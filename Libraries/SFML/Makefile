@@ -15,7 +15,7 @@ OBJ				=    $(SRC:.cpp=.o)
 CXXFLAGS		=    -Wall -Wextra -Werror -fPIC
 
 all:    			$(OBJ)
-					g++ -shared -o ${NAME} $(OBJ) -lsfml-graphics -lsfml-window -lsfml-system
+					g++ -shared -o $(NAME) $(OBJ) -lsfml-graphics -lsfml-window -lsfml-system
 
 clean:
 					rm -f $(OBJ)

@@ -15,7 +15,7 @@ OBJ				=    $(SRC:.cpp=.o)
 CXXFLAGS		=    -Wall -Wextra -Werror -fPIC
 
 all:    			$(OBJ)
-					g++ -shared -o ${NAME} $(OBJ) -lncurses
+					g++ -shared -o $(NAME) $(OBJ) -lncurses
 
 clean:
 					rm -f $(OBJ)
