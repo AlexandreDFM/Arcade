@@ -11,7 +11,9 @@ namespace Arcade {
     AGame::AGame()
     {
         _isRunning = true;
-        _event = Arcade::EventType::NOTHING;
+        _drawable = std::vector<Drawable>();
+        _assets = std::map<char, std::string>();
+        _drawableText = std::vector<DrawableText>();
     }
 
     void AGame::init()
@@ -47,14 +49,18 @@ namespace Arcade {
         return _drawableText;
     }
 
+    void AGame::setMenuInfo(MenuInfo menuInfo)
+    {
+        _menuInfo = menuInfo;
+    }
+
     void AGame::setIsRunning(bool isRunning)
     {
         _isRunning = isRunning;
     }
 
-    const MenuInfo AGame::getMenuInfo(Arcade::EventType event)
+    MenuInfo AGame::getMenuInfo(void) const
     {
-        (void) event;
-        return MenuInfo {0, 0};
+        return _menuInfo;
     }
 }

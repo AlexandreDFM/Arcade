@@ -24,8 +24,7 @@ namespace Arcade {
         this->_speed = 1;
         std::ifstream file("./Assets/Games/Snake/HighScore.txt");
         std::string highScore = "";
-        for (int i = 0; i < 1; i++)
-            getline(file, highScore);
+        for (int i = 0; i < 1; i++) getline(file, highScore);
         file.close();
         this->_highScore = std::stoi(highScore);
         this->_isRunning = true;
@@ -38,8 +37,8 @@ namespace Arcade {
 
         this->setMap();
 
-        this->_text.push_back({ 33, 7, 12, WHITE, "Score: " + std::to_string(this->_score), std::string("Poppins-Black")});
-        this->_text.push_back({ 33, 10, 12, WHITE, "HighScore: " + std::to_string(this->_highScore), std::string("Poppins-WHITE")});
+        this->_drawableText.push_back({ 33, 7, 12, WHITE, "Score: " + std::to_string(this->_score), std::string("Poppins-Black")});
+        this->_drawableText.push_back({ 33, 10, 12, WHITE, "HighScore: " + std::to_string(this->_highScore), std::string("Poppins-WHITE")});
 
         this->placeApple();
     }
@@ -69,21 +68,6 @@ namespace Arcade {
         file.open("./Assets/Games/Snake/HighScore.txt");
         file << this->_highScore << std::endl;
         file.close();
-    }
-
-    const std::vector<Drawable> &SnakeGame::getDrawable() const
-    {
-        return this->_all;
-    }
-
-    const std::vector<DrawableText> &SnakeGame::getDrawableText() const
-    {
-        return this->_text;
-    }
-
-    const std::map<char, std::string> &SnakeGame::getAssets() const
-    {
-        return this->_assets;
     }
 
     void SnakeGame::placeApple()
@@ -127,16 +111,16 @@ namespace Arcade {
                 appleCoordIndex--;
             }
             if (this->_score != 0 && this->_score % 5 == 0) this->_speed += 0.1;
-            this->_text[0].text = "Score: " + std::to_string(this->_score);
+            this->_drawableText[0].text = "Score: " + std::to_string(this->_score);
         }
     }
 
     void SnakeGame::update(EventType event)
     {
-        this->_all.clear();
-        this->_all.push_back(this->_apple);
-        for (auto &i : this->_wall) this->_all.push_back(i);
-        for (auto &i : this->_snake) this->_all.push_back(i);
+        this->_drawable.clear();
+        this->_drawable.push_back(this->_apple);
+        for (auto &i : this->_wall) this->_drawable.push_back(i);
+        for (auto &i : this->_snake) this->_drawable.push_back(i);
 
         switch (event) {
             case EventType::CLOSE:   this->setHighScore(); this->close(); return;
@@ -147,6 +131,7 @@ namespace Arcade {
             case EventType::RIGHT:   if (this->_direction != EventType::LEFT)    this->_direction = EventType::RIGHT; break;
             default:                 break;
         }
+
         static auto start = std::chrono::steady_clock::now();
         auto end = std::chrono::steady_clock::now();
         std::chrono::duration<double> elapsed_seconds = end - start;
@@ -215,7 +200,7 @@ namespace Arcade {
     {
         this->_isRunning = false;
         this->_snake.clear();
-        this->_all.clear();
+        this->_drawable.clear();
         this->_assets.clear();
     }
 

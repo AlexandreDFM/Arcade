@@ -28,7 +28,6 @@ namespace Arcade {
         virtual void clear() = 0;
         //////////////////////// Getters //////////////////////////
         virtual Arcade::EventType getEvent() = 0;
-        //////////////////////// Setters //////////////////////////
     };
 }
 

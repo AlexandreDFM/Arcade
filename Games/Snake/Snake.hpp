@@ -23,9 +23,6 @@ namespace Arcade {
             void update(EventType event) override;
             void placeApple();
             void setHighScore();
-            const std::vector<Drawable> &getDrawable() const override;
-            const std::map<char, std::string> &getAssets() const override;
-            const std::vector<DrawableText> &getDrawableText() const override;
             void setMap();
             void close() override;
         private:
@@ -34,11 +31,8 @@ namespace Arcade {
             int _highScore;
             Drawable _apple;
             EventType _direction;
-            std::vector<Drawable> _all;
             std::vector<Drawable> _wall;
             std::vector<Drawable> _snake;
-            std::vector<DrawableText> _text;
-            std::map<char, std::string> _assets;
     };
 }
 #endif /*SNAKEGAME_HPP_*/

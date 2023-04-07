@@ -19,7 +19,7 @@ namespace Arcade {
         public:
             /////////////////////// Constructors //////////////////////
             SDL2();
-            ~SDL2();
+            ~SDL2() override = default;
             //////////////////////// Functions ////////////////////////
             void init(const std::map<char, std::string> &gameAssets) override;
             void update() override;

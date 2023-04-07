@@ -142,11 +142,11 @@ namespace Arcade {
     }
 
     extern "C" {
-    IDisplay *entryPoint()
+        IDisplay *entryPoint()
         {
             return new NCurses();
         }
-    char *getType()
+        char *getType()
         {
             return (char *) "libNcurses";
         }

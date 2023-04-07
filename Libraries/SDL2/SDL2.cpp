@@ -8,13 +8,12 @@
 #include "SDL2.hpp"
 
 namespace Arcade {
-    SDL2::SDL2() {
+    SDL2::SDL2()
+    {
     }
 
-    SDL2::~SDL2() {
-    }
-
-    void SDL2::init(const std::map<char, std::string> &gameAssets) {
+    void SDL2::init(const std::map<char, std::string> &gameAssets)
+    {
         if (SDL_Init(SDL_INIT_VIDEO) < 0) {
             std::cerr << "SDL could not initialize! SDL_Error: " << SDL_GetError() << std::endl; exit(84);
         }
@@ -47,11 +46,13 @@ namespace Arcade {
         }
     }
 
-    void SDL2::update() {
+    void SDL2::update()
+    {
         SDL_RenderPresent(_renderer);
     }
 
-    void SDL2::close() {
+    void SDL2::close()
+    {
         for (auto &asset : this->_spriteAssets) SDL_DestroyTexture(asset.second);
         this->_spriteAssets.clear();
 //        for (auto &asset : this->_textAssets) {
@@ -67,7 +68,8 @@ namespace Arcade {
         SDL_Quit();
     }
 
-    void SDL2::display(std::vector <Drawable> drawables) {
+    void SDL2::display(std::vector <Drawable> drawables)
+    {
         if (drawables.empty()) return;
         SDL_Rect rect = {0, 0, 40, 40};
         for (auto &drawable : drawables) {
@@ -76,7 +78,8 @@ namespace Arcade {
         }
     }
 
-    void SDL2::display(std::vector <DrawableText> drawables) {
+    void SDL2::display(std::vector <DrawableText> drawables)
+    {
         if (drawables.empty()) return;
         for (auto &drawable : drawables) {
             SDL_Color color = {255, 255, 255, 255};
@@ -101,11 +104,13 @@ namespace Arcade {
         }
     }
 
-    void SDL2::clear() {
+    void SDL2::clear()
+    {
         SDL_RenderClear(_renderer);
     }
 
-    Arcade::EventType SDL2::getEvent() {
+    Arcade::EventType SDL2::getEvent()
+    {
         if (SDL_PollEvent(&_event)) {
             switch (_event.type) {
                 case SDL_QUIT:
@@ -135,7 +140,8 @@ namespace Arcade {
     }
 
     extern "C" {
-        IDisplay *entryPoint() {
+        IDisplay *entryPoint()
+        {
             return new SDL2();
         }
         char *getType()

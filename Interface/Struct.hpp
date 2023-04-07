@@ -57,6 +57,13 @@ namespace Arcade {
         int width;
         int height;
     };
+
+    struct MenuInfo {
+        std::string username;
+        std::string game_path;
+        std::string lib_path;
+    };
+
     struct Drawable {
         int x;
         int y;
@@ -66,10 +73,6 @@ namespace Arcade {
         struct Rect rect = {0, 0, 0, 0};
     };
 
-    struct MenuInfo {
-        std::string game_path;
-        std::string lib_path;
-    };
     struct DrawableText {
         int x;
         int y;

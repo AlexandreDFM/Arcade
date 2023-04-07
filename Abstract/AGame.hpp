@@ -24,15 +24,16 @@ namespace Arcade {
             const std::vector<Drawable> &getDrawable() const override;
             const std::map<char, std::string> &getAssets() const override;
             const std::vector<DrawableText> &getDrawableText() const override;
-            const MenuInfo getMenuInfo(Arcade::EventType event);
+            MenuInfo getMenuInfo(void) const override;
             //////////////////////// Setters //////////////////////////
+            void setMenuInfo(MenuInfo menuInfo) override;
             void setIsRunning(bool isRunning) override;
-    protected:
-        bool _isRunning;
-        Arcade::EventType _event;
-        std::vector<Drawable> _drawable;
-        std::map<char, std::string> _assets;
-        std::vector<DrawableText> _drawableText;
+        protected:
+            bool _isRunning;
+            MenuInfo _menuInfo;
+            std::vector<Drawable> _drawable;
+            std::map<char, std::string> _assets;
+            std::vector<DrawableText> _drawableText;
     };
 }
 

@@ -14,7 +14,6 @@ namespace Arcade {
         _score = 0;
         _highScore = 0;
         _direction = EventType::NOTHING;
-        _event = EventType::NOTHING;
         _isRunning = true;
     }
 
@@ -23,10 +22,9 @@ namespace Arcade {
         this->_snake.clear();
         this->_wall.clear();
         this->_apples.clear();
-        this->_text.clear();
-        this->_all.clear();
+        this->_drawableText.clear();
+        this->_drawable.clear();
         this->_direction = EventType::NOTHING;
-        this->_event = EventType::NOTHING;
 
         if (this->_score == 20)
             this->setMap(2);
@@ -41,8 +39,8 @@ namespace Arcade {
         this->_assets.insert({{'t', "./Assets/Games/Snake/Tail.png"}});
         this->_assets.insert({{'a', "./Assets/Games/Snake/Apple.png"}});
 
-        this->_text.push_back({ 38, 7, 12, WHITE, "Score: " + std::to_string(this->_score), std::string("Poppins-Black")});
-        this->_text.push_back({ 38, 10, 12, WHITE, "HighScore: " + std::to_string(this->_highScore), std::string("Poppins-Black")});
+        this->_drawableText.push_back({ 38, 7, 12, WHITE, "Score: " + std::to_string(this->_score), std::string("Poppins-Black")});
+        this->_drawableText.push_back({ 38, 10, 12, WHITE, "HighScore: " + std::to_string(this->_highScore), std::string("Poppins-Black")});
     }
 
     void NibblerGame::setMap(int i)
@@ -83,7 +81,6 @@ namespace Arcade {
             getline(file, highscore);
         file.close();
         this->_highScore = std::stoi(highscore);
-        this->_event = EventType::NOTHING;
         this->_direction = EventType::NOTHING;
 
         this->_assets.insert({{'w', "./Assets/Games/Nibbler/Wall.png"}});
@@ -94,8 +91,8 @@ namespace Arcade {
 
         this->setMap(1);
 
-        this->_text.push_back({ 38, 7, 12, WHITE, "Score: " + std::to_string(this->_score), std::string("Poppins-Black")});
-        this->_text.push_back({ 38, 10, 12, WHITE, "HighScore: " + std::to_string(this->_highScore), std::string("Poppins-Black")});
+        this->_drawableText.push_back({ 38, 7, 12, WHITE, "Score: " + std::to_string(this->_score), std::string("Poppins-Black")});
+        this->_drawableText.push_back({ 38, 10, 12, WHITE, "HighScore: " + std::to_string(this->_highScore), std::string("Poppins-Black")});
     }
 
     void NibblerGame::setHighScore()
@@ -104,21 +101,6 @@ namespace Arcade {
         file.open("./Assets/Games/Snake/HighScore.txt");
         file << this->_highScore << std::endl;
         file.close();
-    }
-
-    const std::vector<Drawable> &NibblerGame::getDrawable() const
-    {
-        return this->_all;
-    }
-
-    const std::vector<DrawableText> &NibblerGame::getDrawableText() const
-    {
-        return this->_text;
-    }
-
-    const std::map<char, std::string> &NibblerGame::getAssets() const
-    {
-        return this->_assets;
     }
 
     void NibblerGame::checkWall(EventType event)
@@ -150,7 +132,7 @@ namespace Arcade {
                     default:                break;
                 }
                 this->_score += 1;
-                this->_text[0].text = "Score: " + std::to_string(this->_score);
+                this->_drawableText[0].text = "Score: " + std::to_string(this->_score);
             }
             index++;
         }
@@ -250,11 +232,11 @@ namespace Arcade {
 
     void NibblerGame::update(EventType event)
     {
-        this->_all.clear();
-        this->_all.push_back(this->_apple);
-        for (auto &i : this->_wall)     this->_all.push_back(i);
-        for (auto &i : this->_snake)    this->_all.push_back(i);
-        for (auto &i : this->_apples)   this->_all.push_back(i);
+        this->_drawable.clear();
+        this->_drawable.push_back(this->_apple);
+        for (auto &i : this->_wall)     this->_drawable.push_back(i);
+        for (auto &i : this->_snake)    this->_drawable.push_back(i);
+        for (auto &i : this->_apples)   this->_drawable.push_back(i);
 
         EventType tmp = this->_direction;
         if (this->_apples.size() == 0) this->reset();
@@ -290,16 +272,17 @@ namespace Arcade {
     {
         this->_isRunning = false;
         this->_snake.clear();
-        this->_all.clear();
+        this->_drawable.clear();
         this->_wall.clear();
     }
 
     extern "C" {
-    IGame *entryPoint()
+        IGame *entryPoint()
         {
             return new NibblerGame();
         }
-    char *getType()
+
+        char *getType()
         {
             return (char *) "gameNibbler";
         }

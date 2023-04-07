@@ -19,9 +19,6 @@ namespace Arcade {
             void update(EventType key) override;
             void checkWall(EventType key);
             void setHighScore();
-            const std::vector<Drawable> &getDrawable() const override;
-            const std::vector<DrawableText> &getDrawableText() const override;
-            const std::map<char, std::string> &getAssets() const override;
             void setMap(int i);
             void checkApple();
             void bodyMove();
@@ -31,14 +28,10 @@ namespace Arcade {
             int _score;
             int _highScore;
             Drawable _apple;
-            EventType _event;
             EventType _direction;
-            std::vector<Drawable> _all;
             std::vector<Drawable> _wall;
             std::vector<Drawable> _snake;
             std::vector<Drawable> _apples;
-            std::vector<DrawableText> _text;
-            std::map<char, std::string> _assets;
     };
 }
 
