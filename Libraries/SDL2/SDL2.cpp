@@ -71,13 +71,13 @@ namespace Arcade {
     void SDL2::display(std::vector <Drawable> drawables)
     {
         if (drawables.empty()) return;
-        SDL_Rect rect = {0, 0, 40, 40};
         for (auto &drawable : drawables) {
-            SDL_Rect pos = {drawable.x * 40, drawable.y * 40, 40, 40};
+            SDL_Rect rect = {drawable.rect.left, drawable.rect.top, drawable.rect.width, drawable.rect.height};
+            SDL_Rect pos = {drawable.x * 40, drawable.y * 40, drawable.rect.width, drawable.rect.height};
             if (drawable.draw != 'h' && drawable.draw != 'b') {
                 SDL_RenderCopy(_renderer, _spriteAssets[drawable.draw], &rect, &pos); continue;
             }
-            SDL_Point rotation_point = { 40 / 2, 40 / 2 };
+            SDL_Point rotation_point = { drawable.rect.width / 2, drawable.rect.height / 2 };
             switch (drawable.rotation) {
                 case Direction::NO_DIRECTION: SDL_RenderCopy(_renderer, _spriteAssets[drawable.draw], &rect, &pos); break;
                 case Direction::WEST:         SDL_RenderCopyEx(_renderer, _spriteAssets[drawable.draw], &rect, &pos, 0, &rotation_point, SDL_FLIP_NONE); break;

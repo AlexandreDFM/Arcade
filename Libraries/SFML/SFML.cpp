@@ -66,6 +66,8 @@ namespace Arcade {
         for (auto &drawable : drawables) {
             for (auto &sprite : this->_spriteAssets) {
                 if (sprite.first == drawable.draw) {
+                    sf::IntRect rect = sf::IntRect(0, 0, drawable.rect.width, drawable.rect.height);
+                    sprite.second.sprite.setTextureRect(rect);
                     sprite.second.sprite.setPosition({(float) drawable.x * 40, (float) drawable.y * 40});
                     this->window->draw(sprite.second.sprite);
                     if (drawable.draw != 'h' && drawable.draw != 'b') continue;

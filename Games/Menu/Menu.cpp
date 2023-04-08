@@ -14,7 +14,7 @@ namespace Arcade {
         this->_username = "Player 1";
         this->_isUsernameSet = false;
         this->_alphabetIndex = 0;
-        this->_alphabet = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", " ", "DEL"};
+        this->_alphabet = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "_", "DEL"};
         this->_index = 0;
         std::string path = "./lib";
         for (const auto & entry : std::filesystem::directory_iterator(path)) {
@@ -31,15 +31,25 @@ namespace Arcade {
             else if (strncmp(string, "game", 4) == 0) _games.emplace_back(std::string(string += 4), entry.path().string());
             else std::cout << "Error: " << entry.path() << " is not a valid library" << std::endl;
         }
+        this->_assets.insert({{'b', "./Assets/Games/Menu/Background.png"}});
+        this->_drawable.push_back({0, 0, BLACK, 'b', NO_DIRECTION, {0, 0, 1920, 1080}});
     }
 
     void Menu::update(Arcade::EventType event)
     {
         this->_drawableText.clear();
         if (!this->_isUsernameSet) {
-            this->_drawableText.push_back({ 10, 1, 12, WHITE, std::string("Username :"), std::string("Poppins-Black")});
-            this->_drawableText.push_back({ 10, 2, 12, WHITE, this->_username, std::string("Poppins-Black")});
-            this->_drawableText.push_back({ 10, 3, 12, WHITE, this->_alphabet[this->_alphabetIndex], std::string("Poppins-Black")});
+            this->_drawableText.push_back({ 18, 1, 12, WHITE, std::string("Username :"), std::string("Poppins-Black")});
+            this->_drawableText.push_back({ 18 + 6, 1, 12, WHITE, this->_username, std::string("Poppins-Black")});
+            int line = 3;
+            int index = 0;
+            int indexInAlphabet = 0;
+            for (auto &letter : this->_alphabet) {
+                if (index == 20) { index = 0; line += 1; }
+                Color color = this->_alphabetIndex == indexInAlphabet ? RED : WHITE;
+                this->_drawableText.push_back({ 10 + index, line, 12, color, letter, std::string("Poppins-Black")});
+                index += 1; indexInAlphabet += 1;
+            }
             switch (event) {
                 case Arcade::EventType::LEFT:
                     this->_alphabetIndex -= 1;

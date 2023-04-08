@@ -28,7 +28,7 @@ namespace Arcade {
 
         if (this->_mapIndex == 3) {
             this->_mapIndex = 1;
-            this->_speed = 0.1;
+            this->_speed += 0.1;
         } else {
             this->_mapIndex++;
         }
@@ -58,11 +58,11 @@ namespace Arcade {
         for (int y = 5 ;std::getline(inputFile, line); y++) {
             for (int i = 0; line[i]; i++) {
                 switch (line[i]) {
-                    case '#':   this->_wall.push_back({i + 15, y, WHITE, 'w', WEST}); break;
-                    case 'P':   this->_apples.push_back({i + 15, y, RED, 'a', WEST}); break;
-                    case 'h':   this->_snake.push_back({i + 15, y, BLUE, 'h', WEST}); break;
-                    case 'b':   this->_snake.push_back({i + 15, y, BLUE, 'b', WEST}); break;
-//                    case 't':   this->_snake.push_back({i + 15, y, BLUE, 't'}); break;
+                    case '#':   this->_wall.push_back({i + 15, y, WHITE, 'w', WEST, {0, 0, 40, 40}}); break;
+                    case 'P':   this->_apples.push_back({i + 15, y, RED, 'a', WEST, {0, 0, 40, 40}}); break;
+                    case 'h':   this->_snake.push_back({i + 15, y, BLUE, 'h', WEST, {0, 0, 40, 40}}); break;
+                    case 'b':   this->_snake.push_back({i + 15, y, BLUE, 'b', WEST, {0, 0, 40, 40}}); break;
+                    case 't':   this->_snake.push_back({i + 15, y, BLUE, 'b'}); break;
                     default:    break;
                 }
             }

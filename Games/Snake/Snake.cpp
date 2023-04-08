@@ -61,10 +61,10 @@ namespace Arcade {
         for (int y = 3 ;std::getline(inputFile, line); y++) {
             for (int i = 0; line[i]; i++) {
                 switch (line[i]) {
-                    case '#':   this->_wall.push_back({i + 2, y, WHITE, 'w', WEST}); break;
-                    case 'h':   this->_snake.push_back({i + 2, y, BLUE, 'h', WEST}); break;
-                    case 'b':   this->_snake.push_back({i + 2, y, BLUE, 'b', WEST}); break;
-//                    case 't':   this->_snake.push_back({i + 2, y, BLUE, 't', WEST}); break;
+                    case '#':   this->_wall.push_back({i + 2, y, WHITE, 'w', WEST, {0, 0, 40, 40}}); break;
+                    case 'h':   this->_snake.push_back({i + 2, y, BLUE, 'h', WEST, {0, 0, 40, 40}}); break;
+                    case 'b':   this->_snake.push_back({i + 2, y, BLUE, 'b', WEST, {0, 0, 40, 40}}); break;
+                    case 't':   this->_snake.push_back({i + 2, y, BLUE, 'b', WEST}); break;
                     default:    break;
                 }
             }

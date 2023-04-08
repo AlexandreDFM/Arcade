@@ -70,7 +70,7 @@ namespace Arcade {
         Color color;
         char draw;
         enum Direction rotation = NO_DIRECTION;
-        struct Rect rect = {0, 0, 0, 0};
+        struct Rect rect = {0, 0, 40, 40};
     };
 
     struct DrawableText {
