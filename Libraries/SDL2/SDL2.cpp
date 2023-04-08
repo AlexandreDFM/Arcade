@@ -74,7 +74,17 @@ namespace Arcade {
         SDL_Rect rect = {0, 0, 40, 40};
         for (auto &drawable : drawables) {
             SDL_Rect pos = {drawable.x * 40, drawable.y * 40, 40, 40};
-            SDL_RenderCopy(_renderer, _spriteAssets[drawable.draw], &rect, &pos);
+            if (drawable.draw != 'h' && drawable.draw != 'b') {
+                SDL_RenderCopy(_renderer, _spriteAssets[drawable.draw], &rect, &pos); continue;
+            }
+            SDL_Point rotation_point = { 40 / 2, 40 / 2 };
+            switch (drawable.rotation) {
+                case Direction::NO_DIRECTION: SDL_RenderCopy(_renderer, _spriteAssets[drawable.draw], &rect, &pos); break;
+                case Direction::WEST:         SDL_RenderCopyEx(_renderer, _spriteAssets[drawable.draw], &rect, &pos, 0, &rotation_point, SDL_FLIP_NONE); break;
+                case Direction::EAST:         SDL_RenderCopyEx(_renderer, _spriteAssets[drawable.draw], &rect, &pos, 180, &rotation_point, SDL_FLIP_NONE); break;
+                case Direction::NORTH:        SDL_RenderCopyEx(_renderer, _spriteAssets[drawable.draw], &rect, &pos, 90, &rotation_point, SDL_FLIP_NONE); break;
+                case Direction::SOUTH:        SDL_RenderCopyEx(_renderer, _spriteAssets[drawable.draw], &rect, &pos, 270, &rotation_point, SDL_FLIP_NONE); break;
+            }
         }
     }
 
