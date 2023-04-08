@@ -27,6 +27,7 @@ namespace Arcade {
             void close() override;
         private:
             int _score;
+            bool _isStart;
             float _speed;
             int _highScore;
             Drawable _apple;

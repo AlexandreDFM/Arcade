@@ -23,6 +23,7 @@ namespace Arcade {
             //////////////////////// Setter ////////////////////////
             void setGraphic(IDisplay *graphic);
             void setGame(IGame *game);
+            void setMenu();
             void setChangeLib(EventType event);
             void setChangeGame(EventType event);
             //////////////////////// Functions ////////////////////////

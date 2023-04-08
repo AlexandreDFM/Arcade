@@ -12,6 +12,10 @@ namespace Arcade {
     {
     }
 
+    Core::~Core()
+    {
+    }
+
     Core::Core(std::string lib)
     {
         this->_indexLib = 0;
@@ -24,13 +28,15 @@ namespace Arcade {
             std::cout << "Error: " << lib << " is not a valid library" << std::endl; exit(84);
         }
         this->setGraphic(this->graphicDll->getFunction<IDisplay>("entryPoint"));
+        if (!std::filesystem::exists("./lib/arcade_menu.so")) {
+            std::cout << "Error: ./lib/arcade_menu.so does not exist" << std::endl; exit(84);
+        }
         this->gameDll = new DLLoader("./lib/arcade_menu.so");
         this->setGame(this->gameDll->getFunction<IGame>("entryPoint"));
         std::string path = "./lib";
         for (const auto & entry : std::filesystem::directory_iterator(path)) {
             if (entry.path().extension() != ".so") {
-                std::cout << "Error: " << entry.path() << " is not a library" << std::endl;
-                continue;
+                std::cout << "Error: " << entry.path() << " is not a library" << std::endl; continue;
             }
             DLLoader *loader = new DLLoader(entry.path());
             char *string = loader->getFunction<char>("getType");
@@ -41,6 +47,7 @@ namespace Arcade {
             if (strncmp(string, "lib", 3) == 0) _libs.push_back(entry.path());
             else if (strncmp(string, "game", 4) == 0) _games.push_back(entry.path());
             else std::cout << "Error: " << entry.path() << " is not a valid library" << std::endl;
+//            delete loader;
         }
     }
 
@@ -50,10 +57,6 @@ namespace Arcade {
         this->setGraphic(this->graphicDll->getFunction<IDisplay>("entryPoint"));
         this->gameDll = new DLLoader(game);
         this->setGame(this->gameDll->getFunction<IGame>("entryPoint"));
-    }
-
-    Core::~Core()
-    {
     }
 
     void Core::setGraphic(IDisplay *graphic)
@@ -73,7 +76,12 @@ namespace Arcade {
         while (this->game->isRunning()) {
             this->graphic->display(this->game->getDrawable());
             this->graphic->display(this->game->getDrawableText());
+//            static auto start = std::chrono::high_resolution_clock::now();
+//            auto end = std::chrono::high_resolution_clock::now();
+//            if (std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count() <= 100) continue;
+//            else start = std::chrono::high_resolution_clock::now();
             Arcade::EventType eventKey = this->graphic->getEvent();
+            if (eventKey == EventType::MENU) this->setMenu();
             this->game->update(eventKey);
             this->setChangeLib(eventKey);
             this->setChangeGame(eventKey);
@@ -83,6 +91,23 @@ namespace Arcade {
             this->graphic->clear();
         }
         this->graphic->close();
+    }
+
+    void Core::setMenu()
+    {
+        if (!std::filesystem::exists("./lib/arcade_menu.so")) {
+            std::cout << "Error: ./lib/arcade_menu.so does not exist" << std::endl; return;
+        }
+        this->game->close();
+        this->graphic->close();
+        this->gameDll = new DLLoader("./lib/arcade_menu.so");
+        this->setGame(this->gameDll->getFunction<IGame>("entryPoint"));
+        this->game->init();
+        this->graphic->init(this->game->getAssets());
+        this->graphic->display(this->game->getDrawable());
+        this->graphic->display(this->game->getDrawableText());
+        this->graphic->update();
+        this->graphic->clear();
     }
 
     void Core::setChangeLib(EventType event)
@@ -114,26 +139,22 @@ namespace Arcade {
     void Core::MenuGetChange()
     {
         MenuInfo tmp = this->game->getMenuInfo();
-        if (tmp.game_path == "" || tmp.lib_path == "") {
+        if (tmp.gamePath == "" || tmp.libPath == "") {
             return;
         } else {
-            if (!std::filesystem::exists(tmp.game_path)) {
-                std::cout << "Error: " << tmp.game_path << " is not a valid path" << std::endl; return;
-            } else if (!std::filesystem::exists(tmp.lib_path)) {
-                std::cout << "Error: " << tmp.lib_path << " is not a valid path" << std::endl; return;
+            if (!std::filesystem::exists(tmp.gamePath)) {
+                std::cout << "Error: " << tmp.gamePath << " is not a valid path" << std::endl; return;
+            } else if (!std::filesystem::exists(tmp.libPath)) {
+                std::cout << "Error: " << tmp.libPath << " is not a valid path" << std::endl; return;
             }
             this->_menuInfo = tmp;
-            this->game->setMenuInfo((MenuInfo) {"", "", ""});
-            this->changeLib(this->_menuInfo.lib_path);
-            std::cout << "After game: " << this->_menuInfo.game_path << std::endl;
-            std::cout << "After lib: " << this->_menuInfo.lib_path << std::endl;
-//            this->changeGame(this->_menuInfo.game_path);
+            this->changeLib(this->_menuInfo.libPath);
+            this->changeGame(this->_menuInfo.gamePath);
         }
     }
+
     void Core::changeLib(std::string lib)
     {
-        std::cout << "Change lib: " << lib << std::endl;
-        std::cout << "Index: " << this->_indexLib << std::endl;
         this->graphic->close();
         this->graphicDll->~DLLoader();
         this->graphicDll = new DLLoader(lib);
@@ -143,11 +164,11 @@ namespace Arcade {
 
     void Core::changeGame(std::string game)
     {
-        std::cout << "Change game: " << game << std::endl;
         this->game->close();
         this->gameDll->~DLLoader();
         this->gameDll = new DLLoader(game);
         this->setGame(this->gameDll->getFunction<IGame>("entryPoint"));
+        this->game->setMenuInfo({this->_menuInfo.username, "", "" });
         this->game->init();
         this->graphic->close();
         this->graphic->init(this->game->getAssets());

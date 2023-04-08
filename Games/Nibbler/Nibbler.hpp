@@ -26,8 +26,10 @@ namespace Arcade {
             void reset();
         private:
             int _score;
+            float _speed;
             int _highScore;
             Drawable _apple;
+            size_t _mapIndex;
             EventType _direction;
             std::vector<Drawable> _wall;
             std::vector<Drawable> _snake;

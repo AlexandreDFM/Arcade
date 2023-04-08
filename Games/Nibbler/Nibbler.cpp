@@ -26,12 +26,13 @@ namespace Arcade {
         this->_drawable.clear();
         this->_direction = EventType::NOTHING;
 
-        if (this->_score == 20)
-            this->setMap(2);
-        else if (this->_score == 40)
-            this->setMap(3);
-        else
-            std::cout << "You Win" << std::endl;
+        if (this->_mapIndex == 3) {
+            this->_mapIndex = 1;
+            this->_speed = 0.1;
+        } else {
+            this->_mapIndex++;
+        }
+        this->setMap(_mapIndex);
 
         this->_assets.insert({{'w', "./Assets/Games/Nibbler/Wall.png"}});
         this->_assets.insert({{'h', "./Assets/Games/Snake/Head.png"}});
@@ -39,32 +40,29 @@ namespace Arcade {
         this->_assets.insert({{'t', "./Assets/Games/Snake/Tail.png"}});
         this->_assets.insert({{'a', "./Assets/Games/Snake/Apple.png"}});
 
+        this->_drawableText.push_back({ 33, 4, 12, WHITE, std::string("Username: ") + this->_menuInfo.username, std::string("Poppins-Black")});
         this->_drawableText.push_back({ 38, 7, 12, WHITE, "Score: " + std::to_string(this->_score), std::string("Poppins-Black")});
         this->_drawableText.push_back({ 38, 10, 12, WHITE, "HighScore: " + std::to_string(this->_highScore), std::string("Poppins-Black")});
     }
 
     void NibblerGame::setMap(int i)
     {
-        std::string line;
-        std::string path;
-
-        if (i == 1)
-            path = "./Assets/Games/Nibbler/Nibbler_LVL_1.txt";
-        else if (i == 2)
-            path = "./Assets/Games/Nibbler/Nibbler_LVL_2.txt";
-        else
-            path = "./Assets/Games/Nibbler/Nibbler_LVL_3.txt";
-
+        std::string line; std::string path;
+        if (std::ifstream("./Assets/Games/Nibbler/NibblerLvl" + std::to_string(i) + ".txt")) {
+            path = "./Assets/Games/Nibbler/NibblerLvl" + std::to_string(i) + ".txt";
+        } else {
+            std::cerr << "Couldn't find the file." << std::endl;
+            exit(84);
+        }
         std::ifstream inputFile(path);
-
         for (int y = 5 ;std::getline(inputFile, line); y++) {
             for (int i = 0; line[i]; i++) {
                 switch (line[i]) {
-                    case '#':   this->_wall.push_back({i + 15, y, WHITE, 'w'}); break;
-                    case 'P':   this->_apples.push_back({i + 15, y, RED, 'a'}); break;
-                    case 'h':   this->_snake.push_back({i + 15, y, BLUE, 'h'}); break;
-                    case 'b':   this->_snake.push_back({i + 15, y, BLUE, 'b'}); break;
-                    case 't':   this->_snake.push_back({i + 15, y, BLUE, 't'}); break;
+                    case '#':   this->_wall.push_back({i + 15, y, WHITE, 'w', WEST}); break;
+                    case 'P':   this->_apples.push_back({i + 15, y, RED, 'a', WEST}); break;
+                    case 'h':   this->_snake.push_back({i + 15, y, BLUE, 'h', WEST}); break;
+                    case 'b':   this->_snake.push_back({i + 15, y, BLUE, 'b', WEST}); break;
+//                    case 't':   this->_snake.push_back({i + 15, y, BLUE, 't'}); break;
                     default:    break;
                 }
             }
@@ -75,12 +73,17 @@ namespace Arcade {
     {
         srand(time(nullptr));
         this->_score = 0;
-        std::ifstream file("./Assets/Games/Snake/HighScore.txt");
-        std::string highscore = "";
+        this->_speed = 1;
+        this->_mapIndex = 1;
+        this->_highScore = 0;
+        if (std::ifstream("./Assets/Games/Nibbler/HighScore.txt")) {
+            std::ifstream file("./Assets/Games/Nibbler/HighScore.txt");
+            std::string highScore = "";
             for (int i = 0; i < 1; i++)
-            getline(file, highscore);
-        file.close();
-        this->_highScore = std::stoi(highscore);
+                getline(file, highScore);
+            file.close();
+            this->_highScore = std::stoi(highScore);
+        }
         this->_direction = EventType::NOTHING;
 
         this->_assets.insert({{'w', "./Assets/Games/Nibbler/Wall.png"}});
@@ -89,17 +92,21 @@ namespace Arcade {
         this->_assets.insert({{'t', "./Assets/Games/Snake/Tail.png"}});
         this->_assets.insert({{'a', "./Assets/Games/Snake/Apple.png"}});
 
-        this->setMap(1);
+        this->setMap(_mapIndex);
 
+        this->_drawableText.push_back({ 33, 4, 12, WHITE, std::string("Username: ") + this->_menuInfo.username, std::string("Poppins-Black")});
         this->_drawableText.push_back({ 38, 7, 12, WHITE, "Score: " + std::to_string(this->_score), std::string("Poppins-Black")});
         this->_drawableText.push_back({ 38, 10, 12, WHITE, "HighScore: " + std::to_string(this->_highScore), std::string("Poppins-Black")});
     }
 
     void NibblerGame::setHighScore()
     {
-        std::ofstream file;
-        file.open("./Assets/Games/Snake/HighScore.txt");
-        file << this->_highScore << std::endl;
+        std::ofstream file("./Assets/Games/Snake/HighScore.txt");
+        if (file.is_open()) {
+            file << std::to_string(this->_score) << std::endl;
+        } else {
+            std::cerr << "File for HighScore not found" << std::endl;
+        }
         file.close();
     }
 
@@ -125,14 +132,14 @@ namespace Arcade {
                 this->_apples.erase(this->_apples.begin() + index);
                 this->_snake[this->_snake.size() - 1].draw = 'b';
                 switch (this->_direction) {
-                    case EventType::UP:     this->_snake.push_back({this->_snake[this->_snake.size() - 1].x,this->_snake[this->_snake.size() - 1].y + 1, BLUE, 't'});    break;
-                    case EventType::DOWN:   this->_snake.push_back({this->_snake[this->_snake.size() - 1].x,this->_snake[this->_snake.size() - 1].y - 1, BLUE, 't'});    break;
-                    case EventType::LEFT:   this->_snake.push_back({this->_snake[this->_snake.size() - 1].x + 1,this->_snake[this->_snake.size() - 1].y, BLUE, 't'});     break;
-                    case EventType::RIGHT:  this->_snake.push_back({this->_snake[this->_snake.size() - 1].x - 1,this->_snake[this->_snake.size() - 1].y, BLUE, 't'});     break;
+                    case EventType::UP:     this->_snake.push_back({this->_snake[this->_snake.size() - 1].x,this->_snake[this->_snake.size() - 1].y + 1, BLUE, 'b'});    break;
+                    case EventType::DOWN:   this->_snake.push_back({this->_snake[this->_snake.size() - 1].x,this->_snake[this->_snake.size() - 1].y - 1, BLUE, 'b'});    break;
+                    case EventType::LEFT:   this->_snake.push_back({this->_snake[this->_snake.size() - 1].x + 1,this->_snake[this->_snake.size() - 1].y, BLUE, 'b'});     break;
+                    case EventType::RIGHT:  this->_snake.push_back({this->_snake[this->_snake.size() - 1].x - 1,this->_snake[this->_snake.size() - 1].y, BLUE, 'b'});     break;
                     default:                break;
                 }
                 this->_score += 1;
-                this->_drawableText[0].text = "Score: " + std::to_string(this->_score);
+                this->_drawableText[1].text = "Score: " + std::to_string(this->_score);
             }
             index++;
         }
@@ -158,10 +165,11 @@ namespace Arcade {
                     }
                 }
                 for (size_t i = this->_snake.size() - 1; i > 0; i--) {
+                    this->_snake[i].rotation = this->_snake[i - 1].rotation;
                     this->_snake[i].x = this->_snake[i - 1].x;
                     this->_snake[i].y = this->_snake[i - 1].y;
                 }
-                this->_snake[0].y -= 1; break;
+                this->_snake[0].y -= 1; this->_snake[0].rotation = NORTH; break;
             case EventType::DOWN:
                 for (auto i : this->_wall) {
                     if (this->_snake[0].x == i.x && this->_snake[0].y + 1 == i.y) {
@@ -179,11 +187,11 @@ namespace Arcade {
                     }
                 }
                 for (size_t i = this->_snake.size() - 1; i > 0; i--) {
+                    this->_snake[i].rotation = this->_snake[i - 1].rotation;
                     this->_snake[i].x = this->_snake[i - 1].x;
                     this->_snake[i].y = this->_snake[i - 1].y;
                 }
-                this->_snake[0].y += 1;
-                break;
+                this->_snake[0].y += 1; this->_snake[0].rotation = SOUTH; break;
             case EventType::LEFT:
                 for (auto &i : this->_wall) {
                     if (this->_snake[0].x - 1 == i.x && this->_snake[0].y == i.y) {
@@ -204,7 +212,7 @@ namespace Arcade {
                     this->_snake[i].x = this->_snake[i - 1].x;
                     this->_snake[i].y = this->_snake[i - 1].y;
                 }
-                this->_snake[0].x -= 1; break;
+                this->_snake[0].x -= 1; this->_snake[0].rotation = WEST; break;
             case EventType::RIGHT:
                 for (auto &i : this->_wall) {
                     if (this->_snake[0].x + 1 == i.x && this->_snake[0].y == i.y) {
@@ -222,10 +230,11 @@ namespace Arcade {
                     }
                 }
                 for (size_t i = this->_snake.size() - 1; i > 0; i--) {
+                    this->_snake[i].rotation = this->_snake[i - 1].rotation;
                     this->_snake[i].x = this->_snake[i - 1].x;
                     this->_snake[i].y = this->_snake[i - 1].y;
                 }
-                this->_snake[0].x += 1; break;
+                this->_snake[0].x += 1; this->_snake[0].rotation = EAST; break;
             default: break;
         }
     }
@@ -255,7 +264,7 @@ namespace Arcade {
         static auto start = std::chrono::steady_clock::now();
         auto end = std::chrono::steady_clock::now();
         std::chrono::duration<double> elapsed_seconds = end - start;
-        if (elapsed_seconds.count() > 0.1) start = std::chrono::steady_clock::now();
+        if (elapsed_seconds.count() * _speed > 0.1) start = std::chrono::steady_clock::now();
         else return;
 
         this->bodyMove();
