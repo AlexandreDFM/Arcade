@@ -92,7 +92,7 @@ namespace Arcade {
         this->_assets.insert({{'t', "./Assets/Games/Snake/Tail.png"}});
         this->_assets.insert({{'a', "./Assets/Games/Snake/Apple.png"}});
 
-        this->setMap(1);
+        this->setMap(_mapIndex);
 
         this->_drawableText.push_back({ 33, 4, 12, WHITE, std::string("Username: ") + this->_menuInfo.username, std::string("Poppins-Black")});
         this->_drawableText.push_back({ 38, 7, 12, WHITE, "Score: " + std::to_string(this->_score), std::string("Poppins-Black")});
@@ -165,10 +165,11 @@ namespace Arcade {
                     }
                 }
                 for (size_t i = this->_snake.size() - 1; i > 0; i--) {
+                    this->_snake[i].rotation = this->_snake[i - 1].rotation;
                     this->_snake[i].x = this->_snake[i - 1].x;
                     this->_snake[i].y = this->_snake[i - 1].y;
                 }
-                this->_snake[0].y -= 1; break;
+                this->_snake[0].y -= 1; this->_snake[0].rotation = NORTH; break;
             case EventType::DOWN:
                 for (auto i : this->_wall) {
                     if (this->_snake[0].x == i.x && this->_snake[0].y + 1 == i.y) {
@@ -186,11 +187,11 @@ namespace Arcade {
                     }
                 }
                 for (size_t i = this->_snake.size() - 1; i > 0; i--) {
+                    this->_snake[i].rotation = this->_snake[i - 1].rotation;
                     this->_snake[i].x = this->_snake[i - 1].x;
                     this->_snake[i].y = this->_snake[i - 1].y;
                 }
-                this->_snake[0].y += 1;
-                break;
+                this->_snake[0].y += 1; this->_snake[0].rotation = SOUTH; break;
             case EventType::LEFT:
                 for (auto &i : this->_wall) {
                     if (this->_snake[0].x - 1 == i.x && this->_snake[0].y == i.y) {
@@ -211,7 +212,7 @@ namespace Arcade {
                     this->_snake[i].x = this->_snake[i - 1].x;
                     this->_snake[i].y = this->_snake[i - 1].y;
                 }
-                this->_snake[0].x -= 1; break;
+                this->_snake[0].x -= 1; this->_snake[0].rotation = WEST; break;
             case EventType::RIGHT:
                 for (auto &i : this->_wall) {
                     if (this->_snake[0].x + 1 == i.x && this->_snake[0].y == i.y) {
@@ -229,10 +230,11 @@ namespace Arcade {
                     }
                 }
                 for (size_t i = this->_snake.size() - 1; i > 0; i--) {
+                    this->_snake[i].rotation = this->_snake[i - 1].rotation;
                     this->_snake[i].x = this->_snake[i - 1].x;
                     this->_snake[i].y = this->_snake[i - 1].y;
                 }
-                this->_snake[0].x += 1; break;
+                this->_snake[0].x += 1; this->_snake[0].rotation = EAST; break;
             default: break;
         }
     }

@@ -22,12 +22,16 @@ namespace Arcade {
         srand(time(nullptr));
         this->_score = 0;
         this->_speed = 1;
+        this->_highScore = 0;
         this->_isStart = false;
-        std::ifstream file("./Assets/Games/Snake/HighScore.txt");
-        std::string highScore = "";
-        for (int i = 0; i < 1; i++) getline(file, highScore);
-        file.close();
-        this->_highScore = std::stoi(highScore);
+        if (std::ifstream("./Assets/Games/Nibbler/HighScore.txt")) {
+            std::ifstream file("./Assets/Games/Nibbler/HighScore.txt");
+            std::string highScore = "";
+            for (int i = 0; i < 1; i++)
+                getline(file, highScore);
+            file.close();
+            this->_highScore = std::stoi(highScore);
+        }
         this->_isRunning = true;
         this->_direction = EventType::NOTHING;
         this->_assets.insert({{'w', "./Assets/Games/Snake/Wall.png"}});
@@ -49,10 +53,9 @@ namespace Arcade {
     {
         std::string line;
         std::string path = "./Assets/Games/Snake/Snake.txt";
-//        if (!std::ifstream(path)) {
-//            std::cerr << "Error: File not found." << std::endl;
-//            this->
-//        }
+        if (!std::ifstream(path)) {
+            std::cerr << "Error: File 'Snake.txt' not found." << std::endl; return;
+        }
         std::ifstream inputFile(path);
         for (int y = 3 ;std::getline(inputFile, line); y++) {
             for (int i = 0; line[i]; i++) {

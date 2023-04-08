@@ -115,7 +115,7 @@ namespace Arcade {
 
     Arcade::EventType NCurses::getEvent()
     {
-        switch (getch()) {
+        switch (wgetch(this->window)) {
             case 27:        return Arcade::EventType::CLOSE;
             case ' ':       return Arcade::EventType::RESTART;
             case KEY_RIGHT: return Arcade::EventType::RIGHT;
