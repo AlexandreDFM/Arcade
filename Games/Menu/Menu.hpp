@@ -19,20 +19,16 @@ namespace Arcade {
             void init() override;
             void update(Arcade::EventType event) override;
             void close() override;
-            //////////////////////// Getters //////////////////////////
-            bool isRunning() const override;
-            const std::vector<Drawable> &getDrawable() const override;
-            const std::map<char, std::string> &getAssets() const override;
-            const std::vector<DrawableText> &getDrawableText() const override;
-            //////////////////////// Setters //////////////////////////
-            void setIsRunning(bool isRunning) override;
-            MenuInfo getMenuInfo(Arcade::EventType event);
         private:
             size_t _index;
-            std::string _selectedLib;
-            std::string _selectedGame;
-            std::vector<std::string> _libs;
-            std::vector<std::string> _games;
+            bool _isUsernameSet;
+            std::string _username;
+            int _alphabetIndex;
+            std::vector<std::string> _alphabet;
+            std::pair<std::string, std::string> _selectedLib;
+            std::pair<std::string, std::string> _selectedGame;
+            std::vector<std::pair<std::string, std::string>> _libs;
+            std::vector<std::pair<std::string, std::string>> _games;
     };
 }
 

@@ -24,18 +24,22 @@ namespace Arcade {
             void setGraphic(IDisplay *graphic);
             void setGame(IGame *game);
             void setChangeLib(EventType event);
+            void setChangeGame(EventType event);
             //////////////////////// Functions ////////////////////////
             void loop();
-            void changeLib(std::string lib);
-
             void MenuGetChange();
+            void changeLib(std::string lib);
+            void changeGame(std::string game);
         private:
-            IDisplay *graphic;
+            size_t _indexLib;
+            size_t _indexGame;
+            MenuInfo _menuInfo;
             IGame *game;
+            IDisplay *graphic;
             DLLoader *gameDll;
             DLLoader *graphicDll;
             std::vector<std::string> _libs;
-            size_t _index;
+            std::vector<std::string> _games;
     };
 }
 
