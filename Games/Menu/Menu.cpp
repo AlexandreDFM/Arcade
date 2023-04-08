@@ -25,12 +25,11 @@ namespace Arcade {
             char *string = loader->getFunction<char>("getType");
             if (string == nullptr) {
                 std::cout << "Error: " << entry.path() << " is not a valid library" << std::endl;
-                delete loader; continue;
+                continue;
             }
             if (strncmp(string, "lib", 3) == 0) _libs.emplace_back(std::string(string += 3), entry.path().string());
             else if (strncmp(string, "game", 4) == 0) _games.emplace_back(std::string(string += 4), entry.path().string());
             else std::cout << "Error: " << entry.path() << " is not a valid library" << std::endl;
-            delete loader;
         }
     }
 

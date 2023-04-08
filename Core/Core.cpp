@@ -14,10 +14,6 @@ namespace Arcade {
 
     Core::~Core()
     {
-//        delete this->graphic;
-//        delete this->game;
-//        delete this->graphicDll;
-//        delete this->gameDll;
     }
 
     Core::Core(std::string lib)
@@ -46,12 +42,11 @@ namespace Arcade {
             char *string = loader->getFunction<char>("getType");
             if (string == nullptr) {
                 std::cout << "Error: " << entry.path() << " is not a valid library" << std::endl;
-                delete loader; continue;
+                continue;
             }
             if (strncmp(string, "lib", 3) == 0) _libs.push_back(entry.path());
             else if (strncmp(string, "game", 4) == 0) _games.push_back(entry.path());
             else std::cout << "Error: " << entry.path() << " is not a valid library" << std::endl;
-            delete loader;
         }
     }
 
