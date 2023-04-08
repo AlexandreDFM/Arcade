@@ -28,7 +28,7 @@ namespace Arcade {
                 delete loader; continue;
             }
             if (strncmp(string, "lib", 3) == 0) _libs.emplace_back(std::string(string += 3), entry.path().string());
-            else if (strncmp(string, "game", 4) == 0) _games.emplace_back(string += 4, entry.path().string());
+            else if (strncmp(string, "game", 4) == 0) _games.emplace_back(std::string(string += 4), entry.path().string());
             else std::cout << "Error: " << entry.path() << " is not a valid library" << std::endl;
             delete loader;
         }
@@ -61,8 +61,7 @@ namespace Arcade {
                     break;
                 case Arcade::EventType::CLOSE: this->_isRunning = false; break;
                 case Arcade::EventType::ACTION2: this->_isUsernameSet = true; break;
-                default:
-                    break;
+                default: break;
             }
             return;
         }
@@ -84,6 +83,7 @@ namespace Arcade {
         switch (event) {
             case EventType::CLOSE:   this->close(); return;
             case EventType::RESTART: this->close(); this->init(); return;
+            case EventType::LEFT:   this->_isUsernameSet = false; break;
             case EventType::UP:
                 if (this->_index == 0) this->_index = _libs.size() + _games.size() - 1;
                 else this->_index--;
@@ -97,7 +97,7 @@ namespace Arcade {
                 else this->_selectedLib = _libs[this->_index];
                 break;
             case EventType::ACTION2:
-                this->setMenuInfo( (MenuInfo) {this->_username, this->_selectedGame.second, this->_selectedLib.second});
+                this->setMenuInfo((MenuInfo) {this->_username, this->_selectedGame.second, this->_selectedLib.second});
                 break;
             default: break;
         }

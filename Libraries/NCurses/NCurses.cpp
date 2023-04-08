@@ -57,7 +57,6 @@ namespace Arcade {
 
     void NCurses::display(std::vector<Drawable> drawables)
     {
-        (void) drawables;
         for (auto &drawable : drawables) {
             switch (drawable.color) {
                 case Arcade::Color::BLACK:   attron(COLOR_PAIR(1)); break;
@@ -116,9 +115,7 @@ namespace Arcade {
 
     Arcade::EventType NCurses::getEvent()
     {
-
-        int key = wgetch(this->window);
-        switch (key) {
+        switch (getch()) {
             case 27:        return Arcade::EventType::CLOSE;
             case ' ':       return Arcade::EventType::RESTART;
             case KEY_RIGHT: return Arcade::EventType::RIGHT;

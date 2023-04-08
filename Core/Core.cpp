@@ -14,10 +14,10 @@ namespace Arcade {
 
     Core::~Core()
     {
-        delete this->graphic;
-        delete this->game;
-        delete this->graphicDll;
-        delete this->gameDll;
+//        delete this->graphic;
+//        delete this->game;
+//        delete this->graphicDll;
+//        delete this->gameDll;
     }
 
     Core::Core(std::string lib)
@@ -80,6 +80,10 @@ namespace Arcade {
         while (this->game->isRunning()) {
             this->graphic->display(this->game->getDrawable());
             this->graphic->display(this->game->getDrawableText());
+//            static auto start = std::chrono::high_resolution_clock::now();
+//            auto end = std::chrono::high_resolution_clock::now();
+//            if (std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count() <= 100) continue;
+//            else start = std::chrono::high_resolution_clock::now();
             Arcade::EventType eventKey = this->graphic->getEvent();
             if (eventKey == EventType::MENU) this->setMenu();
             this->game->update(eventKey);
@@ -150,7 +154,6 @@ namespace Arcade {
             this->_menuInfo = tmp;
             this->changeLib(this->_menuInfo.libPath);
             this->changeGame(this->_menuInfo.gamePath);
-            this->game->setMenuInfo({this->_menuInfo.username, "", "" });
         }
     }
 
@@ -169,6 +172,7 @@ namespace Arcade {
         this->gameDll->~DLLoader();
         this->gameDll = new DLLoader(game);
         this->setGame(this->gameDll->getFunction<IGame>("entryPoint"));
+        this->game->setMenuInfo({this->_menuInfo.username, "", "" });
         this->game->init();
         this->graphic->close();
         this->graphic->init(this->game->getAssets());

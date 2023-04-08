@@ -28,6 +28,7 @@ namespace Arcade {
             this->_spriteAssets[asset.first].texture.loadFromFile(asset.second);
             this->_spriteAssets[asset.first].sprite.setTexture(this->_spriteAssets[asset.first].texture);
             this->_spriteAssets[asset.first].sprite.setTextureRect(rect);
+            this->_spriteAssets[asset.first].sprite.setOrigin(20, 20);
         }
     }
 
@@ -65,17 +66,16 @@ namespace Arcade {
         for (auto &drawable : drawables) {
             for (auto &sprite : this->_spriteAssets) {
                 if (sprite.first == drawable.draw) {
-//                    std::cout << "ROTATION: " << drawable.rotation << std::endl;
-//                    switch (drawable.rotation) {
-//                        case SpriteDirection::NO_DIRECTION: sprite.second.sprite.setRotation(0);   break;
-//                        case SpriteDirection::NORTH:        sprite.second.sprite.setRotation(0);   break;
-//                        case SpriteDirection::SOUTH:        sprite.second.sprite.setRotation(180); break;
-//                        case SpriteDirection::EAST:         sprite.second.sprite.setRotation(90);  break;
-//                        case SpriteDirection::WEST:         sprite.second.sprite.setRotation(270); break;
-//                        default :                           sprite.second.sprite.setRotation(0);   break;
-//                    }
                     sprite.second.sprite.setPosition({(float) drawable.x * 40, (float) drawable.y * 40});
                     this->window->draw(sprite.second.sprite);
+                    if (drawable.draw != 'h' && drawable.draw != 'b') continue;
+                    switch (drawable.rotation) {
+                        case Direction::WEST:  sprite.second.sprite.setRotation(0);   break;
+                        case Direction::NORTH: sprite.second.sprite.setRotation(90);  break;
+                        case Direction::EAST:  sprite.second.sprite.setRotation(180); break;
+                        case Direction::SOUTH: sprite.second.sprite.setRotation(270); break;
+                        default:               sprite.second.sprite.setRotation(0);   break;
+                    }
                 }
             }
         }
