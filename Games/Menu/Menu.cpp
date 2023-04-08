@@ -59,12 +59,8 @@ namespace Arcade {
                         if (this->_username.size() < 10) this->_username += this->_alphabet[this->_alphabetIndex];
                     }
                     break;
-                case Arcade::EventType::CLOSE:
-                    this->_isRunning = false;
-                    break;
-                case Arcade::EventType::ACTION2:
-                    this->_isUsernameSet = true;
-                    break;
+                case Arcade::EventType::CLOSE: this->_isRunning = false; break;
+                case Arcade::EventType::ACTION2: this->_isUsernameSet = true; break;
                 default:
                     break;
             }
@@ -101,7 +97,7 @@ namespace Arcade {
                 else this->_selectedLib = _libs[this->_index];
                 break;
             case EventType::ACTION2:
-                this->setMenuInfo( (MenuInfo) {this->_username, this->_selectedLib.second, this->_selectedGame.second});
+                this->setMenuInfo( (MenuInfo) {this->_username, this->_selectedGame.second, this->_selectedLib.second});
                 break;
             default: break;
         }

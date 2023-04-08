@@ -60,8 +60,8 @@ namespace Arcade {
 
     struct MenuInfo {
         std::string username;
-        std::string game_path;
-        std::string lib_path;
+        std::string gamePath;
+        std::string libPath;
     };
 
     struct Drawable {

@@ -125,18 +125,14 @@ namespace Arcade {
             case KEY_LEFT:  return Arcade::EventType::LEFT;
             case KEY_DOWN:  return Arcade::EventType::DOWN;
             case KEY_UP:    return Arcade::EventType::UP;
-            case 'd':       return Arcade::EventType::RIGHT;
-            case 'q':       return Arcade::EventType::LEFT;
-            case 's':       return Arcade::EventType::DOWN;
-            case 'z':       return Arcade::EventType::UP;
             case 'l':       return Arcade::EventType::LIBPREV;
             case 'm':       return Arcade::EventType::LIBNEXT;
             case 'o':       return Arcade::EventType::GAMEPREV;
             case 'p':       return Arcade::EventType::GAMENEXT;
             case 'e':       return Arcade::EventType::ACTION1;
             case 'r':       return Arcade::EventType::ACTION2;
-            case 't':       return Arcade::EventType::MENU;
-            case 'y':       return Arcade::EventType::SAVE;
+            case 't':       return Arcade::EventType::SAVE;
+            case 'y':       return Arcade::EventType::MENU;
             default:        return Arcade::EventType::NOTHING;
         }
     }
