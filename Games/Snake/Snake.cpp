@@ -41,9 +41,10 @@ namespace Arcade {
         this->_assets.insert({{'a', "./Assets/Games/Snake/Apple.png"}});
 
         this->setMap();
-
-        this->_drawableText.push_back({ 33, 4, 12, WHITE, std::string("Username: ") + this->_menuInfo.username, std::string("Poppins-Black")});
         this->_drawableText.push_back({ 33, 7, 12, WHITE, "Score: " + std::to_string(this->_score), std::string("Poppins-Black")});
+
+        this->_drawableText.push_back({ 15, 1, 24, WHITE, "SNAKE", std::string("Poppins-Black")});
+        this->_drawableText.push_back({ 33, 4, 12, WHITE, std::string("Username: ") + this->_menuInfo.username, std::string("Poppins-Black")});
         this->_drawableText.push_back({ 33, 10, 12, WHITE, "HighScore: " + std::to_string(this->_highScore), std::string("Poppins-WHITE")});
 
         this->placeApple();
@@ -122,7 +123,7 @@ namespace Arcade {
                 appleCoordIndex--;
             }
             if (this->_score != 0 && this->_score % 5 == 0) this->_speed += 0.1;
-            this->_drawableText[1].text = "Score: " + std::to_string(this->_score);
+            this->_drawableText[0].text = "Score: " + std::to_string(this->_score);
         }
     }
 

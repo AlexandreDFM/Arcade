@@ -39,9 +39,9 @@ namespace Arcade {
         this->_assets.insert({{'b', "./Assets/Games/Snake/Body.png"}});
         this->_assets.insert({{'t', "./Assets/Games/Snake/Tail.png"}});
         this->_assets.insert({{'a', "./Assets/Games/Snake/Apple.png"}});
+        this->_drawableText.push_back({ 38, 7, 12, WHITE, "Score: " + std::to_string(this->_score), std::string("Poppins-Black")});
 
         this->_drawableText.push_back({ 33, 4, 12, WHITE, std::string("Username: ") + this->_menuInfo.username, std::string("Poppins-Black")});
-        this->_drawableText.push_back({ 38, 7, 12, WHITE, "Score: " + std::to_string(this->_score), std::string("Poppins-Black")});
         this->_drawableText.push_back({ 38, 10, 12, WHITE, "HighScore: " + std::to_string(this->_highScore), std::string("Poppins-Black")});
     }
 
@@ -93,10 +93,11 @@ namespace Arcade {
         this->_assets.insert({{'a', "./Assets/Games/Snake/Apple.png"}});
 
         this->setMap(_mapIndex);
+        this->_drawableText.push_back({ 35, 13, 12, WHITE, "Score: " + std::to_string(this->_score), std::string("Poppins-Black")});
 
-        this->_drawableText.push_back({ 33, 4, 12, WHITE, std::string("Username: ") + this->_menuInfo.username, std::string("Poppins-Black")});
-        this->_drawableText.push_back({ 38, 7, 12, WHITE, "Score: " + std::to_string(this->_score), std::string("Poppins-Black")});
-        this->_drawableText.push_back({ 38, 10, 12, WHITE, "HighScore: " + std::to_string(this->_highScore), std::string("Poppins-Black")});
+        this->_drawableText.push_back({ 23, 1, 24, WHITE, "NIBBLER", std::string("Poppins-Black")});
+        this->_drawableText.push_back({ 35, 10, 12, WHITE, std::string("Username: ") + this->_menuInfo.username, std::string("Poppins-Black")});
+        this->_drawableText.push_back({ 35, 16, 12, WHITE, "HighScore: " + std::to_string(this->_highScore), std::string("Poppins-Black")});
     }
 
     void NibblerGame::setHighScore()
@@ -120,7 +121,6 @@ namespace Arcade {
                 case EventType::UP:     if (this->_snake[0].x == i.x && this->_snake[0].y - 1 == i.y && this->_snake[1].y != this->_snake[0].y + 1) this->_direction = event; break;
                 default:                break;
             }
-
         }
     }
 
@@ -139,7 +139,7 @@ namespace Arcade {
                     default:                break;
                 }
                 this->_score += 1;
-                this->_drawableText[1].text = "Score: " + std::to_string(this->_score);
+                this->_drawableText[0].text = "Score: " + std::to_string(this->_score);
             }
             index++;
         }
@@ -259,6 +259,29 @@ namespace Arcade {
             default:                break;
         }
 
+        if (!this->_isStart) {
+            for (auto &i : this->_wall) {
+                switch (this->_direction) {
+                    case EventType::UP:     if (this->_snake[0].x == i.x && this->_snake[0].y - 1 == i.y) return; else break;
+                    case EventType::LEFT:   if (this->_snake[0].x - 1 == i.x && this->_snake[0].y == i.y) return; else break;
+                    case EventType::DOWN:   if (this->_snake[0].x == i.x && this->_snake[0].y + 1 == i.y) return; else break;
+                    case EventType::RIGHT:  if (this->_snake[0].x + 1 == i.x && this->_snake[0].y == i.y) return; else break;
+                    default:                return;
+                }
+            }
+            for (auto &i : this->_snake) {
+                if (i.draw == 'h') continue;
+                switch (this->_direction) {
+                    case EventType::UP:     if (this->_snake[0].x == i.x && this->_snake[0].y - 1 == i.y) return; else break;
+                    case EventType::LEFT:   if (this->_snake[0].x - 1 == i.x && this->_snake[0].y == i.y) return; else break;
+                    case EventType::DOWN:   if (this->_snake[0].x == i.x && this->_snake[0].y + 1 == i.y) return; else break;
+                    case EventType::RIGHT:  if (this->_snake[0].x + 1 == i.x && this->_snake[0].y == i.y) return; else break;
+                    default:                return;
+                }
+            }
+            this->_isStart = true;
+        }
+
         this->checkWall(tmp);
 
         static auto start = std::chrono::steady_clock::now();
@@ -272,6 +295,7 @@ namespace Arcade {
 
         for (auto it = this->_snake.begin() + 1; it != this->_snake.end(); it++) {
             if (this->_snake[0].x == it->x && this->_snake[0].y == it->y) {
+                if (this->_score > this->_highScore) this->setHighScore();
                 this->close(); return;
             }
         }

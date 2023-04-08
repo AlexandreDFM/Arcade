@@ -27,6 +27,7 @@ namespace Arcade {
         private:
             int _score;
             float _speed;
+            bool _isStart;
             int _highScore;
             Drawable _apple;
             size_t _mapIndex;

@@ -93,17 +93,17 @@ namespace Arcade {
         if (drawables.empty()) return;
         for (auto &drawable : drawables) {
             SDL_Color color = {255, 255, 255, 255};
-            SDL_Rect size = {0, 0, (int) drawable.text.length() * drawable.size * 3, drawable.size * 3};
-            SDL_Rect pos = {drawable.x * 40, drawable.y * 40, (int) drawable.text.length() * drawable.size * 3, drawable.size * 3};
+            SDL_Rect size = {0, 0, (int) drawable.text.length() * drawable.size, drawable.size * 2};
+            SDL_Rect pos = {drawable.x * 40, drawable.y * 40, (int) drawable.text.length() * drawable.size, drawable.size * 2};
             switch (drawable.color) {
+                case Color::BLACK:   color = {0, 0, 0, 255};         break;
                 case Color::RED:     color = {255, 0, 0, 255};       break;
                 case Color::BLUE:    color = {0, 0, 255, 255};       break;
-                case Color::CYAN:    color = {0, 255, 255, 255};     break;
                 case Color::GREEN:   color = {0, 255, 0, 255};       break;
-                case Color::WHITE:   color = {255, 255, 255, 255};   break;
-                case Color::BLACK:   color = {0, 0, 0, 255};         break;
+                case Color::CYAN:    color = {0, 255, 255, 255};     break;
                 case Color::YELLOW:  color = {255, 255, 0, 255};     break;
                 case Color::MAGENTA: color = {255, 0, 255, 255};     break;
+                case Color::WHITE:   color = {255, 255, 255, 255};   break;
                 default:                                             break;
             }
             SDL_Surface *surface = TTF_RenderText_Solid(_font, drawable.text.c_str(), color);
