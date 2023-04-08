@@ -21,6 +21,7 @@ namespace Arcade {
             ~SnakeGame() override = default;
             void init() override;
             void update(EventType event) override;
+            void moveSnakeBody(Direction rotation);
             void placeApple();
             void setHighScore();
             void setMap();
@@ -30,6 +31,8 @@ namespace Arcade {
             float _speed;
             bool _isStart;
             int _highScore;
+            int _spriteSize;
+            bool _pushATail;
             Drawable _apple;
             EventType _direction;
             std::vector<Drawable> _wall;

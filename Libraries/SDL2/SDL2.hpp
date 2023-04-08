@@ -30,10 +30,11 @@ namespace Arcade {
             //////////////////////// Getters //////////////////////////
             Arcade::EventType getEvent() override;
         private:
+            int _spriteSize;
+            TTF_Font *_font;
+            SDL_Event _event;
             SDL_Window *_window;
             SDL_Renderer *_renderer;
-            SDL_Event _event;
-            TTF_Font *_font;
             std::map<char, SDL_Texture *> _spriteAssets;
     };
 }

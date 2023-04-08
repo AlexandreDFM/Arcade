@@ -12,6 +12,7 @@
     #include <map>
     #include <vector>
     #include <chrono>
+    #include <fstream>
     #include <iostream>
     #include "Struct.hpp"
 

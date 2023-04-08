@@ -22,13 +22,25 @@ namespace Arcade {
         this->text.setFont(this->font);
         this->text.setCharacterSize(24);
         this->text.setStyle(sf::Text::Bold);
-        sf::IntRect rect = sf::IntRect(0, 0, 40, 40);
+        this->_spriteSize = 40;
+        if (std::ifstream("./Assets/Config/SpriteSize.txt")) {
+            std::ifstream file("./Assets/Config/SpriteSize.txt");
+            std::string spriteSize = "";
+            for (int i = 0; i < 1; i++) getline(file, spriteSize);
+            file.close();
+            try {
+                this->_spriteSize = std::stoi(spriteSize);
+            } catch (std::exception &e) {
+                this->_spriteSize = 40;
+            }
+        }
+        sf::IntRect rect = sf::IntRect(0, 0, this->_spriteSize, this->_spriteSize);
         for (auto &asset : gameAssets) {
             this->_spriteAssets[asset.first] = {sf::Texture(), sf::Sprite()};
             this->_spriteAssets[asset.first].texture.loadFromFile(asset.second);
             this->_spriteAssets[asset.first].sprite.setTexture(this->_spriteAssets[asset.first].texture);
             this->_spriteAssets[asset.first].sprite.setTextureRect(rect);
-            this->_spriteAssets[asset.first].sprite.setOrigin(20, 20);
+            this->_spriteAssets[asset.first].sprite.setOrigin(this->_spriteSize / 2, this->_spriteSize / 2);
         }
     }
 
@@ -68,7 +80,7 @@ namespace Arcade {
                 if (sprite.first == drawable.draw) {
                     sf::IntRect rect = sf::IntRect(0, 0, drawable.rect.width, drawable.rect.height);
                     sprite.second.sprite.setTextureRect(rect);
-                    sprite.second.sprite.setPosition({(float) drawable.x * 40, (float) drawable.y * 40});
+                    sprite.second.sprite.setPosition({(float) drawable.x * this->_spriteSize, (float) drawable.y * this->_spriteSize});
                     this->window->draw(sprite.second.sprite);
                     if (drawable.draw != 'h' && drawable.draw != 'b') continue;
                     switch (drawable.rotation) {
@@ -99,7 +111,7 @@ namespace Arcade {
                 case Color::MAGENTA: this->text.setFillColor(sf::Color::Magenta); break;
                 default:             this->text.setFillColor(sf::Color::White);   break;
             }
-            this->text.setPosition({(float) drawable.x * 40, (float) drawable.y * 40});
+            this->text.setPosition({(float) drawable.x * this->_spriteSize, (float) drawable.y * this->_spriteSize});
             this->window->draw(this->text);
         }
     }

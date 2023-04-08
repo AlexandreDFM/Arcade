@@ -32,11 +32,12 @@ namespace Arcade {
             void display(std::vector<Drawable>) override;
             void display(std::vector<DrawableText>) override;
         private:
-            sf::RenderWindow *window;
-            sf::Sprite sprite;
-            sf::Event event;
             sf::Text text;
             sf::Font font;
+            sf::Event event;
+            int _spriteSize;
+            sf::Sprite sprite;
+            sf::RenderWindow *window;
             std::map<char, SFMLSprite> _spriteAssets;
     };
 }

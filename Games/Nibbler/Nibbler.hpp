@@ -20,8 +20,9 @@ namespace Arcade {
             void checkWall(EventType key);
             void setHighScore();
             void setMap(int i);
+            void moveSnakeBody(Direction rotation);
             void checkApple();
-            void bodyMove();
+            void movements();
             void close() override;
             void reset();
         private:
@@ -29,6 +30,8 @@ namespace Arcade {
             float _speed;
             bool _isStart;
             int _highScore;
+            int _spriteSize;
+            bool _pushATail;
             Drawable _apple;
             size_t _mapIndex;
             EventType _direction;

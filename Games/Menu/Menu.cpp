@@ -31,7 +31,7 @@ namespace Arcade {
             else if (strncmp(string, "game", 4) == 0) _games.emplace_back(std::string(string += 4), entry.path().string());
             else std::cout << "Error: " << entry.path() << " is not a valid library" << std::endl;
         }
-        this->_assets.insert({{'b', "./Assets/Games/Menu/Background.png"}});
+        this->_assets.insert({{'b', "./Assets/Games/Menu/Images/Background.png"}});
         this->_drawable.push_back({0, 0, BLACK, 'b', NO_DIRECTION, {0, 0, 1920, 1080}});
     }
 

@@ -38,6 +38,18 @@ namespace Arcade {
             std::cerr << "Font could not be created! SDL_ttf Error: " << TTF_GetError() << std::endl; exit(84);
         }
         this->_event = SDL_Event();
+        this->_spriteSize = 40;
+        if (std::ifstream("./Assets/Config/SpriteSize.txt")) {
+            std::ifstream file("./Assets/Config/SpriteSize.txt");
+            std::string spriteSize = "";
+            for (int i = 0; i < 1; i++) getline(file, spriteSize);
+            file.close();
+            try {
+                this->_spriteSize = std::stoi(spriteSize);
+            } catch (std::exception &e) {
+                this->_spriteSize = 40;
+            }
+        }
         for (auto &asset: gameAssets) {
             SDL_Surface *surface = IMG_Load(asset.second.c_str());
             SDL_Texture *texture = SDL_CreateTextureFromSurface(_renderer, surface);
@@ -55,11 +67,6 @@ namespace Arcade {
     {
         for (auto &asset : this->_spriteAssets) SDL_DestroyTexture(asset.second);
         this->_spriteAssets.clear();
-//        for (auto &asset : this->_textAssets) {
-//            SDL_DestroyTexture(asset.second.texture);
-//            SDL_FreeSurface(asset.second.surface);
-//        }
-//        this->_textAssets.clear();
         SDL_DestroyRenderer(this->_renderer);
         TTF_CloseFont(this->_font);
         SDL_DestroyWindow(this->_window);
@@ -73,7 +80,7 @@ namespace Arcade {
         if (drawables.empty()) return;
         for (auto &drawable : drawables) {
             SDL_Rect rect = {drawable.rect.left, drawable.rect.top, drawable.rect.width, drawable.rect.height};
-            SDL_Rect pos = {drawable.x * 40, drawable.y * 40, drawable.rect.width, drawable.rect.height};
+            SDL_Rect pos = {drawable.x * this->_spriteSize, drawable.y * this->_spriteSize, drawable.rect.width, drawable.rect.height};
             if (drawable.draw != 'h' && drawable.draw != 'b') {
                 SDL_RenderCopy(_renderer, _spriteAssets[drawable.draw], &rect, &pos); continue;
             }
@@ -94,7 +101,7 @@ namespace Arcade {
         for (auto &drawable : drawables) {
             SDL_Color color = {255, 255, 255, 255};
             SDL_Rect size = {0, 0, (int) drawable.text.length() * drawable.size, drawable.size * 2};
-            SDL_Rect pos = {drawable.x * 40, drawable.y * 40, (int) drawable.text.length() * drawable.size, drawable.size * 2};
+            SDL_Rect pos = {drawable.x * this->_spriteSize, drawable.y * this->_spriteSize, (int) drawable.text.length() * drawable.size, drawable.size * 2};
             switch (drawable.color) {
                 case Color::BLACK:   color = {0, 0, 0, 255};         break;
                 case Color::RED:     color = {255, 0, 0, 255};       break;
