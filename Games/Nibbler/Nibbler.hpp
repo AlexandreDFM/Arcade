@@ -18,10 +18,14 @@ namespace Arcade {
             void init() override;
             void update(EventType key) override;
             void checkWall(EventType key);
-            void setHighScore();
+            void setHighScoreInFile();
             void setMap(int i);
             void save();
+            void getHighScoreFromFile();
+            void getSpriteSizeFromFile();
             void loadSave();
+            void deleteSave();
+            bool beforeStart();
             void moveSnakeBody(Direction rotation);
             void checkApple();
             void movements();

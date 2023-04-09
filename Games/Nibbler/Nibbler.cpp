@@ -8,6 +8,10 @@
 #include "Nibbler.hpp"
 
 namespace Arcade {
+    /**
+     * This is the constructor for the NibblerGame class that initializes its
+     * member variables.
+     */
     NibblerGame::NibblerGame() : AGame()
     {
         _apple = {};
@@ -17,6 +21,10 @@ namespace Arcade {
         _isRunning = true;
     }
 
+    /**
+     * The function resets the game state and initializes the game assets for the
+     * Nibbler game.
+     */
     void NibblerGame::reset()
     {
         this->_snake.clear();
@@ -28,10 +36,9 @@ namespace Arcade {
         this->_direction = EventType::NOTHING;
 
         if (this->_mapIndex == 3) {
-            this->_mapIndex = 1;
-            this->_speed += 0.1;
+            this->_mapIndex = 1; this->_speed += 0.1;
         } else {
-            this->_mapIndex++;
+            this->_mapIndex++; this->_speed += 0.1;
         }
         this->setMap(_mapIndex);
 
@@ -46,6 +53,14 @@ namespace Arcade {
         this->_drawableText.push_back({ 38, 10, 12, WHITE, "HighScore: " + std::to_string(this->_highScore), std::string("Poppins-Black")});
     }
 
+    /**
+     * This function sets the map for the Nibbler game by reading a text file and
+     * creating objects based on the characters in the file.
+     *
+     * @param i The parameter `i` is an integer representing the level number of
+     * the Nibbler game. It is used to determine the path of the configuration
+     * file for the level.
+     */
     void NibblerGame::setMap(int i)
     {
         std::string line; std::string path;
@@ -70,6 +85,10 @@ namespace Arcade {
         }
     }
 
+    /**
+     * The function initializes the game variables and loads assets for the
+     * Nibbler game.
+     */
     void NibblerGame::init()
     {
         srand(time(nullptr));
@@ -120,7 +139,10 @@ namespace Arcade {
         this->_drawableText.push_back({ 35, 16, 12, WHITE, "HighScore: " + std::to_string(this->_highScore), std::string("Poppins-Black")});
     }
 
-    void NibblerGame::setHighScore()
+    /**
+     * The function sets the high score of the Nibbler game in a text file.
+     */
+    void NibblerGame::setHighScoreInFile()
     {
         std::ofstream file("./Assets/Games/Nibbler/Config/HighScore.txt");
         if (file.is_open()) file << std::to_string(this->_score) << std::endl;
@@ -128,6 +150,14 @@ namespace Arcade {
         file.close();
     }
 
+    /**
+     * The function checks if the snake hits a wall and changes its direction
+     * accordingly.
+     *
+     * @param event The parameter "event" is of type EventType and represents the
+     * direction in which the player is trying to move the snake. It is used to
+     * check if the snake can move in that direction without hitting a wall.
+     */
     void NibblerGame::checkWall(EventType event)
     {
         for (auto &i : this->_wall) {
@@ -141,6 +171,10 @@ namespace Arcade {
         }
     }
 
+    /**
+     * The function checks if the snake head has collided with an apple and
+     * updates the game state accordingly.
+     */
     void NibblerGame::checkApple()
     {
         int index = 0;
@@ -155,6 +189,14 @@ namespace Arcade {
         }
     }
 
+    /**
+     * This function moves the body of a snake in a Nibbler game based on a given
+     * rotation direction.
+     *
+     * @param rotation The parameter "rotation" is of type "Direction" and
+     * represents the direction in which the snake's head should move. It can take
+     * one of four values: NORTH, SOUTH, WEST, or EAST.
+     */
     void NibblerGame::moveSnakeBody(Direction rotation)
     {
         std::pair<int, int> tmp = {this->_snake[this->_snake.size() - 1].x, this->_snake[this->_snake.size() - 1].y};
@@ -178,6 +220,14 @@ namespace Arcade {
         this->_snake[0].rotation = rotation;
     }
 
+    /**
+     * The function handles the movements of the snake in a game, taking into
+     * account the walls and changing direction accordingly.
+     *
+     * @return nothing (void). However, there are several instances where the
+     * function uses the keyword "return" to exit the function early under certain
+     * conditions.
+     */
     void NibblerGame::movements()
     {
         switch (this->_direction) {
@@ -245,6 +295,9 @@ namespace Arcade {
         }
     }
 
+    /**
+     * The function saves the current state of the Nibbler game to a text file.
+     */
     void NibblerGame::save()
     {
         std::ofstream file("./Assets/Games/Nibbler/Config/Save.txt");
@@ -271,6 +324,9 @@ namespace Arcade {
         file.close();
     }
 
+    /**
+     * This function loads saved game data from a file for the Nibbler game.
+     */
     void NibblerGame::loadSave()
     {
         std::ifstream file;
@@ -323,6 +379,61 @@ namespace Arcade {
         }
     }
 
+    /**
+     * This function deletes the save file for the Snake game in the specified
+     * directory.
+     */
+    void NibblerGame::deleteSave()
+    {
+        std::remove("./Assets/Games/Nibbler/Config/Save.txt");
+    }
+
+    /**
+     * The function checks if the game can start by ensuring that the snake and
+     * walls do not overlap.
+     *
+     * @return The function `beforeStart()` returns a boolean value.
+     */
+    bool NibblerGame::beforeStart()
+    {
+        if (!this->_isStart) {
+            for (auto &i : this->_wall) {
+                switch (this->_direction) {
+                    case EventType::UP:     if (this->_snake[0].x == i.x && this->_snake[0].y - 1 == i.y) return false; else break;
+                    case EventType::LEFT:   if (this->_snake[0].x - 1 == i.x && this->_snake[0].y == i.y) return false; else break;
+                    case EventType::DOWN:   if (this->_snake[0].x == i.x && this->_snake[0].y + 1 == i.y) return false; else break;
+                    case EventType::RIGHT:  if (this->_snake[0].x + 1 == i.x && this->_snake[0].y == i.y) return false; else break;
+                    default:                return false;
+                }
+            }
+            for (auto &i : this->_snake) {
+                if (i.draw == 'h') continue;
+                switch (this->_direction) {
+                    case EventType::UP:     if (this->_snake[0].x == i.x && this->_snake[0].y - 1 == i.y) return false; else break;
+                    case EventType::LEFT:   if (this->_snake[0].x - 1 == i.x && this->_snake[0].y == i.y) return false; else break;
+                    case EventType::DOWN:   if (this->_snake[0].x == i.x && this->_snake[0].y + 1 == i.y) return false; else break;
+                    case EventType::RIGHT:  if (this->_snake[0].x + 1 == i.x && this->_snake[0].y == i.y) return false; else break;
+                    default:                return false;
+                }
+            }
+            this->_isStart = true;
+        }
+        return true;
+    }
+
+    /**
+     * The function updates the state of the Nibbler game based on the given event
+     * and checks for collisions between the snake and walls or apples.
+     *
+     * @param event The parameter "event" is of type EventType and represents the
+     * user input event that triggers the update function. It can be one of the
+     * following values: CLOSE, SAVE, RIGHT, DOWN, LEFT, UP.
+     *
+     * @return If the condition `elapsed_seconds.count() * _speed > 0.1` is not
+     * met, the function returns without executing the remaining code. If the
+     * snake collides with itself, the function returns after closing the game.
+     * Otherwise, the function does not return anything.
+     */
     void NibblerGame::update(EventType event)
     {
         this->_drawable.clear();
@@ -335,38 +446,18 @@ namespace Arcade {
         if (this->_apples.size() == 0) this->reset();
 
         switch (event) {
-            case EventType::CLOSE:  this->_isRunning = false; break;
-            case EventType::SAVE:   this->save(); break;
-            case EventType::RIGHT:  if (this->_direction != EventType::LEFT)    this->_direction = EventType::RIGHT;    break;
-            case EventType::DOWN:   if (this->_direction != EventType::UP)      this->_direction = EventType::DOWN;     break;
-            case EventType::LEFT:   if (this->_direction != EventType::RIGHT)   this->_direction = EventType::LEFT;     break;
-            case EventType::UP:     if (this->_direction != EventType::DOWN)    this->_direction = EventType::UP;       break;
-            default:                break;
+            case EventType::SAVE:     this->save(); break;
+            case EventType::GAMENEXT: this->save(); break;
+            case EventType::GAMEPREV: this->save(); break;
+            case EventType::CLOSE:    if (this->_score > this->_highScore) setHighScoreInFile(); this->close(); break;
+            case EventType::RIGHT:    if (this->_direction != EventType::LEFT)    this->_direction = EventType::RIGHT;    break;
+            case EventType::DOWN:     if (this->_direction != EventType::UP)      this->_direction = EventType::DOWN;     break;
+            case EventType::LEFT:     if (this->_direction != EventType::RIGHT)   this->_direction = EventType::LEFT;     break;
+            case EventType::UP:       if (this->_direction != EventType::DOWN)    this->_direction = EventType::UP;       break;
+            default:                  break;
         }
 
-        if (!this->_isStart) {
-            for (auto &i : this->_wall) {
-                switch (this->_direction) {
-                    case EventType::UP:     if (this->_snake[0].x == i.x && this->_snake[0].y - 1 == i.y) return; else break;
-                    case EventType::LEFT:   if (this->_snake[0].x - 1 == i.x && this->_snake[0].y == i.y) return; else break;
-                    case EventType::DOWN:   if (this->_snake[0].x == i.x && this->_snake[0].y + 1 == i.y) return; else break;
-                    case EventType::RIGHT:  if (this->_snake[0].x + 1 == i.x && this->_snake[0].y == i.y) return; else break;
-                    default:                return;
-                }
-            }
-            for (auto &i : this->_snake) {
-                if (i.draw == 'h') continue;
-                switch (this->_direction) {
-                    case EventType::UP:     if (this->_snake[0].x == i.x && this->_snake[0].y - 1 == i.y) return; else break;
-                    case EventType::LEFT:   if (this->_snake[0].x - 1 == i.x && this->_snake[0].y == i.y) return; else break;
-                    case EventType::DOWN:   if (this->_snake[0].x == i.x && this->_snake[0].y + 1 == i.y) return; else break;
-                    case EventType::RIGHT:  if (this->_snake[0].x + 1 == i.x && this->_snake[0].y == i.y) return; else break;
-                    default:                return;
-                }
-            }
-            this->_isStart = true;
-        }
-
+        this->beforeStart();
         this->checkWall(tmp);
 
         static auto start = std::chrono::steady_clock::now();
@@ -380,12 +471,15 @@ namespace Arcade {
 
         for (auto it = this->_snake.begin() + 1; it != this->_snake.end(); it++) {
             if (this->_snake[0].x == it->x && this->_snake[0].y == it->y) {
-                if (this->_score > this->_highScore) this->setHighScore();
-                this->close(); return;
+                if (this->_score > this->_highScore) this->setHighScoreInFile();
+                this->deleteSave(); this->close(); return;
             }
         }
     }
 
+    /**
+     * The function closes the Nibbler game by resetting various game elements.
+     */
     void NibblerGame::close()
     {
         this->_isRunning = false;
@@ -394,15 +488,35 @@ namespace Arcade {
         this->_wall.clear();
     }
 
+    /* The above code is implementing the entry point and type functions for a
+    game called "Nibbler". The `entryPoint()` function returns a pointer to a
+    new instance of the `NibblerGame` class that implements the `IGame`
+    interface. The `getType()` function returns a string literal "gameNibbler"
+    as a pointer to a character array. These functions are declared as `extern
+    "C"` to ensure that they have C linkage and can be called from a C program. */
     extern "C" {
-    IGame *entryPoint()
-    {
-        return new NibblerGame();
-    }
+        /**
+         * The function returns a pointer to a new instance of the NibblerGame
+         * class, which implements the IGame interface.
+         *
+         * @return An instance of the `NibblerGame` class that implements the
+         * `IGame` interface is being returned.
+         */
+        IGame *entryPoint()
+        {
+            return new NibblerGame();
+        }
 
-    char *getType()
-    {
-        return (char *) "gameNibbler";
-    }
+        /**
+         * The function returns a string indicating the type of game, which is
+         * "gameNibbler".
+         *
+         * @return A string literal "gameNibbler" is being returned as a pointer
+         * to a character array.
+         */
+        char *getType()
+        {
+            return (char *) "gameNibbler";
+        }
     }
 }
