@@ -11,10 +11,6 @@
     #include "../../Abstract/AGame.hpp"
 
 namespace Arcade {
-    typedef struct vector2i_s {
-        int x;
-        int y;
-    } vector2i_t;
     class SnakeGame : virtual public AGame {
         public:
             SnakeGame();

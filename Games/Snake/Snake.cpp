@@ -162,17 +162,16 @@ namespace Arcade {
 
     void SnakeGame::placeApple()
     {
-        std::vector<vector2i_t> appleCoord;
+        std::vector<std::pair<int, int>> appleCoord;
         for (int x = 6; x < 30; x++) {
             for (int y = 7; y < 20; y++) {
-                vector2i_t coord = {x, y};
-                appleCoord.insert(appleCoord.end(), coord);
+                appleCoord.push_back({x, y});
             }
         }
         int index = 0;
         for (auto &i : this->_snake) {
             for (auto &j : appleCoord) {
-                if (i.x == j.x && i.y == j.y) appleCoord.erase(appleCoord.begin() + index);
+                if (i.x == j.first && i.y == j.second) appleCoord.erase(appleCoord.begin() + index);
                 index += 1;
             }
             index = 0;
@@ -180,7 +179,7 @@ namespace Arcade {
         index = 0;
         for (auto &i : this->_wall) {
             for (auto &j : appleCoord) {
-                if (i.x == j.x && i.y == j.y) appleCoord.erase(appleCoord.begin() + index);
+                if (i.x == j.first && i.y == j.second) appleCoord.erase(appleCoord.begin() + index);
                 index += 1;
             }
             index = 0;
@@ -193,8 +192,8 @@ namespace Arcade {
             size_t appleCoordIndex = (rand() % appleCoord.size());
             for (auto &i : appleCoord) {
                 if (appleCoordIndex == 0) {
-                    this->_apple.x = i.x;
-                    this->_apple.y = i.y;
+                    this->_apple.x = i.first;
+                    this->_apple.y = i.second;
                     this->_apple.draw = 'a';
                     break;
                 }
