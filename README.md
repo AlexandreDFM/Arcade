@@ -38,7 +38,7 @@ namespace Arcade {
 }
 ```
 
-# Implémentation de librairies et de jeux
+# Implémentation de librairies graphiques et de jeux
 
 ## Interface de jeux
 
