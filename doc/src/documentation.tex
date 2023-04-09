@@ -19,11 +19,11 @@ Bienvenue dans la documentation de notre projet Arcade, ici vous pourrez retrouv
 \subsection{L'Arcade c'est quoi ?}
 
 L'Arcade est une plate-forme de jeu, c'est un programme qui permet à l'utilisateur de choisir un jeu et qui tient un registre des scores des joueurs. \\
-Afin de pouvoir traiter les éléments de via notre plate-forme de jeu au moment de l'exécution, nos bibliothèques graphiques et nos jeux doivent être implémentées en tant que bibliothèques dynamiques, qui sont alors chargées au moment de l'exécution.
+Afin de pouvoir traiter les éléments via notre plate-forme de jeu au moment de l'exécution, nos bibliothèques graphiques et nos jeux doivent être implémentées en tant que bibliothèques dynamiques, qui sont alors chargées au moment de l'exécution.
 
 \section{\underline{Classe Core}}
 
-Le "Core" du programme est initialisé dans le main. Il permet le chargement de la librairie graphique indiqué par l’utilisateur ainsi que le menu.
+Le "Core" du programme est initialisé dans le main. Il permet le chargement de la librairie graphique indiqué par l’utilisateur ainsi que celui du menu.
 
 \begin{tcolorbox}[colback=black!75!white]
 {\color{white}
@@ -65,7 +65,7 @@ namespace Arcade {
 }
 \end{tcolorbox}
 
-\section{\underline{Implémentation de lib et de jeux}}
+\section{\underline{Implémentation de librairies graphiques et de jeux}}
 \subsection{Interface de jeux}
 
 Pour que les jeux soient compatibles, ils doivent avoir l'interface suivante :
@@ -99,7 +99,7 @@ namespace Arcade {
 \end{tcolorbox}
 
 \subsection{Implémenter un jeu}
-Pour pouvoir implémenter un jeux il y a besoin d'un "entrypoint" ainsi que une fonction "getType" :
+Pour pouvoir implémenter un jeu il a besoin d'un "entrypoint" ainsi qu'une fonction "getType" :
 
 \begin{tcolorbox}[colback=black!75!white]
 {\color{white}
@@ -127,7 +127,7 @@ Afin de lancer un jeu il faut : \\
 
 \subsection{Interface de librairie graphique}
 
-Pour que les libraires graphiques soient compatibles, ils doivent avoir l'interface suivante :
+Pour que les libraires graphiques soient compatibles, elles doivent avoir l'interface suivante :
 
 \begin{tcolorbox}[colback=black!75!white]
 {\color{white}
@@ -155,7 +155,7 @@ namespace Arcade {
 
 \subsection{Implémenter une librairie graphique}
 
-Pour pouvoir implémenter un jeux il y a besoin d'un "entrypoint" ainsi que une fonction "getType" :
+Pour pouvoir implémenter une librairie graphique elle a besoin d'un "entrypoint" ainsi qu'une fonction "getType" :
 
 \begin{tcolorbox}[colback=black!75!white]
 {\color{white}
@@ -186,7 +186,7 @@ Afin de lancer une librairie graphique il faut : \\
 \begin{tcolorbox}[colback=black!75!white]
 {\color{white}
 \begin{markdown}
-```
+```bash
 ./arcade ./lib/NomDeLaLib.so
 ```
 \end{markdown}
