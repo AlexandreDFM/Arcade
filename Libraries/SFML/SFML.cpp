@@ -8,12 +8,25 @@
 #include "SFML.hpp"
 
 namespace Arcade {
+    /**
+     * This is a constructor for the SFML class that initializes the window and
+     * event variables.
+     */
     SFML::SFML()
     {
         this->window = nullptr;
         this->event = sf::Event();
     }
 
+    /**
+     * The function initializes the SFML window and loads game assets such as
+     * textures and sprites.
+     *
+     * @param gameAssets gameAssets is a std::map that contains pairs of
+     * characters and strings. The characters represent the keys and the strings
+     * represent the file paths to the corresponding sprite assets. These sprite
+     * assets are loaded into textures and sprites using the SFML library.
+     */
     void SFML::init(const std::map<char, std::string> &gameAssets)
     {
         this->window = new sf::RenderWindow(sf::VideoMode(1920, 1080), "Arkade");
@@ -44,6 +57,15 @@ namespace Arcade {
         }
     }
 
+    /**
+     * This function returns the type of event that occurred in a SFML window.
+     *
+     * @return an EventType enum value based on the type of event that is being
+     * polled from the SFML window. If the event is a closed event, it returns
+     * EventType::CLOSE. If the event is a key press event, it checks which key
+     * was pressed and returns the corresponding EventType value. If no event is
+     * being polled, it returns EventType::NOTHING.
+     */
     EventType SFML::getEvent() {
         while (this->window->pollEvent(this->event)) {
             if (this->event.type == sf::Event::Closed) {
@@ -72,6 +94,16 @@ namespace Arcade {
         return EventType::NOTHING;
     }
 
+    /**
+     * The function displays a vector of drawable objects using sprite assets and
+     * sets their position and rotation based on their properties.
+     *
+     * @param drawables A vector of Drawable objects that contain information
+     * about what to draw and where to draw it on the SFML window.
+     *
+     * @return If the `drawables` vector is empty, the function returns
+     * immediately without doing anything.
+     */
     void SFML::display(std::vector<Drawable> drawables)
     {
         if (drawables.empty()) return;
@@ -95,6 +127,16 @@ namespace Arcade {
         }
     }
 
+    /**
+     * The function displays a vector of text objects with specified colors and
+     * positions on an SFML window.
+     *
+     * @param drawables A vector of DrawableText objects that contain information
+     * about the text to be displayed, its position, and color.
+     *
+     * @return If the `drawables` vector is empty, the function returns without
+     * doing anything.
+     */
     void SFML::display(std::vector<DrawableText> drawables)
     {
         if (drawables.empty()) return;
@@ -116,28 +158,60 @@ namespace Arcade {
         }
     }
 
+    /**
+     * The SFML update function displays the window.
+     */
     void SFML::update()
     {
         this->window->display();
 
     }
 
+    /**
+     * The SFML clear function clears the window with a black color.
+     */
     void SFML::clear()
     {
         this->window->clear(sf::Color::Black);
     }
 
+    /**
+     * This function closes the SFML window and deletes the window object.
+     */
     void SFML::close()
     {
         this->window->close();
         delete this->window;
     }
 
+    /* The `extern "C"` block is used to specify that the functions inside it
+    should be compiled using C linkage instead of C++ linkage. This is
+    necessary when creating a C++ library that needs to be used by a C program
+    or a program written in another language that uses C linkage. In this case,
+    the `entryPoint()` and `getType()` functions are declared as C functions
+    that return a pointer to `ADisplay` and a character array, respectively.
+    This allows the functions to be called from a C program or a program
+    written in another language that uses C linkage. */
     extern "C" {
+        /**
+         * The function returns a pointer to an instance of the SFML class, which
+         * is a display object.
+         *
+         * @return A pointer to an object of type `ADisplay` that is created using
+         * the `new` operator and initialized with a `SFML` object.
+         */
         ADisplay *entryPoint()
         {
             return new SFML();
         }
+
+        /**
+         * The function returns a string indicating the type of library used,
+         * which is "libSFML".
+         *
+         * @return A string literal "libSFML" is being returned as a pointer to a
+         * character array.
+         */
         char *getType()
         {
             return (char *) "libSFML";
