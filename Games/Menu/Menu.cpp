@@ -40,15 +40,15 @@ namespace Arcade {
     {
         this->_drawableText.clear();
         if (!this->_isUsernameSet) {
-            this->_drawableText.push_back({ 18, 1, 12, WHITE, std::string("Username :"), std::string("Poppins-Black")});
-            this->_drawableText.push_back({ 18 + 6, 1, 12, WHITE, this->_username, std::string("Poppins-Black")});
+            this->_drawableText.push_back({ 19, 1, 12, WHITE, std::string("Username :"), std::string("Poppins-Black")});
+            this->_drawableText.push_back({ 19 + 6, 1, 12, WHITE, this->_username, std::string("Poppins-Black")});
             int line = 3;
             int index = 0;
             int indexInAlphabet = 0;
             for (auto &letter : this->_alphabet) {
                 if (index == 20) { index = 0; line += 1; }
                 Color color = this->_alphabetIndex == indexInAlphabet ? RED : WHITE;
-                this->_drawableText.push_back({ 10 + index, line, 12, color, letter, std::string("Poppins-Black")});
+                this->_drawableText.push_back({ 14 + index, line, 12, color, letter, std::string("Poppins-Black")});
                 index += 1; indexInAlphabet += 1;
             }
             switch (event) {
