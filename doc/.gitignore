@@ -2,3 +2,8 @@
 .vscode
 *.aux
 *.log
+*.out
+*.fdb_latexmk
+*.fls
+*.markdown.in
+src/_markdown_documentation

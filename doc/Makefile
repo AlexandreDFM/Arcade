@@ -10,13 +10,17 @@ NAME	=	documentation
 SRC 	=	./src/main.tex													   \
 
 all:
-			pdflatex -output-directory ./src ./src/$(NAME).tex
-			mv ./src/$(NAME).pdf ./$(NAME).pdf
+			latexmk -f -cd -lualatex -silent src/$(NAME).tex				   \
+			&& mv ./src/$(NAME).pdf ./$(NAME).pdf
 
 clean:
 			rm -rf ./src/*.aux
 			rm -rf ./src/*.log
 			rm -rf ./src/*.out
+			rm -rf ./src/*.fdb_latexmk
+			rm -rf ./src/*.fls
+			rm -rf ./src/*.markdown.in
+			rm -rf ./src/_markdown_documentation
 
 fclean:		clean
 			rm -rf ./$(NAME).pdf

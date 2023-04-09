@@ -1,14 +1,203 @@
-\documentclass{article}
+\documentclass{report}
+\usepackage{fullpage}
 \usepackage{graphicx} % Required for inserting images
+\usepackage[fencedCode]{markdown}
+\usepackage[most]{tcolorbox}
+\usepackage{xcolor}
 
-\title{Test}
-\author{Aldka }
-\date{March 2023}
+\title{\includegraphics{epitechLogo.png} \\ \vspace{0.5cm} Arcade Documentation}
+\author{Roman Lopez, Stephane Fievez, Alexandre De Freitas Martins}
+\date{Mars / Avril 2023}
 
 \begin{document}
-
 \maketitle
 
-\section{Introduction}
+\section{\underline{Introduction}}
+
+Bienvenue dans la documentation de notre projet Arcade, ici vous pourrez retrouver tous les éléments afin de créer votre propre librairie graphique ou jeu afin de l'intégrer dans notre projet.
+
+\subsection{L'Arcade c'est quoi ?}
+
+L'Arcade est une plate-forme de jeu, c'est un programme qui permet à l'utilisateur de choisir un jeu et qui tient un registre des scores des joueurs. \\
+Afin de pouvoir traiter les éléments de via notre plate-forme de jeu au moment de l'exécution, nos bibliothèques graphiques et nos jeux doivent être implémentées en tant que bibliothèques dynamiques, qui sont alors chargées au moment de l'exécution.
+
+\section{\underline{Classe Core}}
+
+Le "Core" du programme est initialisé dans le main. Il permet le chargement de la librairie graphique indiqué par l’utilisateur ainsi que le menu.
+
+\begin{tcolorbox}[colback=black!75!white]
+{\color{white}
+\begin{markdown}
+```
+namespace Arcade {
+    class Core {
+        public:
+            //////////////////////// Constructor ////////////////////////
+            Core();
+            Core(std::string lib);
+            Core(std::string lib, std::string game);
+            ~Core();
+            //////////////////////// Setter ////////////////////////
+            void setGraphic(IDisplay *graphic);
+            void setGame(IGame *game);
+            void setMenu();
+            void setChangeLib(EventType event);
+            void setChangeGame(EventType event);
+            //////////////////////// Functions ////////////////////////
+            void loop();
+            void MenuGetChange();
+            void changeLib(std::string lib);
+            void changeGame(std::string game);
+        private:
+            size_t _indexLib;
+            size_t _indexGame;
+            MenuInfo _menuInfo;
+            IGame *game;
+            IDisplay *graphic;
+            DLLoader *gameDll;
+            DLLoader *graphicDll;
+            std::vector<std::string> _libs;
+            std::vector<std::string> _games;
+    };
+}
+```
+\end{markdown}
+}
+\end{tcolorbox}
+
+\section{\underline{Implémentation de lib et de jeux}}
+\subsection{Interface de jeux}
+
+Pour que les jeux soient compatibles, ils doivent avoir l'interface suivante :
+
+\begin{tcolorbox}[colback=black!75!white]
+{\color{white}
+\begin{markdown}
+```
+namespace Arcade {
+    class IGame {
+    public:
+        virtual ~IGame() = default;
+        //////////////////////// Functions ////////////////////////
+        virtual void init() = 0;
+        virtual void update(Arcade::EventType event) = 0;
+        virtual void close() = 0;
+        //////////////////////// Getters //////////////////////////
+        virtual bool isRunning() const = 0;
+        virtual const std::map<char, std::string> &getAssets() const = 0;
+        virtual const std::vector<Drawable> &getDrawable() const = 0;
+        virtual const std::vector<DrawableText> &getDrawableText() const = 0;
+        virtual MenuInfo getMenuInfo(void) const = 0;
+        //////////////////////// Setters //////////////////////////
+        virtual void setMenuInfo(MenuInfo menuInfo) = 0;
+        virtual void setIsRunning(bool isRunning) = 0;
+    };
+}
+```
+\end{markdown}
+}
+\end{tcolorbox}
+
+\subsection{Implémenter un jeu}
+Pour pouvoir implémenter un jeux il y a besoin d'un "entrypoint" ainsi que une fonction "getType" :
+
+\begin{tcolorbox}[colback=black!75!white]
+{\color{white}
+\begin{markdown}
+```
+extern "C" {
+    IGame *entryPoint()
+    {
+        return new Menu();
+    }
+    char *getType()
+    {
+        return (char *) "gameMenu";
+    }
+}
+```
+\end{markdown}
+}
+\end{tcolorbox}
+
+\subsection{Lancement de jeux}
+Afin de lancer un jeu il faut : \\
+\hspace*{1cm}- D'abord que la librairie du jeu soit placée dans le répertoire "./lib/". \\
+\hspace*{1cm}- Puis lancer l'Arcade, le jeu sera alors disponible dans le menu.
+
+\subsection{Interface de librairie graphique}
+
+Pour que les libraires graphiques soient compatibles, ils doivent avoir l'interface suivante :
+
+\begin{tcolorbox}[colback=black!75!white]
+{\color{white}
+\begin{markdown}
+```
+namespace Arcade {
+    class IDisplay {
+        public:
+            virtual ~IDisplay() = default;
+            //////////////////////// Functions ////////////////////////
+            virtual void init(const std::map<char, std::string>& gameAssets) = 0;
+            virtual void update() = 0;
+            virtual void close() = 0;
+            virtual void display(std::vector<Drawable> drawables) = 0;
+            virtual void display(std::vector<DrawableText> drawables) = 0;
+            virtual void clear() = 0;
+            //////////////////////// Getters //////////////////////////
+            virtual Arcade::EventType getEvent() = 0;
+    };
+}
+```
+\end{markdown}
+}
+\end{tcolorbox}
+
+\subsection{Implémenter une librairie graphique}
+
+Pour pouvoir implémenter un jeux il y a besoin d'un "entrypoint" ainsi que une fonction "getType" :
+
+\begin{tcolorbox}[colback=black!75!white]
+{\color{white}
+\begin{markdown}
+```
+extern "C" {
+    IGame *entryPoint()
+    {
+        return new SDL2();
+    }
+    char *getType()
+    {
+        return (char *) "libSDL2";
+    }
+}
+```
+\end{markdown}
+}
+\end{tcolorbox}
+
+\subsection{Lancement d'une librairie graphique}
+Afin de lancer une librairie graphique il faut : \\
+\hspace*{1cm}- D'abord que la librairie du jeu soit placée dans le répertoire "./lib/". \\
+\hspace*{1cm}- Puis lancer l'Arcade, la librairie graphique sera disponible dans le menu. \\
+
+\hspace*{-0.5cm}Ou bien il est possible de la choisir au lancement en la sélectionnant à l'execution :
+
+\begin{tcolorbox}[colback=black!75!white]
+{\color{white}
+\begin{markdown}
+```
+./arcade ./lib/NomDeLaLib.so
+```
+\end{markdown}
+}
+\end{tcolorbox}
+
+\section{\underline{Interface Partagées}}
+
+Les Interfaces de ce projet ont été partagé avec les groupes suivants : \\
+\hspace*{1cm}- gwenael.hubler@epitech.eu, ewan.bigotte@epitech.eu, nathan.donadey@epitech.eu \\
+\hspace*{1cm}- hugo.houbert@epitech.eu, victor.delamonica@epitech.eu \\
+\hspace*{1cm}- maxime.mallet@epitech.eu, allan.charlier@epitech.eu \\
 
 \end{document}
