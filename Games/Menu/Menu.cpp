@@ -8,6 +8,10 @@
 #include "Menu.hpp"
 
 namespace Arcade {
+    /**
+     * The function initializes various variables and loads libraries and assets
+     * for a menu.
+     */
     void Menu::init()
     {
         this->_isRunning = true;
@@ -36,6 +40,16 @@ namespace Arcade {
         this->_drawableText.push_back({ 18, 1, 12, WHITE, std::string("Username :"), std::string("Poppins-Black")});
     }
 
+    /**
+     * The function updates the menu based on the given event, allowing the user
+     * to select a username and choose a game and library to play.
+     *
+     * @param event The parameter "event" is of type Arcade::EventType and
+     * represents the event that occurred in the menu. It is used to update the
+     * state of the menu accordingly.
+     *
+     * @return The function does not return anything, as its return type is void.
+     */
     void Menu::update(Arcade::EventType event)
     {
         this->_drawableText.clear();
@@ -113,6 +127,10 @@ namespace Arcade {
         }
     }
 
+    /**
+     * The function "close" sets the "_isRunning" variable to false and clears the
+     * "_libs" and "_games" vectors.
+     */
     void Menu::close()
     {
         this->_isRunning = false;
@@ -120,11 +138,32 @@ namespace Arcade {
         this->_games.clear();
     }
 
+    /* The `extern "C"` block is used to specify that the functions inside it
+    should be compiled using C linkage instead of C++ linkage. This is
+    necessary when the code is being used in a C++ program but the functions
+    need to be called from a C program or a library that uses C linkage. In
+    this case, the `entryPoint()` and `getType()` functions are being declared
+    with C linkage so that they can be called from a C program or library that
+    uses C linkage. */
     extern "C" {
+        /**
+         * The function returns a pointer to a new instance of the Menu class,
+         * which implements the IGame interface.
+         *
+         * @return An instance of the `Menu` class, which implements the `IGame`
+         * interface, is being returned.
+         */
         IGame *entryPoint()
         {
             return new Menu();
         }
+
+        /**
+         * The function returns a string "gameMenu" as a character pointer.
+         *
+         * @return A string literal "gameMenu" is being returned as a pointer to a
+         * character array.
+         */
         char *getType()
         {
             return (char *) "gameMenu";
