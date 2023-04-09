@@ -8,35 +8,32 @@
 #include "SDL2.hpp"
 
 namespace Arcade {
+    /**
+     * This is a constructor for a class called SDL2 with no parameters.
+     */
     SDL2::SDL2()
     {
     }
 
+    /**
+     * This function initializes SDL2 and loads game assets such as textures and
+     * fonts.
+     *
+     * @param gameAssets gameAssets is a std::map that contains pairs of
+     * characters and strings. The characters represent the keys for the sprite
+     * assets, while the strings represent the file paths for the corresponding
+     * sprite assets. These sprite assets are loaded into the program and stored
+     * in the _spriteAssets member variable of the SDL2 class
+     */
     void SDL2::init(const std::map<char, std::string> &gameAssets)
     {
-        if (SDL_Init(SDL_INIT_VIDEO) < 0) {
-            std::cerr << "SDL could not initialize! SDL_Error: " << SDL_GetError() << std::endl; exit(84);
-        }
-        if (!(IMG_Init(IMG_INIT_PNG) & IMG_INIT_PNG)) {
-            std::cerr << "SDL_image could not initialize! SDL_image Error: " << IMG_GetError() << std::endl; exit(84);
-        }
-        if (TTF_Init() == -1) {
-            std::cerr << "SDL_ttf could not initialize! SDL_ttf Error: " << TTF_GetError() << std::endl; exit(84);
-        }
+        SDL_Init(SDL_INIT_VIDEO);
+        IMG_Init(IMG_INIT_PNG);
+        TTF_Init();
         this->_window = SDL_CreateWindow("Arcade", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 1920, 1080,
         SDL_WINDOW_SHOWN);
-        if (_window == nullptr) {
-            std::cerr << "Window could not be created! SDL_Error: " << SDL_GetError() << std::endl; exit(84);
-        }
         this->_renderer = SDL_CreateRenderer(_window, -1, SDL_RENDERER_ACCELERATED);
-        if (_renderer == nullptr) {
-            std::cerr << "Renderer could not be created! SDL_Error: " << SDL_GetError() << std::endl;
-            exit(84);
-        }
         this->_font = TTF_OpenFont("./Assets/Police/Poppins-Black.ttf", 12);
-        if (_font == nullptr) {
-            std::cerr << "Font could not be created! SDL_ttf Error: " << TTF_GetError() << std::endl; exit(84);
-        }
         this->_event = SDL_Event();
         this->_spriteSize = 40;
         if (std::ifstream("./Assets/Config/SpriteSize.txt")) {
@@ -58,11 +55,17 @@ namespace Arcade {
         }
     }
 
+    /**
+     * This function updates the SDL2 renderer to present the rendered output.
+     */
     void SDL2::update()
     {
         SDL_RenderPresent(_renderer);
     }
 
+    /**
+     * This function closes all SDL2 assets and quits the SDL2 library.
+     */
     void SDL2::close()
     {
         for (auto &asset : this->_spriteAssets) SDL_DestroyTexture(asset.second);
@@ -75,6 +78,16 @@ namespace Arcade {
         SDL_Quit();
     }
 
+    /**
+     * This function displays a vector of drawable objects on an SDL2 renderer
+     * with optional rotation.
+     *
+     * @param drawables A vector of Drawable objects that contain information
+     * about what to draw and how to draw it on the screen.
+     *
+     * @return If the input vector `drawables` is empty, the function returns
+     * without doing anything.
+     */
     void SDL2::display(std::vector <Drawable> drawables)
     {
         if (drawables.empty()) return;
@@ -95,6 +108,17 @@ namespace Arcade {
         }
     }
 
+    /**
+     * The function displays a vector of DrawableText objects on an SDL2 window.
+     *
+     * @param drawables A vector of DrawableText objects that contain information
+     * about the text to be displayed, including the text string, position, size,
+     * and color.
+     *
+     * @return If the `drawables` vector is empty, the function returns without
+     * doing anything. Otherwise, the function displays the text in each
+     * `DrawableText` object in the vector on the SDL window.
+     */
     void SDL2::display(std::vector <DrawableText> drawables)
     {
         if (drawables.empty()) return;
@@ -121,11 +145,23 @@ namespace Arcade {
         }
     }
 
+    /**
+     * This function clears the renderer in SDL2.
+     */
     void SDL2::clear()
     {
         SDL_RenderClear(_renderer);
     }
 
+    /**
+     * This function returns the corresponding Arcade event type based on the SDL2
+     * event type.
+     *
+     * @return an Arcade::EventType enum value based on the SDL2 event that was
+     * polled. The possible return values are CLOSE, RESTART, RIGHT, LEFT, DOWN,
+     * UP, LIBPREV, LIBNEXT, GAMEPREV, GAMENEXT, ACTION1, ACTION2, SAVE, MENU, or
+     * NOTHING.
+     */
     Arcade::EventType SDL2::getEvent()
     {
         if (SDL_PollEvent(&_event)) {
@@ -156,11 +192,31 @@ namespace Arcade {
         return Arcade::EventType::NOTHING;
     }
 
+    /* The `extern "C"` block is used to specify that the functions inside it
+    should be compiled using C linkage instead of C++ linkage. This is
+    necessary when creating a C++ library that needs to be used by a C program
+    or by a program written in another language that uses C linkage. In this
+    case, the `entryPoint()` and `getType()` functions are defined inside the
+    `extern "C"` block to ensure that they are compiled using C linkage. */
     extern "C" {
+        /**
+         * The function returns a new instance of the SDL2 class that implements
+         * the IDisplay interface.
+         *
+         * @return A pointer to an instance of the SDL2 class is being returned.
+         */
         IDisplay *entryPoint()
         {
             return new SDL2();
         }
+
+        /**
+         * The function returns a string indicating the type of library as
+         * "libSDL2".
+         *
+         * @return A string literal "libSDL2" is being returned as a pointer to a
+         * character array.
+         */
         char *getType()
         {
             return (char *) "libSDL2";
