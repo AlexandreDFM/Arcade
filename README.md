@@ -1,10 +1,10 @@
 
-# Arcade Documentation
+# Arcade Readme
 
-## Class Core::
-Le Coeur du programme est initialisé dans le main. Il permet le chargement de la librairie graphique indiqué par l’utilisateur ainsi que le menu
+## La Classe Core
+Le "Coeur" du programme est initialisé dans le main. Il permet le chargement de la librairie graphique indiquée par l’utilisateur ainsi que celui du menu.
 
-```
+```C++
 namespace Arcade {
     class Core {
         public:
@@ -38,13 +38,13 @@ namespace Arcade {
 }
 ```
 
-# Implémentation de lib et de jeux
+# Implémentation de librairies et de jeux
 
 ## Interface de jeux
 
-Pour que les jeux soient compatibles, ils doivent avoir l'interface suivante
+Pour que les jeux soient compatibles, ils doivent avoir l'interface suivante :
 
-```
+```C++
 namespace Arcade {
     class IGame {
     public:
@@ -67,33 +67,33 @@ namespace Arcade {
 ```
 ## Implémenter un jeu
 
-Pour pouvoir implementer un jeux il y a besoin de un entrypoint ainsi que une fonction getType
+Pour pouvoir implementer un jeu, il a besoin d'un "entrypoint" ainsi qu'une fonction "getType".
 
-Exemple:
+Exemple :
 
-```
-    extern "C" {
-        IGame *entryPoint()
-        {
-            return new Menu();
-        }
-        char *getType()
-        {
-            return (char *) "gameMenu";
-        }
+```C++
+extern "C" {
+    IGame *entryPoint()
+    {
+        return new Menu();
     }
+    char *getType()
+    {
+        return (char *) "gameMenu";
+    }
+}
 ```
 
 ### Lancement de jeux
 
-- La librairie du jeu dois être placés dans ./lib/
-- Lancer Arcade, le jeu sera disponible dans le menu
+- Placer la librairie du jeu dans le répertoire "./lib/".
+- Lancer l'Arcade, le jeu sera disponible dans le menu.
 
 ## Interface de librairie graphique
 
-Pour que les libraires graphiques soient compatibles, ils doivent avoir l'interface suivante
+Pour que les libraires graphiques soient compatibles, elles doivent avoir l'interface suivante :
 
-```
+```C++
 namespace Arcade {
     class IDisplay {
     public:
@@ -112,35 +112,37 @@ namespace Arcade {
 ```
 ## Implémenter une librairie graphique
 
-Pour pouvoir implementer un jeux il y a besoin de un entrypoint ainsi que une fonction getType
+Pour pouvoir implémenter une librairie graphique, elle a besoin d'un "entrypoint" ainsi qu'une fonction "getType".
 
-Exemple:
+Exemple :
 
-```
-    extern "C" {
-        IGame *entryPoint()
-        {
-            return new SDL2();
-        }
-        char *getType()
-        {
-            return (char *) "LibSDL2";
-        }
+```C++
+extern "C" {
+    IGame *entryPoint()
+    {
+        return new SDL2();
     }
+    char *getType()
+    {
+        return (char *) "libSDL2";
+    }
+}
 ```
 
 ### Lancement d'une librairie graphique
 
-- La librairie du jeu dois être placés dans ./lib/
-- Lancer Arcade, la librairie graphique sera disponible dans le menu ou au lancement en selection ./arcade ./lib/NomDeLaLib
+- Placer la librairie graphique dans le répertoire "./lib/".
+- Lancer l'Arcade, la librairie graphique sera disponible dans le menu.
+- Ou bien il est possible de la sélectionner au lancement :
 
+```bash
+./arcade ./lib/NomDeLaLib.so
+```
 
+## Interfaces Partagées
 
+Les Interfaces de ce projet ont été partagées avec les groupes suivants:
 
-## Interface Partagé
-
-Les Interfaces de ce projet ont été partagé avec les groupes suivants:
-
-- gwenael.hubler@epitech.eu
-- hugo.houbert@epitech.eu
-- maxime.mallet@epitech.eu
+- gwenael.hubler@epitech.eu, ewan.bigotte@epitech.eu, nathan.donadey@epitech.eu
+- hugo.houbert@epitech.eu, victor.delamonica@epitech.eu
+- maxime.mallet@epitech.eu, allan.charlier@epitech.eu
