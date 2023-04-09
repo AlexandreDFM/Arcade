@@ -19,9 +19,12 @@ namespace Arcade {
             void update(EventType event) override;
             void moveSnakeBody(Direction rotation);
             void placeApple();
-            void setHighScore();
+            void setHighScoreInFile();
+            void getHighScoreFromFile();
+            void getSpriteSizeFromFile();
             void save();
             void loadSave();
+            void deleteSave();
             void setMap();
             void close() override;
         private:
