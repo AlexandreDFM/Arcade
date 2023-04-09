@@ -24,6 +24,8 @@ namespace Arcade {
             void moveSnakeBody(Direction rotation);
             void placeApple();
             void setHighScore();
+            void save();
+            void loadSave();
             void setMap();
             void close() override;
         private:

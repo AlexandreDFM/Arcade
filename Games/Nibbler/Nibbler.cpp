@@ -77,7 +77,10 @@ namespace Arcade {
         this->_speed = 1;
         this->_mapIndex = 1;
         this->_highScore = 0;
+        this->_spriteSize = 40;
         this->_pushATail = false;
+        this->_direction = EventType::NOTHING;
+
         if (std::ifstream("./Assets/Games/Nibbler/Config/HighScore.txt")) {
             std::ifstream file("./Assets/Games/Nibbler/Config/HighScore.txt");
             std::string highScore = "";
@@ -85,7 +88,7 @@ namespace Arcade {
             file.close();
             this->_highScore = std::stoi(highScore);
         }
-        this->_spriteSize = 40;
+
         if (std::ifstream("./Assets/Config/SpriteSize.txt")) {
             std::ifstream file("./Assets/Config/SpriteSize.txt");
             std::string spriteSize = "";
@@ -97,7 +100,12 @@ namespace Arcade {
                 this->_spriteSize = 40;
             }
         }
-        this->_direction = EventType::NOTHING;
+
+        if (std::ifstream("./Assets/Games/Nibbler/Config/Save.txt")) {
+            this->loadSave();
+        } else {
+            this->setMap(_mapIndex);
+        }
 
         this->_assets.insert({{'w', "./Assets/Games/Nibbler/Images/Wall.png"}});
         this->_assets.insert({{'h', "./Assets/Games/Nibbler/Images/Head.png"}});
@@ -105,7 +113,6 @@ namespace Arcade {
         this->_assets.insert({{'t', "./Assets/Games/Nibbler/Images/Tail.png"}});
         this->_assets.insert({{'a', "./Assets/Games/Nibbler/Images/Apple.png"}});
 
-        this->setMap(_mapIndex);
         this->_drawableText.push_back({ 35, 13, 12, WHITE, "Score: " + std::to_string(this->_score), std::string("Poppins-Black")});
 
         this->_drawableText.push_back({ 23, 1, 24, WHITE, "NIBBLER", std::string("Poppins-Black")});
@@ -238,6 +245,84 @@ namespace Arcade {
         }
     }
 
+    void NibblerGame::save()
+    {
+        std::ofstream file("./Assets/Games/Nibbler/Config/Save.txt");
+        file << this->_score << std::endl;
+        file << this->_mapIndex << std::endl;
+        file << this->_speed << std::endl;
+        file << this->_direction << std::endl;
+        file << this->_snake.size() << std::endl;
+        file << "Snake:" << std::endl;
+        file << this->_snake[0].x << " " << this->_snake[0].y << " " << this->_snake[0].rotation << std::endl;
+        for (auto &i : this->_snake) {
+            file << i.x << " " << i.y << " " << i.rotation << std::endl;
+        }
+        file << "Apples:" << std::endl;
+        file << this->_apples.size() << std::endl;
+        for (auto &i : this->_apples) {
+            file << i.x << " " << i.y << std::endl;
+        }
+        file << "Walls:" << std::endl;
+        file << this->_wall.size() << std::endl;
+        for (auto &i : this->_wall) {
+            file << i.x << " " << i.y << std::endl;
+        }
+        file.close();
+    }
+
+    void NibblerGame::loadSave()
+    {
+        std::ifstream file;
+        file.open("./Assets/Games/Nibbler/Config/Save.txt");
+        std::string line;
+        std::getline(file, line);
+        this->_score = std::stoi(line);
+        std::getline(file, line);
+        this->_mapIndex = std::stoi(line);
+        std::getline(file, line);
+        this->_speed = std::stoi(line);
+        std::getline(file, line);
+        this->_direction = static_cast<EventType>(std::stoi(line));
+        std::getline(file, line);
+        int size = std::stoi(line);
+        std::getline(file, line);
+        std::getline(file, line);
+        std::getline(file, line);
+        std::string x = line.substr(0, line.find(" "));
+        std::string y = line.substr(line.find(" ") + 1, line.find(" ", line.find(" ") + 1));
+        std::string rot = line.substr(line.find(" ", line.find(" ") + 1) + 1, line.size());
+        this->_snake.clear();
+        this->_snake.push_back({std::stoi(x), std::stoi(y), BLUE, 'h', static_cast<Direction>(std::stoi(rot)), {0, 0, this->_spriteSize, this->_spriteSize}});
+        for (int i = 1; i < size; i++) {
+            std::getline(file, line);
+            x = line.substr(0, line.find(" "));
+            y = line.substr(line.find(" ") + 1, line.find(" ", line.find(" ") + 1));
+            rot = line.substr(line.find(" ", line.find(" ") + 1) + 1, line.size());
+            this->_snake.push_back({std::stoi(x), std::stoi(y), BLUE, 'b', static_cast<Direction>(std::stoi(rot)), {0, 0, this->_spriteSize, this->_spriteSize}});
+        }
+        std::getline(file, line);
+        std::getline(file, line);
+        size = std::stoi(line);
+        this->_apples.clear();
+        for (int i = 0; i < size; i++) {
+            std::getline(file, line);
+            x = line.substr(0, line.find(" "));
+            y = line.substr(line.find(" ") + 1, line.size());
+            this->_apples.push_back({std::stoi(x), std::stoi(y), RED, 'a', Direction::NO_DIRECTION, {0, 0, this->_spriteSize, this->_spriteSize}});
+        }
+        std::getline(file, line);
+        std::getline(file, line);
+        size = std::stoi(line);
+        this->_wall.clear();
+        for (int i = 0; i < size; i++) {
+            std::getline(file, line);
+            x = line.substr(0, line.find(" "));
+            y = line.substr(line.find(" ") + 1, line.size());
+            this->_wall.push_back({std::stoi(x), std::stoi(y), WHITE, 'w', Direction::NO_DIRECTION, {0, 0, this->_spriteSize, this->_spriteSize}});
+        }
+    }
+
     void NibblerGame::update(EventType event)
     {
         this->_drawable.clear();
@@ -251,6 +336,7 @@ namespace Arcade {
 
         switch (event) {
             case EventType::CLOSE:  this->_isRunning = false; break;
+            case EventType::SAVE:   this->save(); break;
             case EventType::RIGHT:  if (this->_direction != EventType::LEFT)    this->_direction = EventType::RIGHT;    break;
             case EventType::DOWN:   if (this->_direction != EventType::UP)      this->_direction = EventType::DOWN;     break;
             case EventType::LEFT:   if (this->_direction != EventType::RIGHT)   this->_direction = EventType::LEFT;     break;

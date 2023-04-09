@@ -56,14 +56,18 @@ namespace Arcade {
         this->_assets.insert({{'t', "./Assets/Games/Snake/Images/Tail.png"}});
         this->_assets.insert({{'a', "./Assets/Games/Snake/Images/Apple.png"}});
 
-        this->setMap();
         this->_drawableText.push_back({ 33, 7, 12, WHITE, "Score: " + std::to_string(this->_score), std::string("Poppins-Black")});
 
         this->_drawableText.push_back({ 15, 1, 24, WHITE, "SNAKE", std::string("Poppins-Black")});
         this->_drawableText.push_back({ 33, 4, 12, WHITE, std::string("Username: ") + this->_menuInfo.username, std::string("Poppins-Black")});
         this->_drawableText.push_back({ 33, 10, 12, WHITE, "HighScore: " + std::to_string(this->_highScore), std::string("Poppins-WHITE")});
-
-        this->placeApple();
+        if (std::ifstream("./Assets/Games/Snake/Config/Save.txt")) {
+            std::cout << "Loading save..." << std::endl;
+            this->loadSave();
+        } else {
+            this->setMap();
+            this->placeApple();
+        }
     }
 
     void SnakeGame::setMap()
@@ -85,6 +89,67 @@ namespace Arcade {
                 }
             }
         }
+    }
+
+    void SnakeGame::save()
+    {
+        std::ofstream file("./Assets/Games/Snake/Config/Save.txt");
+        file << this->_score << std::endl;
+        file << this->_speed << std::endl;
+        file << this->_highScore << std::endl;
+        file << this->_direction << std::endl;
+        file << "Snake: " << this->_snake.size() << std::endl;
+        file << this->_snake[0].x << " " << this->_snake[0].y << " " << this->_snake[0].rotation << std::endl;
+        for (auto &i : this->_snake) {
+            file << i.x << " " << i.y << " " << i.rotation << std::endl;
+        }
+        file << "Wall: " << this->_wall.size() << std::endl;
+        for (auto &i : this->_wall) {
+            file << i.x << " " << i.y << std::endl;
+        }
+        file << "Apple: " << this->_apple.x << " " << this->_apple.y << std::endl;
+        file.close();
+    }
+
+    void SnakeGame::loadSave()
+    {
+        std::ifstream file("./Assets/Games/Snake/Config/Save.txt");
+        std::string line;
+        std::getline(file, line);
+        this->_score = std::stoi(line);
+        std::getline(file, line);
+        this->_speed = std::stoi(line);
+        std::getline(file, line);
+        this->_highScore = std::stoi(line);
+        std::getline(file, line);
+        this->_direction = static_cast<EventType>(std::stoi(line));
+        std::getline(file, line);
+        int snakeSize = std::stoi(line.substr(line.find(" ") + 1, line.size()));
+        std::getline(file, line);
+        std::string x = line.substr(0, line.find(" "));
+        std::string y = line.substr(line.find(" ") + 1, line.find(" ", line.find(" ") + 1));
+        std::string rotation = line.substr(line.find(" ", line.find(" ") + 1) + 1, line.size());
+        this->_snake.clear();
+        this->_snake.push_back({std::stoi(x), std::stoi(y), BLUE, 'h', static_cast<Direction>(std::stoi(rotation)), {0, 0, this->_spriteSize, this->_spriteSize}});
+        for (int i = 0; i < snakeSize; i++) {
+            std::getline(file, line);
+            x = line.substr(0, line.find(" "));
+            y = line.substr(line.find(" ") + 1, line.find(" ", line.find(" ") + 1));
+            rotation = line.substr(line.find(" ", line.find(" ") + 1) + 1, line.size());
+            this->_snake.push_back({std::stoi(x), std::stoi(y), BLUE, 'b', static_cast<Direction>(std::stoi(rotation)), {0, 0, this->_spriteSize, this->_spriteSize}});
+        }
+        std::getline(file, line);
+        int wallSize = std::stoi(line.substr(line.find(" ") + 1, line.size()));
+        this->_wall.clear();
+        for (int i = 0; i < wallSize; i++) {
+            std::getline(file, line);
+            x = line.substr(0, line.find(" "));
+            y = line.substr(line.find(" ") + 1, line.find(" ", line.find(" ") + 1));
+            this->_wall.push_back({std::stoi(x), std::stoi(y), WHITE, 'w', NO_DIRECTION, {0, 0, this->_spriteSize, this->_spriteSize}});
+        }
+        std::getline(file, line);
+        this->_apple = {std::stoi(line.substr(line.find(" ") + 1, line.find(" ", line.find(" ") + 1))), std::stoi(line.substr(line.find(" ", line.find(" ") + 1) + 1, line.size())), RED, 'a', WEST, {0, 0, this->_spriteSize, this->_spriteSize}};
+        file.close();
     }
 
     void SnakeGame::setHighScore()
@@ -171,6 +236,7 @@ namespace Arcade {
         for (auto &i : this->_snake) this->_drawable.push_back(i);
 
         switch (event) {
+            case EventType::SAVE:    this->save(); break;
             case EventType::CLOSE:   this->setHighScore(); this->close(); return;
             case EventType::RESTART: this->setHighScore(); this->close(); this->init(); return;
             case EventType::UP:      if (this->_direction != EventType::DOWN)    this->_direction = EventType::UP;    break;

@@ -33,6 +33,7 @@ namespace Arcade {
         }
         this->_assets.insert({{'b', "./Assets/Games/Menu/Images/Background.png"}});
         this->_drawable.push_back({0, 0, BLACK, 'b', NO_DIRECTION, {0, 0, 1920, 1080}});
+        this->_drawableText.push_back({ 18, 1, 12, WHITE, std::string("Username :"), std::string("Poppins-Black")});
     }
 
     void Menu::update(Arcade::EventType event)

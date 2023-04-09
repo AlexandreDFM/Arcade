@@ -20,6 +20,8 @@ namespace Arcade {
             void checkWall(EventType key);
             void setHighScore();
             void setMap(int i);
+            void save();
+            void loadSave();
             void moveSnakeBody(Direction rotation);
             void checkApple();
             void movements();
